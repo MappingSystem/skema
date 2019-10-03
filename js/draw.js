@@ -58,8 +58,21 @@ var draw = {
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
+ var nodeDataArray = [
+    { key: "Alpha", color: "lightblue" },
+    { key: "Beta", color: "orange" },
+    { key: "Gamma", color: "lightgreen" },
+    { key: "Delta", color: "pink" }
+  ];
+  var linkDataArray = [
+    { from: "Alpha", to: "Beta" },
+    { from: "Alpha", to: "Gamma" },
+    { from: "Beta", to: "Beta" },
+    { from: "Gamma", to: "Delta" },
+    { from: "Delta", to: "Alpha" }
+  ];
 console.log(draw.input["node"]);console.log(draw.input["link"]);
-                    myDiagram.model = new go.GraphLinksModel(draw.input["node"], draw.input["link"]);
+                    myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
                     $('.diagram').append(svg);
