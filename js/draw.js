@@ -275,8 +275,8 @@ var draw = {
 
     eq : function(c = 0) {
 
-        var tot = this.type.length;
-        return eq(++c%tot);
+        var tot = this.scope.length;
+        return (++c%tot == 0)? 0 :c;
 
     }
 }
