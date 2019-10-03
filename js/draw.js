@@ -52,15 +52,15 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-                    diagram = go.GraphObject.make(go.Diagram, "diagram");
-                    diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
+                    var myDiagram = go.GraphObject.make(go.Diagram, "diagram");
+                    myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
-                    diagram.model = new go.GraphLinksModel(draw.input);
-                    var svg = diagram.makeSvg({scale: 2});
-                    $('#diagram').append(svg);
+                    myDiagram.model = new go.GraphLinksModel(draw.input);
+                    var svg = myDiagram.makeSvg({scale: 2});
+                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
+                    $('#diagram div').append(svg);
 
                 }
 
