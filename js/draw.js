@@ -55,7 +55,7 @@ var draw = {
                 } else if(type == 'nodelinks'){
 
                     diagram = draw.makeSvg(input, skema);
-                    $('.diagram').append(diagram);
+                    g.prepend(diagram);
 
                 }
 
