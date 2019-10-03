@@ -22,7 +22,7 @@ var draw = {
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
-        var js = '/' + this[type] + '?t=' + $.now();
+        var js = '/' + draw[type] + '?t=' + $.now();
 
         $('#type').text(type);
         $('#type')[0].href = '/' + type;
