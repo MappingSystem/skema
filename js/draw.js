@@ -57,6 +57,15 @@ var draw = {
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
+
+draw.skema = [
+    { from: "Alpha", to: "Beta" },
+    { from: "Alpha", to: "Gamma" },
+    { from: "Beta", to: "Beta" },
+    { from: "Gamma", to: "Delta" },
+    { from: "Delta", to: "Alpha" }
+];
+
                     myDiagram.model = new go.GraphLinksModel(draw.input, draw.skema);
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
