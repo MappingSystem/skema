@@ -191,7 +191,7 @@ var draw = {
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
 
-                var index = Object.keys(draw.scope).indexOf(draw.type); console.log(index); console.log(draw.eq(index));
+                var index = draw.scope.indexOf(draw.type); console.log(index); console.log(draw.eq(index));
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
