@@ -36,7 +36,7 @@ var draw = {
         var js = '/' + draw[type] + '?t=' + $.now();
 
 this.scope.forEach(function(key,val) {
-   console.log(key); console.log(type); 
+   console.log(key); console.log(val); 
    if (key==type) var jso = '/' + val + '?t=' + $.now(); 
 });
 
