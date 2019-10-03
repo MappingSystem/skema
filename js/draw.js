@@ -52,16 +52,15 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-                    //if (diagram.div) diagram.div = null;
-                    diagram = go.GraphObject.make(go.Diagram, "diagram");
-                    diagram.model = new go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
+                    var myDiagram = go.GraphObject.make(go.Diagram, "diagram");
+                    myDiagram.model = new go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
 
-                    diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
+                    myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
 
-                    var svg = diagram.makeSvg({scale: 2});
+                    var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
                     $('.diagram').append(svg);
 
