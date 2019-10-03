@@ -57,19 +57,7 @@ myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
     go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
     go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
   );
-myDiagram.model = new go.GraphLinksModel([
-  { key: "Alpha", color: "lightblue" },
-  { key: "Beta", color: "orange" },
-  { key: "Gamma", color: "lightgreen" },
-  { key: "Delta", color: "pink" }
-],
-[
-  { from: "Alpha", to: "Beta" },
-  { from: "Alpha", to: "Gamma" },
-  { from: "Beta", to: "Beta" },
-  { from: "Gamma", to: "Delta" },
-  { from: "Delta", to: "Alpha" }
-]);
+myDiagram.model = new go.GraphLinksModel(draw.input);
 var svg = myDiagram.makeSvg({scale: 2});
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 $('.diagram').append(svg);
@@ -194,7 +182,7 @@ $('.diagram').append(svg);
             .click(function() {
 
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
-                var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 2));
+                var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
