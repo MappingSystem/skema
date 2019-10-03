@@ -60,7 +60,7 @@ myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
 myDiagram.model = new go.GraphLinksModel(draw.input);
 var svg = myDiagram.makeSvg({scale: 2});
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-$('.diagram').append(svg);
+$('#diagram div').append(svg);
 
                 }
 
