@@ -58,7 +58,7 @@ var draw = {
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
-
+console.log(draw.input["node"]);console.log(draw.input["link"]);
                     myDiagram.model = new go.GraphLinksModel(draw.input["node"], draw.input["link"]);
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
