@@ -60,10 +60,8 @@ var draw = {
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
 
-                    var svg = myDiagram.makeSvg({scale: 2});
-                    $('#diagram div').remove();
-                    $('.diagram').append(svg);
-                    myDiagram.div = null;
+                    var svg = myDiagram.makeSvg({scale: 2}); myDiagram.div = null;
+                    $('#diagram div').remove(); $('.diagram').append(svg);
 
                 }
 
