@@ -53,7 +53,7 @@ var draw = {
                 } else if(type == 'nodelinks'){
 
                     diagram = new go.GraphObject.make(go.Diagram, "diagram");
-                    diagram.model = new go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
+                    diagram.model = go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
 
                     diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
