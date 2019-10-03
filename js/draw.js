@@ -34,9 +34,11 @@ var draw = {
 
         var type = (!draw.type)? 'sequence': draw.type;
         var js = '/' + draw[type] + '?t=' + $.now();
+
 this.scope.forEach(function(key,val) {
+   console.log(key); console.log(type); 
    if (key==type) var jso = '/' + val + '?t=' + $.now(); 
-});console.log(jso);
+});
 
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
