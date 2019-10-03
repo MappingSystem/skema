@@ -78,7 +78,9 @@ diagram.nodeTemplate =
     { from: "Delta", to: "Alpha" }
   ];
   diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
-                    diagram.makeSvg();
+window.myDiagram = diagram;
+  if (diagramclass === undefined) diagramclass = go.Diagram;
+myDiagram.makeSvg();
 
                 }
 
