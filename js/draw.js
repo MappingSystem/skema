@@ -102,7 +102,7 @@ $('.diagram').append(svg);
             $('.editor-wrapper').height($('.editor').height() + 3);
             $('.editor').height($('.diagram').height() - 94);
 
-            $('.diagram canvas').hide();
+            $('#diagram canvas').hide();
             $('#loadingImg').hide();
 
             editor.clearSelection();
