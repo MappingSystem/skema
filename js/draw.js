@@ -80,7 +80,8 @@ diagram.nodeTemplate =
   ];
   diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
 diagramclass = go.Diagram;
-diagram.makeSvg();
+window.myDiagram = diagram;
+myDiagram.makeSvg();
 
                 }
 
