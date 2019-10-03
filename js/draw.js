@@ -52,17 +52,14 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
-   diagram = go.GraphObject.make(go.Diagram, "editor");
-
-   diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto", 
+   var myDiagram = go.GraphObject.make(go.Diagram, "editor");
+   myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
       );
-
-   diagram.model = new go.GraphLinksModel(
+   myDiagram.model = new go.GraphLinksModel(
     [
       { key: "Alpha", color: "lightblue" },
       { key: "Beta", color: "orange" },
@@ -77,8 +74,8 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
       { from: "Delta", to: "Alpha" }
     ]);
 
-   var svg = diagram.makeSvg({scale: 2});
-   $('.diagram').append(svg);
+   var svg = myDiagram.makeSvg({scale: 2});
+    $('.diagram').append(svg);
 
                 }
 
@@ -265,7 +262,7 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
     eq : function(c = 0) {
 
-        var tot = this.type.length
+        var tot = this.type.length;
         return eq(++c%tot);
 
     }
