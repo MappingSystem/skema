@@ -10,6 +10,14 @@ editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) )
 
 var draw = {
 
+    scope : [
+        {
+           color : 'blue',
+           size : 'large',
+           type : 'mug'
+        }
+    ],
+
     'sequence' : 'sequence/js/sequence-diagram-snap-min.js',
     'flowchart': 'flowchart/flowchart-latest.js',
     'railroad' : 'railroad/railroad-diagrams.js',
@@ -17,7 +25,7 @@ var draw = {
     'scenetree': 'graphql/build.js',
 
     diagram : function() {
-
+console.log(draw.scope);
         var diagram;
         var g = $('.diagram').get(0);
         
