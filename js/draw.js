@@ -52,7 +52,7 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-                    if (Diagram.div) Diagram.div = null;
+                    if (diagram.div) diagram.div = null;
                     diagram = new go.GraphObject.make(go.Diagram, "diagram");
                     diagram.model = go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
 
