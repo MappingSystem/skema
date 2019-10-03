@@ -51,7 +51,7 @@ var draw = {
                     diagram.addTo($('.diagram').get(0));
 
                 } else if(type == 'nodelinks'){
-
+diagram = $('.diagram').get(0);
 diagram.nodeTemplate =
     $(go.Node, "Auto",
       $(go.Shape, "RoundedRectangle",
@@ -78,7 +78,7 @@ diagram.nodeTemplate =
     { from: "Delta", to: "Alpha" }
   ];
   diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
-                    diagram.makeSvg($('.diagram').get(0));
+                    diagram.makeSvg();
 
                 }
 
