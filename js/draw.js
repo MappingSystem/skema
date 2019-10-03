@@ -93,7 +93,7 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
 
    var svg = myDiagram.makeSvg({
-        scale: 0.5
+        scale: 2
       });
     svg.style.border = "1px solid black";
     $('.diagram').append(svg);
