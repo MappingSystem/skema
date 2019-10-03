@@ -59,7 +59,7 @@ var draw = {
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
 
-                    myDiagram.model = new go.GraphLinksModel(draw.input.node, draw.input.link);
+                    myDiagram.model = new go.GraphLinksModel(draw.input["node"], draw.input["link"]);
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
                     $('.diagram').append(svg);
