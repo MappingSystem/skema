@@ -58,7 +58,8 @@ var draw = {
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
 
-draw.skema = [
+draw.skema = 
+[
     { from: "Alpha", to: "Beta" },
     { from: "Alpha", to: "Gamma" },
     { from: "Beta", to: "Beta" },
