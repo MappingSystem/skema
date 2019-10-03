@@ -13,7 +13,7 @@ var draw = {
     'sequence' : 'sequence/js/sequence-diagram-snap-min.js',
     'flowchart': 'flowchart/flowchart-latest.js',
     'railroad' : 'railroad/railroad-diagrams.js',
-    'nodelinks': 'GoJS/release/go.js',
+    'nodelinks': 'nodelinks/release/go.js',
 
     diagram : function() {
 
@@ -157,7 +157,7 @@ var draw = {
 
                 case 'nodelinks':
 
-                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
+                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
                     $('svg g g g').each(function( index ) {
                         this.id = draw.pad('0' + index, 3);
