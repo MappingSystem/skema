@@ -57,9 +57,9 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
    diagram = go.GraphObject.make(go.Diagram, "editor");
 
-   diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",  // the Shape will go around the TextBlock
+   diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto", 
         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))Node.data.key
+        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
       );
 
    diagram.model = new go.GraphLinksModel(
