@@ -33,7 +33,10 @@ var draw = {
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
-        var js = '/' + draw[type] + '?t=' + $.now();console.log(draw.scope);
+        var js = '/' + draw[type] + '?t=' + $.now();
+this.scope.forEach(function(key,val) {
+   if (key==type) var jso = '/' + val + '?t=' + $.now(); 
+});console.log(jso);
 
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
@@ -188,10 +191,10 @@ var draw = {
 
             .click(function() {
 
+var index = draw.scope.findIndex(function(e) {return e.key == draw.type;}); console.log(index); console.log(draw.eq(index));
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
 
-                var index = draw.scope.indexOf(draw.type); console.log(index); console.log(draw.eq(index));
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
