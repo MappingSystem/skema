@@ -134,21 +134,6 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
                 break;
 
-                case 'nodelinks':
-
-                    $('svg g g g').each(function( index ) {
-                        this.id = draw.pad('0' + index, 3);
-                    });
-
-                    draw.elements = $('svg g g g');
-                    draw.elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    });
-
-                break;
-
                 case 'flowchart':
 
                     $(".theme").val("simple");
@@ -185,6 +170,21 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
                 break;
 
+                case 'nodelinks':
+
+                    $('svg g g g').each(function( index ) {
+                        this.id = draw.pad('0' + index, 3);
+                    });
+
+                    draw.elements = $('svg g g g');
+                    draw.elements.hover(function() {
+                        
+                        $(this).hide(100).show(100);
+
+                    });
+
+                break;
+
             }
 
             draw.elements.css({'cursor':'pointer'})
@@ -197,8 +197,8 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
             .click(function() {
 
-                draw.type = (draw.type == 'sequence')? 'nodelinks': ((draw.type == 'nodelinks')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': 'sequence'));
-                var item = (draw.type == 'sequence')? 0: ((draw.type == 'nodelinks')? 1: ((draw.type == 'flowchart')? 1: 2));
+                draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
+                var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 2));
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
@@ -250,8 +250,8 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params; console.log(draw.params);
-        draw.diagram();
+        this.params = params; console.log(this.params);
+        this.diagram();
 
     },
 
@@ -261,6 +261,12 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
         while (s.length < (size || 2)) {s = "0" + s;}
         return s;
 
-    }
+    },
 
+    eq : function(c = 0) {
+
+        var tot = this.type.length
+        return eq(++c%tot);
+
+    }
 }
