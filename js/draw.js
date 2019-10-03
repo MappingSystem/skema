@@ -26,10 +26,8 @@ var draw = {
 
     diagram : function() {
 
-draw.scope.forEach(function(item) {
-  Object.keys(item).forEach(function(key) {
-    console.log("key:" + key + "value:" + item[key]);
-  });
+draw.scope.forEach(function(key,val) {
+   console.log(key,val);
 });
 
         var diagram;
