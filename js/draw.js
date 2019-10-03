@@ -52,19 +52,8 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-diagram = $('.diagram');
-diagram.nodeTemplate =
-    $(go.Node, "Auto",
-      $(go.Shape, "RoundedRectangle",
-        // Shape.fill is bound to Node.data.color
-        new go.Binding("fill", "color")),
-      $(go.TextBlock,
-        { margin: 3 },  // some room around the text
-        // TextBlock.text is bound to Node.data.key
-        new go.Binding("text", "key"))
-    );
 
-  // create the model data that will be represented by Nodes and Links
+// create the model data that will be represented by Nodes and Links
   var nodeDataArray = [
     { key: "Alpha", color: "lightblue" },
     { key: "Beta", color: "orange" },
@@ -78,8 +67,19 @@ diagram.nodeTemplate =
     { from: "Gamma", to: "Delta" },
     { from: "Delta", to: "Alpha" }
   ];
-  diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
+diagram = $('.diagram');
 diagramclass = go.Diagram;
+diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
+diagram.nodeTemplate =
+    $(go.Node, "Auto",
+      $(go.Shape, "RoundedRectangle",
+        // Shape.fill is bound to Node.data.color
+        new go.Binding("fill", "color")),
+      $(go.TextBlock,
+        { margin: 3 },  // some room around the text
+        // TextBlock.text is bound to Node.data.key
+        new go.Binding("text", "key"))
+    );
 window.myDiagram = diagram;
 myDiagram.makeSvg();
 
