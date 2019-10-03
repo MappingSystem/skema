@@ -71,7 +71,7 @@ var draw = {
     { from: "Gamma", to: "Delta" },
     { from: "Delta", to: "Alpha" }
   ];
-console.log(draw.input); console.log(draw.input[0]); console.log(draw.input[1]);
+console.log(draw.input); console.log(draw.input[0].node); console.log(draw.input[1].link);
                     myDiagram.model = new go.GraphLinksModel(draw.input[0], draw.input[1]);
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
