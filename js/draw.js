@@ -13,6 +13,7 @@ var draw = {
     'sequence' : 'sequence/js/sequence-diagram-snap-min.js',
     'flowchart': 'flowchart/flowchart-latest.js',
     'railroad' : 'railroad/railroad-diagrams.js',
+    'nodelinks': 'GoJS/release/go.js',
 
     diagram : function() {
 
@@ -44,10 +45,40 @@ var draw = {
                     diagram = flowchart.parse(draw.skema);
                     diagram.drawSVG($('.diagram').get(0), draw.input);
 
-                } else {
+                } else if(type == 'railroad'){
 
                     diagram = eval(draw.skema).format();
                     diagram.addTo($('.diagram').get(0));
+
+                } else if(type == 'nodelinks'){
+
+diagram.nodeTemplate =
+    $(go.Node, "Auto",
+      $(go.Shape, "RoundedRectangle",
+        // Shape.fill is bound to Node.data.color
+        new go.Binding("fill", "color")),
+      $(go.TextBlock,
+        { margin: 3 },  // some room around the text
+        // TextBlock.text is bound to Node.data.key
+        new go.Binding("text", "key"))
+    );
+
+  // create the model data that will be represented by Nodes and Links
+  var nodeDataArray = [
+    { key: "Alpha", color: "lightblue" },
+    { key: "Beta", color: "orange" },
+    { key: "Gamma", color: "lightgreen" },
+    { key: "Delta", color: "pink" }
+  ];
+  var linkDataArray = [
+    { from: "Alpha", to: "Beta" },
+    { from: "Alpha", to: "Gamma" },
+    { from: "Beta", to: "Beta" },
+    { from: "Gamma", to: "Delta" },
+    { from: "Delta", to: "Alpha" }
+  ];
+  diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
+                    diagram.makeSvg($('.diagram').get(0));
 
                 }
 
@@ -103,6 +134,21 @@ var draw = {
 
                 break;
 
+                case 'nodelinks':
+
+                    $('svg g g g').each(function( index ) {
+                        this.id = draw.pad('0' + index, 3);
+                    });
+
+                    draw.elements = $('svg g g g');
+                    draw.elements.hover(function() {
+                        
+                        $(this).hide(100).show(100);
+
+                    });
+
+                break;
+
                 case 'flowchart':
 
                     $(".theme").val("simple");
@@ -129,7 +175,7 @@ var draw = {
                 case 'railroad':
 
                     $('svg rect').each(function( index ) {
-                     this.id = draw.pad('0' + index, 3);
+                        this.id = draw.pad('0' + index, 3);
                     });
 
                     draw.elements = $('svg rect');
@@ -151,8 +197,8 @@ var draw = {
 
             .click(function() {
 
-                draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': 'sequence');
-                var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: 2);
+                draw.type = (draw.type == 'sequence')? 'nodelinks': ((draw.type == 'nodelinks')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': 'sequence'));
+                var item = (draw.type == 'sequence')? 0: ((draw.type == 'nodelinks')? 1: ((draw.type == 'flowchart')? 1: 2));
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
