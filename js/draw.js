@@ -57,8 +57,7 @@ myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
     go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
     go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
   );
-draw.skema = 
-[
+myDiagram.model = new go.GraphLinksModel([
   { key: "Alpha", color: "lightblue" },
   { key: "Beta", color: "orange" },
   { key: "Gamma", color: "lightgreen" },
@@ -70,9 +69,7 @@ draw.skema =
   { from: "Beta", to: "Beta" },
   { from: "Gamma", to: "Delta" },
   { from: "Delta", to: "Alpha" }
-];
-
-myDiagram.model = new go.GraphLinksModel(draw.skema);
+]);
 var svg = myDiagram.makeSvg({scale: 2});
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 $('.diagram').append(svg);
