@@ -57,8 +57,9 @@ var draw = {
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
-                    myDiagram.model = new go.GraphLinksModel(draw.input);
+                    myDiagram.model = new go.GraphLinksModel(draw.input, draw.skema);
                     var svg = myDiagram.makeSvg({scale: 2});
+                    $('#diagram div').remove();
                     $('.diagram').append(svg);
 
                 }
