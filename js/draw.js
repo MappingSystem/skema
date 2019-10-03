@@ -51,17 +51,14 @@ var draw = {
                     diagram.addTo($('.diagram').get(0));
 
                 } else if(type == 'nodelinks'){
+
+
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
 
-   if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
-    var $ = go.GraphObject.make;  // for conciseness in defining templates
+diagramclass = go.Diagram;
 
-    window.myDiagram = $(go.Diagram, "editor",  // create a Diagram for the DIV HTML element
-                  {
-                    initialContentAlignment: go.Spot.Center,  // center the content
-                    "undoManager.isEnabled": true  // enable undo & redo
-                  });
+    window.myDiagram = $('.editor');
 
     // define a simple Node template
     myDiagram.nodeTemplate =
