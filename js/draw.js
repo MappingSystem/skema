@@ -101,6 +101,8 @@ $('.diagram').append(svg);
             $('.chetabahana-skema').height($('.editor').height() + 200);
             $('.editor-wrapper').height($('.editor').height() + 3);
             $('.editor').height($('.diagram').height() - 94);
+
+            $('.diagram canvas').hide();
             $('#loadingImg').hide();
 
             editor.clearSelection();
