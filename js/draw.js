@@ -52,34 +52,33 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-                    draw.skema =
-                    [
-                      { key: "Alpha", color: "lightblue" },
-                      { key: "Beta", color: "orange" },
-                      { key: "Gamma", color: "lightgreen" },
-                      { key: "Delta", color: "pink" }
-                    ],
-                    [
-                      { from: "Alpha", to: "Beta" },
-                      { from: "Alpha", to: "Gamma" },
-                      { from: "Beta", to: "Beta" },
-                      { from: "Gamma", to: "Delta" },
-                      { from: "Delta", to: "Alpha" }
-                    ];
 
-                    var div = document.createElement('div');
-                    diagram = go.GraphObject.make(go.Diagram, "editor");
+$('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
-                    diagram.nodeTemplate = 
-                        go.GraphObject.make(go.Node, "Auto", 
-                        go.GraphObject.make(go.TextBlock, {margin: 3}, new go.Binding("text", "key")),
-                        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color"))
-                    );
+   diagram = go.GraphObject.make(go.Diagram, "editor");
 
-                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-                    diagram.model = new go.GraphLinksModel(draw.skema);
-                    var svg = diagram.makeSvg({scale: 1});
-                    $('.diagram').append(svg);
+   diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto", 
+        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+      );
+
+   diagram.model = new go.GraphLinksModel(
+    [
+      { key: "Alpha", color: "lightblue" },
+      { key: "Beta", color: "orange" },
+      { key: "Gamma", color: "lightgreen" },
+      { key: "Delta", color: "pink" }
+    ],
+    [
+      { from: "Alpha", to: "Beta" },
+      { from: "Alpha", to: "Gamma" },
+      { from: "Beta", to: "Beta" },
+      { from: "Gamma", to: "Delta" },
+      { from: "Delta", to: "Alpha" }
+    ]);
+
+   var svg = diagram.makeSvg({scale: 2});
+   $('.diagram').append(svg);
 
                 }
 
@@ -266,7 +265,7 @@ var draw = {
 
     eq : function(c = 0) {
 
-        var tot = this.type.length;
+        var tot = this.type.length
         return eq(++c%tot);
 
     }
