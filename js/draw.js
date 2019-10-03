@@ -52,7 +52,7 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-$("<div>", {id: "myDiagram", class: "myDiagram"});
+var g = document.createElement('div'); g.id = 'myDiagram';
 var myDiagram = go.GraphObject.make(go.Diagram, "myDiagram");
 myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
     go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
