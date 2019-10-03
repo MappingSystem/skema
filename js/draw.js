@@ -55,14 +55,14 @@ var draw = {
 
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
-   var myDiagram = go.GraphObject.make(go.Diagram, "editor");
+   diagram = go.GraphObject.make(go.Diagram, "editor");
 
-   myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",  // the Shape will go around the TextBlock
+   diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",  // the Shape will go around the TextBlock
         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))Node.data.key
       );
 
-   myDiagram.model = new go.GraphLinksModel(
+   diagram.model = new go.GraphLinksModel(
     [
       { key: "Alpha", color: "lightblue" },
       { key: "Beta", color: "orange" },
@@ -77,9 +77,8 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
       { from: "Delta", to: "Alpha" }
     ]);
 
-   var svg = myDiagram.makeSvg({scale: 2});
-    $('.diagram').append(svg);
-
+   var svg = diagram.makeSvg({scale: 2});
+   $('.diagram').append(svg);
 
                 }
 
