@@ -52,30 +52,30 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
+var myDiagram = go.GraphObject.make(go.Diagram, "editor");
+myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
+    go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+    go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+  );
+draw.skema = 
+[
+  { key: "Alpha", color: "lightblue" },
+  { key: "Beta", color: "orange" },
+  { key: "Gamma", color: "lightgreen" },
+  { key: "Delta", color: "pink" }
+],
+[
+  { from: "Alpha", to: "Beta" },
+  { from: "Alpha", to: "Gamma" },
+  { from: "Beta", to: "Beta" },
+  { from: "Gamma", to: "Delta" },
+  { from: "Delta", to: "Alpha" }
+];
+
+myDiagram.model = new go.GraphLinksModel(draw.skema);
+var svg = myDiagram.makeSvg({scale: 2});
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-
-   var myDiagram = go.GraphObject.make(go.Diagram, "editor");
-   myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
-        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
-      );
-   myDiagram.model = new go.GraphLinksModel(
-    [
-      { key: "Alpha", color: "lightblue" },
-      { key: "Beta", color: "orange" },
-      { key: "Gamma", color: "lightgreen" },
-      { key: "Delta", color: "pink" }
-    ],
-    [
-      { from: "Alpha", to: "Beta" },
-      { from: "Alpha", to: "Gamma" },
-      { from: "Beta", to: "Beta" },
-      { from: "Gamma", to: "Delta" },
-      { from: "Delta", to: "Alpha" }
-    ]);
-
-   var svg = myDiagram.makeSvg({scale: 2});
-    $('.diagram').append(svg);
+$('.diagram').append(svg);
 
                 }
 
