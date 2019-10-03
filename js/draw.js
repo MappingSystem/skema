@@ -77,7 +77,7 @@ var draw = {
                     ]);
 
                     $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-                    var svg = diagram.makeSvg({scale: 2});
+                    var svg = diagram.makeSvg({scale: 0.5});
                     $('.diagram').append(svg);
 
                 }
