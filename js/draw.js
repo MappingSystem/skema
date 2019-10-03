@@ -26,7 +26,7 @@ var draw = {
 
     diagram : function() {
 
-draw.scope.forEach(function(key,val) {
+this.scope.forEach(function(key,val) {
    console.log(key,val);
 });
 
