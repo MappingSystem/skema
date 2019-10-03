@@ -59,7 +59,7 @@ var draw = {
                       );
                     myDiagram.model = new go.GraphLinksModel(draw.input);
                     var svg = myDiagram.makeSvg({scale: 2});
-                    $('.diagram').get(0).append(svg);
+                    $('.diagram').append(svg);
 
                 }
 
