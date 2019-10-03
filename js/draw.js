@@ -63,6 +63,7 @@ var draw = {
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
                     $('.diagram').append(svg);
+                    myDiagram.div = null;
 
                 }
 
