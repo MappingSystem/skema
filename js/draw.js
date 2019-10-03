@@ -53,35 +53,53 @@ var draw = {
                 } else if(type == 'nodelinks'){
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
-// create the model data that will be represented by Nodes and Links
-  var nodeDataArray = [
-    { key: "Alpha", color: "lightblue" },
-    { key: "Beta", color: "orange" },
-    { key: "Gamma", color: "lightgreen" },
-    { key: "Delta", color: "pink" }
-  ];
-  var linkDataArray = [
-    { from: "Alpha", to: "Beta" },
-    { from: "Alpha", to: "Gamma" },
-    { from: "Beta", to: "Beta" },
-    { from: "Gamma", to: "Delta" },
-    { from: "Delta", to: "Alpha" }
-  ];
-diagram = $('.diagram');
-diagramclass = go.Diagram;
-diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
-diagram.nodeTemplate =
-    $(go.Node, "Auto",
-      $(go.Shape, "RoundedRectangle",
-        // Shape.fill is bound to Node.data.color
-        new go.Binding("fill", "color")),
-      $(go.TextBlock,
-        { margin: 3 },  // some room around the text
-        // TextBlock.text is bound to Node.data.key
-        new go.Binding("text", "key"))
-    );
-window.myDiagram = diagram;
-myDiagram.makeSvg();
+
+   if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+    var $ = go.GraphObject.make;  // for conciseness in defining templates
+
+    window.myDiagram = $(go.Diagram, "editor",  // create a Diagram for the DIV HTML element
+                  {
+                    initialContentAlignment: go.Spot.Center,  // center the content
+                    "undoManager.isEnabled": true  // enable undo & redo
+                  });
+
+    // define a simple Node template
+    myDiagram.nodeTemplate =
+      $(go.Node, "Auto",  // the Shape will go around the TextBlock
+        $(go.Shape, "RoundedRectangle",
+          // Shape.fill is bound to Node.data.color
+          new go.Binding("fill", "color")),
+        $(go.TextBlock,
+          { margin: 3 },  // some room around the text
+          // TextBlock.text is bound to Node.data.key
+          new go.Binding("text", "key"))
+      );
+
+    // but use the default Link template, by not setting Diagram.linkTemplate
+
+    // create the model data that will be represented by Nodes and Links
+    myDiagram.model = new go.GraphLinksModel(
+    [
+      { key: "Alpha", color: "lightblue" },
+      { key: "Beta", color: "orange" },
+      { key: "Gamma", color: "lightgreen" },
+      { key: "Delta", color: "pink" }
+    ],
+    [
+      { from: "Alpha", to: "Beta" },
+      { from: "Alpha", to: "Gamma" },
+      { from: "Beta", to: "Beta" },
+      { from: "Gamma", to: "Delta" },
+      { from: "Delta", to: "Alpha" }
+    ]);
+
+
+   var svg = myDiagram.makeSvg({
+        scale: 0.5
+      });
+    svg.style.border = "1px solid black";
+    $('.diagram').appendChild(svg);
+
 
                 }
 
