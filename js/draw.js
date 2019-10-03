@@ -37,17 +37,17 @@ var draw = {
 
                 if(type == 'sequence') {
 
-                    diagram = Diagram.parse(draw.skema);
+                    diagram = Diagram.parse(editor.getValue());
                     diagram.drawSVG($('.diagram').get(0), draw.input);
 
                 } else if(type == 'flowchart'){
 
-                    diagram = flowchart.parse(draw.skema);
+                    diagram = flowchart.parse(editor.getValue());
                     diagram.drawSVG($('.diagram').get(0), draw.input);
 
                 } else if(type == 'railroad'){
 
-                    diagram = eval(draw.skema).format();
+                    diagram = eval(editor.getValue().format();
                     diagram.addTo($('.diagram').get(0));
 
                 } else if(type == 'nodelinks'){
@@ -57,7 +57,7 @@ var draw = {
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
-                    myDiagram.model = new go.GraphLinksModel(draw.input, draw.skema);
+                    myDiagram.model = new go.GraphLinksModel(draw.input, editor.getValue());
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
                     $('.diagram').append(svg);
