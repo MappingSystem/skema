@@ -265,7 +265,7 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
     eq : function(c = 0) {
 
-        var tot = this.type.length
+        var tot = this.type.length;
         return eq(++c%tot);
 
     }
