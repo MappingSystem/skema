@@ -52,33 +52,32 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
+                    diagram = go.GraphObject.make(go.Diagram, "editor");
 
-$('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
+                    diagram.nodeTemplate = go.GraphObject.make(
+                        go.Node, "Auto", 
+                        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+                        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+                    );
 
-   diagram = go.GraphObject.make(go.Diagram, "editor");
+                    diagram.model = new go.GraphLinksModel(
+                    [
+                      { key: "Alpha", color: "lightblue" },
+                      { key: "Beta", color: "orange" },
+                      { key: "Gamma", color: "lightgreen" },
+                      { key: "Delta", color: "pink" }
+                    ],
+                    [
+                      { from: "Alpha", to: "Beta" },
+                      { from: "Alpha", to: "Gamma" },
+                      { from: "Beta", to: "Beta" },
+                      { from: "Gamma", to: "Delta" },
+                      { from: "Delta", to: "Alpha" }
+                    ]);
 
-   diagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto", 
-        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
-      );
-
-   diagram.model = new go.GraphLinksModel(
-    [
-      { key: "Alpha", color: "lightblue" },
-      { key: "Beta", color: "orange" },
-      { key: "Gamma", color: "lightgreen" },
-      { key: "Delta", color: "pink" }
-    ],
-    [
-      { from: "Alpha", to: "Beta" },
-      { from: "Alpha", to: "Gamma" },
-      { from: "Beta", to: "Beta" },
-      { from: "Gamma", to: "Delta" },
-      { from: "Delta", to: "Alpha" }
-    ]);
-
-   var svg = diagram.makeSvg({scale: 2});
-   $('.diagram').append(svg);
+                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
+                    var svg = diagram.makeSvg({scale: 2});
+                    $('.diagram').append(svg);
 
                 }
 
