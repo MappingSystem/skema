@@ -68,7 +68,7 @@ var draw = {
                     ];
 
                     var div = document.createElement('div');
-                    diagram = go.GraphObject.make(go.Diagram, div);
+                    diagram = go.GraphObject.make(go.Diagram, "editor");
 
                     diagram.nodeTemplate = 
                         go.GraphObject.make(go.Node, "Auto", 
