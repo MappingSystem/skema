@@ -33,7 +33,7 @@ var draw = {
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
-        var js = '/' + draw[type] + '?t=' + $.now();console.log(this.scope[type]);
+        var js = '/' + draw[type] + '?t=' + $.now();console.log(draw.scope[type]);
 
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
