@@ -58,7 +58,7 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
 diagramclass = go.Diagram;
 
-    window.myDiagram = $('.editor');
+    var myDiagram = $('.editor');
 
     // define a simple Node template
     myDiagram.nodeTemplate =
