@@ -52,16 +52,7 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-                    var div = document.createElement('div');
-                    diagram = go.GraphObject.make(go.Diagram, div);
-
-                    diagram.nodeTemplate = 
-                        go.GraphObject.make(go.Node, "Auto", 
-                        go.GraphObject.make(go.TextBlock, {margin: 3}, new go.Binding("text", "key")),
-                        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color"))
-                    );
-
-                    diagram.model = new go.GraphLinksModel(
+                    draw.skema =
                     [
                       { key: "Alpha", color: "lightblue" },
                       { key: "Beta", color: "orange" },
@@ -74,7 +65,17 @@ var draw = {
                       { from: "Beta", to: "Beta" },
                       { from: "Gamma", to: "Delta" },
                       { from: "Delta", to: "Alpha" }
-                    ]);
+                    ];
+
+                    var div = document.createElement('div');
+                    diagram = go.GraphObject.make(go.Diagram, div);
+                    diagram.model = new go.GraphLinksModel(draw.skema);
+
+                    diagram.nodeTemplate = 
+                        go.GraphObject.make(go.Node, "Auto", 
+                        go.GraphObject.make(go.TextBlock, {margin: 3}, new go.Binding("text", "key")),
+                        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color"))
+                    );
 
                     $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
                     var svg = diagram.makeSvg({scale: 0.5});
