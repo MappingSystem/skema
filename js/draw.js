@@ -57,22 +57,12 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
    var myDiagram = go.GraphObject.make(go.Diagram, "editor");
 
-    // define a simple Node template
-    myDiagram.nodeTemplate =
-      go.GraphObject.make(go.Node, "Auto",  // the Shape will go around the TextBlock
-        go.GraphObject.make(go.Shape, "RoundedRectangle",
-          // Shape.fill is bound to Node.data.color
-          new go.Binding("fill", "color")),
-        go.GraphObject.make(go.TextBlock,
-          { margin: 3 },  // some room around the text
-          // TextBlock.text is bound to Node.data.key
-          new go.Binding("text", "key"))
+   myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",  // the Shape will go around the TextBlock
+        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))Node.data.key
       );
 
-    // but use the default Link template, by not setting Diagram.linkTemplate
-
-    // create the model data that will be represented by Nodes and Links
-    myDiagram.model = new go.GraphLinksModel(
+   myDiagram.model = new go.GraphLinksModel(
     [
       { key: "Alpha", color: "lightblue" },
       { key: "Beta", color: "orange" },
@@ -86,7 +76,6 @@ $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
       { from: "Gamma", to: "Delta" },
       { from: "Delta", to: "Alpha" }
     ]);
-
 
    var svg = myDiagram.makeSvg({scale: 2});
     $('.diagram').append(svg);
