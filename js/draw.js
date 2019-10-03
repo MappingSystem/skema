@@ -55,11 +55,7 @@ var draw = {
 
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
-   var myDiagram = go.GraphObject.make(go.Diagram, "editor",  // create a Diagram for the DIV HTML element
-                  {
-                    initialContentAlignment: go.Spot.Center,  // center the content
-                    "undoManager.isEnabled": true  // enable undo & redo
-                  });
+   var myDiagram = go.GraphObject.make(go.Diagram, "editor");
 
     // define a simple Node template
     myDiagram.nodeTemplate =
