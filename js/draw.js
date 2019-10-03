@@ -53,26 +53,13 @@ var draw = {
                 } else if(type == 'nodelinks'){
 
                     var myDiagram = go.GraphObject.make(go.Diagram, "diagram");
+                    myDiagram.model = new go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
 
                     myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
                         go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
                         go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
                       );
- var nodeDataArray = [
-    { key: "Alpha", color: "lightblue" },
-    { key: "Beta", color: "orange" },
-    { key: "Gamma", color: "lightgreen" },
-    { key: "Delta", color: "pink" }
-  ];
-  var linkDataArray = [
-    { from: "Alpha", to: "Beta" },
-    { from: "Alpha", to: "Gamma" },
-    { from: "Beta", to: "Beta" },
-    { from: "Gamma", to: "Delta" },
-    { from: "Delta", to: "Alpha" }
-  ];
-console.log(draw.input); console.log(draw.input[0].node); console.log(draw.input[1].link);
-                    myDiagram.model = new go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
+
                     var svg = myDiagram.makeSvg({scale: 2});
                     $('#diagram div').remove();
                     $('.diagram').append(svg);
