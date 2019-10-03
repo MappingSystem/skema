@@ -51,6 +51,7 @@ var draw = {
                     diagram.addTo($('.diagram').get(0));
 
                 } else if(type == 'nodelinks'){
+$('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 diagram = $('.diagram').get(0);
 diagram.nodeTemplate =
     $(go.Node, "Auto",
