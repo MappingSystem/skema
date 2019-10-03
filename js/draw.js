@@ -52,7 +52,7 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-diagram = $('.diagram').get(0);
+diagram = $('.diagram');
 diagram.nodeTemplate =
     $(go.Node, "Auto",
       $(go.Shape, "RoundedRectangle",
@@ -79,9 +79,8 @@ diagram.nodeTemplate =
     { from: "Delta", to: "Alpha" }
   ];
   diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
-window.myDiagram = diagram;
-  if (diagramclass === undefined) diagramclass = go.Diagram;
-myDiagram.makeSvg();
+diagramclass = go.Diagram;
+diagram.makeSvg();
 
                 }
 
