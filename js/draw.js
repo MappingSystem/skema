@@ -18,18 +18,20 @@ var draw = {
     diagram : function() {
 
         var diagram;
+        var g = $('.diagram').get(0);
+        
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
         var js = '/' + draw[type] + '?t=' + $.now();
 
+        var skema = (draw.skema)? draw.skema: editor.getValue();
+        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
+
         $('#type').text(type);
         $('#type')[0].href = '/' + type;
         $('.diagram').html(''); $("#loadingImg").show();
-
-        var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -38,17 +40,17 @@ var draw = {
                 if(type == 'sequence') {
 
                     diagram = Diagram.parse(skema);
-                    diagram.drawSVG($('.diagram').get(0), input);
+                    diagram.drawSVG(g, input);
 
                 } else if(type == 'flowchart'){
 
                     diagram = flowchart.parse(skema);
-                    diagram.drawSVG($('.diagram').get(0), input);
+                    diagram.drawSVG(g, input);
 
                 } else if(type == 'railroad'){
 
                     diagram = eval(skema).format();
-                    diagram.addTo($('.diagram').get(0));
+                    diagram.addTo(g);
 
                 } else if(type == 'nodelinks'){
 
@@ -81,6 +83,7 @@ var draw = {
             $('.editor').height($('.diagram').height() - 94);
 
             $('#diagram canvas').remove();
+            $('#diagram div').remove();
             $('#loadingImg').hide();
 
             editor.clearSelection();
@@ -212,17 +215,17 @@ var draw = {
 
     makeSvg : function(input, skema) {
 
-        var myDiagram = go.GraphObject.make(go.Diagram, "diagram");
+        var $ = go.GraphObject.make;
+        var myDiagram = $(go.Diagram, "diagram");
         myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
 
-        myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
-            go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-            go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
-          );
+        myDiagram.nodeTemplate = $(go.Node, "Auto",
+            $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+            $(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+        );
 
         var svg = myDiagram.makeSvg({scale: 2});
-        if (myDiagram.div) myDiagram.div = null;
-        $('#diagram div').remove();
+        myDiagram.div = null;
         return svg;
 
     }, 
