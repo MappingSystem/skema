@@ -52,7 +52,7 @@ var draw = {
 
                 } else if(type == 'nodelinks'){
 
-                    div = document.createElement('div');
+                    var div = document.createElement('div');
                     diagram = go.GraphObject.make(go.Diagram, div);
 
                     diagram.nodeTemplate = 
