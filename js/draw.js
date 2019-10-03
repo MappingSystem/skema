@@ -59,8 +59,7 @@ var draw = {
                       );
                     myDiagram.model = new go.GraphLinksModel(draw.input);
                     var svg = myDiagram.makeSvg({scale: 2});
-                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
-                    $('#diagram div').append(svg);
+                    $('.diagram').get(0).append(svg);
 
                 }
 
@@ -88,7 +87,6 @@ var draw = {
             $('.editor').height($('.diagram').height() - 94);
 
             $('#diagram canvas').remove();
-            $('#diagram div').remove();
             $('#loadingImg').hide();
 
             editor.clearSelection();
@@ -156,6 +154,8 @@ var draw = {
                 break;
 
                 case 'nodelinks':
+
+                    $('#type')[0].href = 'GoJS/api/symbols/Diagram.html#makeSvg';
 
                     $('svg g g g').each(function( index ) {
                         this.id = draw.pad('0' + index, 3);
