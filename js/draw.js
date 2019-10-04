@@ -189,7 +189,7 @@ var draw = {
 
             .click(function() {
 
-var index = _.findIndex(kinds, function(e) { return e.key == draw.type })
+var index = _.findIndex(draw.kind[0], function(e) { return e.key == draw.type })
 console.log(index); console.log(draw.eq(index));
 
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
