@@ -189,9 +189,14 @@ var draw = {
 
             .click(function() {
 
-                var kinds = draw.kind[0];
-                var index = _.findIndex(kinds, function(e) { return e.key == draw.type })
-                console.log(index); console.log(draw.eq(index, kinds));
+                var kinds = draw.kind[0]; var tot = kinds.length;
+                var index = _.findIndex(kinds, function(e) { return e.key == draw.type;})
+
+                var item = (++index%tot == 0)? 0 :index;
+                console.log(index); console.log(item);
+                _.each(kinds, function(eachItem, index){
+                    console.log("item: "+ eachItem + "at index " + index);
+                }
 
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
