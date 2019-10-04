@@ -193,8 +193,7 @@ var draw = {
                 var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
 
                 var itemIndex = (drawIndex + 1 == index)? 0: drawIndex + 1;
-                var index = 0; for (key in kinds) {if(index == itemIndex) draw.type = key; index++;}
-                console.log(_.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;}));
+                draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;}));
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
