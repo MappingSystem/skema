@@ -28,19 +28,14 @@ var draw = {
 
     diagram : function() {
 
+        var js;
         var diagram;
         var kinds = this.kind[0];
         var g = $('.diagram').get(0);
         
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
-
         var type = (!draw.type)? 'sequence': draw.type;
-        var js = '/' + draw[type] + '?t=' + $.now();
-
-    _.each(kinds, function(value, key){
-        console.log(value);
-    });
 
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
@@ -49,6 +44,11 @@ var draw = {
         $('#type')[0].href = '/' + type;
         $('.diagram').html(''); $("#loadingImg").show();
 
+        _.each(kinds, function(value, key){
+            if (key == type) js = '/' + value + '?t=' + $.now();console.log(js);
+        });
+
+        js = '/' + draw[type] + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             try {
