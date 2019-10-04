@@ -46,10 +46,9 @@ var draw = {
         $('.diagram').html(''); $("#loadingImg").show();
 
         _.each(kinds, function(value, key){
-            if (key == type) js = '/' + value + '?t=' + $.now();console.log(js);
+            if (key == type) js = '/' + value + '?t=' + $.now();
         });
 
-        js = '/' + draw[type] + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             try {
