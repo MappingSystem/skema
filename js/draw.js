@@ -189,10 +189,10 @@ var draw = {
 
             .click(function() {
 
-                var kinds = draw.kind[0]; var tot = kinds.length;
+                var kinds = draw.kind[0];
                 var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
 
-                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1;
+                var item = (drawIndex + 1 == index)? 0: drawIndex + 1; console.log(index);
                 var index = 0; for (key in kinds) {if(index == item) draw.type = key; index++;}
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
