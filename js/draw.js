@@ -37,7 +37,7 @@ var draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var js = '/' + draw[type] + '?t=' + $.now();
 
-this.kind.forEach(function(key,val) {
+this.kind[0].forEach(function(key,val) {
    console.log(key); console.log(val); 
    if (key==type) var jso = '/' + val + '?t=' + $.now(); 
 });
