@@ -191,11 +191,10 @@ var draw = {
 
                 var kinds = draw.kind[0];
                 var index = _.findIndex(kinds, function(e) { return e.key == draw.type })
-                console.log(index); console.log(draw.eq(index));
+                console.log(index); console.log(draw.eq(index, kinds));
 
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
-
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
@@ -277,9 +276,9 @@ var draw = {
 
     },
 
-    eq : function(c = 0) {
+    eq : function(c = 0, kinds) {
 
-        var tot = this.scope.length;
+        var tot = kinds.length;
         return (++c%tot == 0)? 0 :c;
 
     }
