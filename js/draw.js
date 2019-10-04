@@ -194,7 +194,7 @@ var draw = {
 
                 var itemIndex = (drawIndex + 1 == index)? 0: drawIndex + 1;
                 var index = 0; for (key in kinds) {if(index == itemIndex) draw.type = key; index++;}
-console.log(_.findKey(kinds, function(item) { return kinds.indexOf(item) == itemIndex; }));
+console.log(_.findKey(kinds, function(item) { return _.indexOf(kinds, item) == itemIndex; }));
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
                 $("#json").attr("href", jsonfile);
