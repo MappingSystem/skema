@@ -242,7 +242,7 @@ var draw = {
         );
 
         var svg = myDiagram.makeSvg({scale: 2});
-        //myDiagram.div = null;
+        myDiagram.div = null;
         return svg;
 
     }, 
