@@ -233,7 +233,7 @@ var draw = {
     makeSvg : function(input, skema) {
 
         var $ = go.GraphObject.make;
-        var myDiagram = $(go.Diagram, "graphiql");
+        var myDiagram = $(go.Diagram, "viewport");
         myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
 
         myDiagram.nodeTemplate = $(go.Node, "Auto",
