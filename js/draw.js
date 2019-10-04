@@ -30,13 +30,14 @@ var draw = {
 
         var js;
         var diagram;
+
         var kinds = this.kind[0];
         var g = $('.diagram').get(0);
         
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
-        var type = (!draw.type)? 'sequence': draw.type;
 
+        var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
