@@ -192,9 +192,9 @@ var draw = {
                 var kinds = draw.kind[0]; var tot = kinds.length;
                 var index = _.findIndex(kinds, function(e) {return e.key == draw.type;})
 
-                var item = (++index%tot == 0)? 0: index;
+                var item = (++index%tot == 0)? 0: index; console.log(index); console.log(item);
                 var index = 0; for (key in kinds){if(index == item) draw.type = key; index++;}
-                console.log(index); console.log(item); console.log(draw.type);
+                console.log(draw.type);
 
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
