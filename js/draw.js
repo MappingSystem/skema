@@ -277,12 +277,5 @@ var draw = {
         while (s.length < (size || 2)) {s = "0" + s;}
         return s;
 
-    },
-
-    eq : function(c = 0, kinds) {
-
-        var tot = kinds.length;
-        return (++c%tot == 0)? 0 :c;
-
     }
 }
