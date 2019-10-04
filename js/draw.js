@@ -29,6 +29,7 @@ var draw = {
     diagram : function() {
 
         var diagram;
+        var kinds = this.kind[0];
         var g = $('.diagram').get(0);
         
         var select = $(".theme").val();
@@ -37,10 +38,9 @@ var draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var js = '/' + draw[type] + '?t=' + $.now();
 
-this.kind[0].forEach(function(val, key) {
-   console.log(key); console.log(val);
-   if (key==type) var jso = '/' + val + '?t=' + $.now(); 
-});
+    _.each(kinds, function(value, key){
+        console.log(value);
+    });
 
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
