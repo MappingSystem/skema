@@ -69,8 +69,8 @@ var draw = {
 
                 } else if(type == 'scenetree'){
 
-                    diagram = draw.makeSvg(input, skema);
-                    g.prepend(diagram);
+                    //diagram = draw.makeSvg(input, skema);
+                    //g.prepend(diagram);
 
                 }
 
