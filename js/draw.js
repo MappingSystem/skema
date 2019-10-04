@@ -10,26 +10,38 @@ editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) )
 
 var draw = {
 
-    'sequence' : 'sequence/js/sequence-diagram-snap-min.js',
-    'flowchart': 'flowchart/flowchart-latest.js',
-    'railroad' : 'railroad/railroad-diagrams.js',
-    'nodelinks': 'nodelinks/release/go.js',
+    kind : [
+        { 
+            'sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
+            'flowchart' : 'flowchart/flowchart-latest.js',
+            'railroad'  : 'railroad/railroad-diagrams.js',
+            'nodelinks' : 'nodelinks/release/go.js',
+            'scenetree' : 'graphql/build.js'
+        }
+    ],
 
     diagram : function() {
 
+        var js;
         var diagram;
+
+        var kinds = this.kind[0];
+        var g = $('.diagram').get(0);
+        
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
-        var js = '/' + draw[type] + '?t=' + $.now();
+        var skema = (draw.skema)? draw.skema: editor.getValue();
+        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
         $('#type').text(type);
         $('#type')[0].href = '/' + type;
         $('.diagram').html(''); $("#loadingImg").show();
 
-        if (!draw.skema) draw.skema = editor.getValue();
-        if (type=='sequence') draw.input = {theme: select, "font-size": font_size};
+        _.each(kinds, function(value, key){
+            if (key == type) js = '/' + value + '?t=' + $.now();
+        });
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -37,31 +49,23 @@ var draw = {
 
                 if(type == 'sequence') {
 
-                    diagram = Diagram.parse(draw.skema);
-                    diagram.drawSVG($('.diagram').get(0), draw.input);
+                    diagram = Diagram.parse(skema);
+                    diagram.drawSVG(g, input);
 
                 } else if(type == 'flowchart'){
 
-                    diagram = flowchart.parse(draw.skema);
-                    diagram.drawSVG($('.diagram').get(0), draw.input);
+                    diagram = flowchart.parse(skema);
+                    diagram.drawSVG(g, input);
 
                 } else if(type == 'railroad'){
 
-                    diagram = eval(draw.skema).format();
-                    diagram.addTo($('.diagram').get(0));
+                    diagram = eval(skema).format();
+                    diagram.addTo(g);
 
                 } else if(type == 'nodelinks'){
 
-                    var myDiagram = go.GraphObject.make(go.Diagram, "diagram");
-                    myDiagram.model = new go.GraphLinksModel(draw.input[0].node, draw.input[1].link);
-
-                    myDiagram.nodeTemplate = go.GraphObject.make(go.Node, "Auto",
-                        go.GraphObject.make(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-                        go.GraphObject.make(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
-                      );
-
-                    var svg = myDiagram.makeSvg({scale: 2}); myDiagram.div = null;
-                    $('#diagram div').remove(); $('.diagram').append(svg);
+                    diagram = draw.makeSvg(input, skema);
+                    g.prepend(diagram);
 
                 }
 
@@ -89,6 +93,7 @@ var draw = {
             $('.editor').height($('.diagram').height() - 94);
 
             $('#diagram canvas').remove();
+            $('#diagram div').remove();
             $('#loadingImg').hide();
 
             editor.clearSelection();
@@ -184,8 +189,11 @@ var draw = {
 
             .click(function() {
 
-                draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
-                var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
+                var kinds = draw.kind[0];
+                var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
+
+                var item = (drawIndex + 1 == index)? 0: drawIndex + 1;
+                var index = 0; for (key in kinds) {if(index == item) draw.type = key; index++;}
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
@@ -218,6 +226,23 @@ var draw = {
 
     },
 
+    makeSvg : function(input, skema) {
+
+        var $ = go.GraphObject.make;
+        var myDiagram = $(go.Diagram, "diagram");
+        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
+
+        myDiagram.nodeTemplate = $(go.Node, "Auto",
+            $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+            $(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+        );
+
+        var svg = myDiagram.makeSvg({scale: 2});
+        myDiagram.div = null;
+        return svg;
+
+    }, 
+
     encode : function(data) {
 
         return data.replace(/&apos;/g, "'")
@@ -247,13 +272,6 @@ var draw = {
         var s = String(data);
         while (s.length < (size || 2)) {s = "0" + s;}
         return s;
-
-    },
-
-    eq : function(c = 0) {
-
-        var tot = this.type.length;
-        return eq(++c%tot);
 
     }
 }
