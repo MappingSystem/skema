@@ -192,7 +192,7 @@ var draw = {
                 var kinds = draw.kind[0]; var tot = kinds.length;
                 var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
 
-                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1;console.log(tot);
+                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1;
                 var index = 0; for (key in kinds) {if(index == item) draw.type = key; index++;}
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
