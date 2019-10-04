@@ -96,8 +96,8 @@ var draw = {
             $('.editor-wrapper').height($('.editor').height() + 3);
             $('.editor').height($('.diagram').height() - 94);
 
-            $('.diagram canvas').html('');
-            $('.diagram div').remove();
+            //$('.diagram canvas').html('');
+            //$('.diagram div').remove();
             $('.loadingImg').hide();
 
             editor.clearSelection();
@@ -242,7 +242,7 @@ var draw = {
         );
 
         var svg = myDiagram.makeSvg({scale: 2});
-        myDiagram.div = null;
+        //myDiagram.div = null;
         return svg;
 
     }, 
