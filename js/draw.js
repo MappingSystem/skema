@@ -35,9 +35,8 @@ var draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        $('#type').text(type);
-        $('#type')[0].href = '/' + type;
-        $('.diagram').html(''); $("#loadingImg").show();
+        $('.diagram').html(''); $(".loadingImg").show();
+        $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){
             if (key == type) js = '/' + value + '?t=' + $.now();
@@ -97,9 +96,9 @@ var draw = {
             $('.editor-wrapper').height($('.editor').height() + 3);
             $('.editor').height($('.diagram').height() - 94);
 
-            $('#diagram canvas').remove();
-            $('#diagram div').remove();
-            $('#loadingImg').hide();
+            $('.diagram canvas').html('');
+            $('.diagram div').remove();
+            $('.loadingImg').hide();
 
             editor.clearSelection();
             editor.gotoLine(1, 1);
