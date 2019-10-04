@@ -16,7 +16,7 @@ var draw = {
             'flowchart' : 'flowchart/flowchart-latest.js',
             'railroad'  : 'railroad/railroad-diagrams.js',
             'nodelinks' : 'nodelinks/release/go.js',
-            'scenetree' : 'graphql/build.js'
+            'scenetree' : 'scenetree/build.js'
         }
     ],
 
