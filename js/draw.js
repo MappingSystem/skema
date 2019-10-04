@@ -15,8 +15,8 @@ var draw = {
             'sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
             'flowchart' : 'flowchart/flowchart-latest.js',
             'railroad'  : 'railroad/railroad-diagrams.js',
-            'nodelinks' : 'nodelinks/release/go.js',
-            'scenetree' : 'graphql/build.js'
+            'nodelinks' : 'nodelinks/release/go.js'
+            //'scenetree' : 'graphql/build.js',
         }
     ],
 
