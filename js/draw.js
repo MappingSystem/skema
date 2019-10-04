@@ -67,6 +67,11 @@ var draw = {
                     diagram = draw.makeSvg(input, skema);
                     g.prepend(diagram);
 
+                } else if(type == 'scenetree'){
+
+                    diagram = draw.makeSvg(input, skema);
+                    g.prepend(diagram);
+
                 }
 
             } finally {
@@ -229,7 +234,7 @@ var draw = {
     makeSvg : function(input, skema) {
 
         var $ = go.GraphObject.make;
-        var myDiagram = $(go.Diagram, "diagram");
+        var myDiagram = $(go.Diagram, "graphiql");
         myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
 
         myDiagram.nodeTemplate = $(go.Node, "Auto",
