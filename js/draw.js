@@ -190,14 +190,10 @@ var draw = {
             .click(function() {
 
                 var kinds = draw.kind[0]; var tot = kinds.length;
-                var index = 0; for (key in kinds){if(key == draw.type) drawIndex = index; index++;}
+                var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
 
-                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1; console.log(drawIndex); console.log(item);
-                var index = 0; for (key in kinds){if(index == item) drawtype = key; index++;}
-                console.log(drawtype);
-
-                draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
-                var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
+                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1;
+                var index = 0; for (key in kinds) {if(index == item) draw.type = key; index++;}
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
