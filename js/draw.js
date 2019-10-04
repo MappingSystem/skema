@@ -20,12 +20,6 @@ var draw = {
         }
     ],
 
-    'sequence' : 'sequence/js/sequence-diagram-snap-min.js',
-    'flowchart': 'flowchart/flowchart-latest.js',
-    'railroad' : 'railroad/railroad-diagrams.js',
-    'nodelinks': 'nodelinks/release/go.js',
-    'scenetree': 'graphql/build.js',
-
     diagram : function() {
 
         var js;
@@ -195,7 +189,9 @@ var draw = {
 
             .click(function() {
 
-var index = draw.kind[0].findIndex(function(e) {return e.key == draw.type;}); console.log(index); console.log(draw.eq(index));
+var index = _.findIndex(kinds, function(e) { return e.key == draw.type })
+console.log(index); console.log(draw.eq(index));
+
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
 
