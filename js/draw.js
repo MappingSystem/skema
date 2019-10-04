@@ -200,7 +200,7 @@ var draw = {
                 $("#json").attr("href", jsonfile);
                 
                 $.getJSON(jsonfile).done(function(result){
-
+console.log(item);
                     var obj = result.items[4].items[item];
                     draw.input = obj.input;
                     draw.skema = draw.encode(obj.query);
