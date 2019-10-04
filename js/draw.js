@@ -188,9 +188,10 @@ var draw = {
             })
 
             .click(function() {
-var kinds = draw.kind[0];
-var index = _.findIndex(kinds, function(e) { return e.key == draw.type })
-console.log(index); console.log(draw.eq(index));
+
+                var kinds = draw.kind[0];
+                var index = _.findIndex(kinds, function(e) { return e.key == draw.type })
+                console.log(index); console.log(draw.eq(index));
 
                 draw.type = (draw.type == 'sequence')? 'flowchart': ((draw.type == 'flowchart')? 'railroad': ((draw.type == 'railroad')? 'nodelinks': 'sequence'));
                 var item = (draw.type == 'sequence')? 0: ((draw.type == 'flowchart')? 1: ((draw.type == 'railroad')? 2: 3));
