@@ -10,12 +10,14 @@ editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) )
 
 var draw = {
 
-    scope : [
-        { 'sequence'  : 'sequence/js/sequence-diagram-snap-min.js' },
-        { 'flowchart' : 'flowchart/flowchart-latest.js' },
-        { 'railroad'  : 'railroad/railroad-diagrams.js' },
-        { 'nodelinks' : 'nodelinks/release/go.js' },
-        { 'scenetree' : 'graphql/build.js' }
+    kind : [
+        { 
+            'sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
+            'flowchart' : 'flowchart/flowchart-latest.js',
+            'railroad'  : 'railroad/railroad-diagrams.js',
+            'nodelinks' : 'nodelinks/release/go.js',
+            'scenetree' : 'graphql/build.js'
+        }
     ],
 
     'sequence' : 'sequence/js/sequence-diagram-snap-min.js',
@@ -35,7 +37,7 @@ var draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var js = '/' + draw[type] + '?t=' + $.now();
 
-this.scope.forEach(function(key,val) {
+this.kind.forEach(function(key,val) {
    console.log(key); console.log(val); 
    if (key==type) var jso = '/' + val + '?t=' + $.now(); 
 });
