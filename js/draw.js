@@ -192,7 +192,7 @@ var draw = {
                 var kinds = draw.kind[0]; var tot = kinds.length;
                 var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
 
-                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1;
+                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1;console.log(item);
                 var index = 0; for (key in kinds) {if(index == item) draw.type = key; index++;}
 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
@@ -200,7 +200,7 @@ var draw = {
                 $("#json").attr("href", jsonfile);
                 
                 $.getJSON(jsonfile).done(function(result){
-console.log(item);
+
                     var obj = result.items[4].items[item];
                     draw.input = obj.input;
                     draw.skema = draw.encode(obj.query);
