@@ -192,7 +192,7 @@ var draw = {
                 var kinds = draw.kind[0]; var tot = kinds.length;
                 var index = _.findIndex(kinds, function(e) {return e.key == draw.type;})
 
-                var item = (++index%tot == 0)? 0: index + 1; console.log(index); console.log(item);
+                var item = (index + 1 == tot)? 0: index + 1; console.log(index); console.log(item);
                 var index = 0; for (key in kinds){if(index == item) drawype = key; index++;}
                 console.log(drawtype);
 
