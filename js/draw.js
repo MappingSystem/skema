@@ -190,9 +190,9 @@ var draw = {
             .click(function() {
 
                 var kinds = draw.kind[0]; var tot = kinds.length;
-                var index = _.findIndex(kinds, function(e) {return e.key == draw.type;})
+                var index = 0; for (key in kinds){if(key == draw.type) drawIndex = index; index++;}
 
-                var item = (index + 1 == tot)? 0: index + 1; console.log(index); console.log(item);
+                var item = (drawIndex + 1 == tot)? 0: drawIndex + 1; console.log(drawIndex); console.log(item);
                 var index = 0; for (key in kinds){if(index == item) drawtype = key; index++;}
                 console.log(drawtype);
 
