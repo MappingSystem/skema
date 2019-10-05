@@ -152,13 +152,13 @@ var draw = {
                         this.id = draw.pad(index + 1, 3);
                     });
 
-                    $('svg rect').css({'fill-opacity':'0.3'})
+                    draw.elements = $('svg rect').css({'fill-opacity':'0.3'})
                        .mouseenter(function(){$(this).css('fill', 'cyan')})
                        .mouseout(function(){$(this).css('fill','')});
 
                     var el1 = $('svg path').first(); el1.attr("id", "000");
                     var el2 = $('svg path').last(); el2.attr("id", "999");
-                    draw.elements = $('svg rect').add(el1).add(el2);
+                    draw.elements = draw.elements.add(el1).add(el2);
                     
                 break;
 
@@ -223,7 +223,8 @@ var draw = {
                 var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
                 draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
-                if(itemIndex == index - 1) $(".theme").val("simple");
+                if(itemIndex == index - 1) {$(".theme").val("simple"); $('.editor').html('');}
+ 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
                 $("#json").attr("href", jsonfile);
