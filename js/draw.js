@@ -115,7 +115,7 @@ var draw = {
 
         } else {
 
-            $('svg').css({'position':'absolute',"top":0,"left":0});
+            $('svg').css({'position':'absolute',"top":0,"left":0,"fill-opacity":0.5});
             $('.chetabahana-skema').height($('.editor').height() + 200);
             $('.editor-wrapper').height($('.editor').height() + 3);
             $('.editor').height($('.diagram').height() - 94);
