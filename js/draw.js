@@ -177,7 +177,7 @@ var draw = {
                     draw.elements.css({'fill-opacity':'0.3'})
                                .mouseenter(function(){$(this).css('fill', 'cyan')})
                                .mouseout(function(){$(this).css('fill','')});
-                    draw.elements.push($('svg path').first()).push($('svg path').last());
+                    draw.elements.add($('svg path').first()).add($('svg path').last());
                     
                 break;
 
