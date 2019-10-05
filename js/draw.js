@@ -67,6 +67,13 @@ var draw = {
 
                 } else if(type == 'scenetree'){
 
+                    js = '/' + kinds['sequence'] + '?t=' + $.now();
+
+                    $.getScript(js, function( data, textStatus, jqxhr ) {
+                        diagram = Diagram.parse(skema);
+                        diagram.drawSVG(g, input);
+                    });
+
                     diagram = d3.select("#viewport").append("svg").attr("width", 1).attr("height", 1);
                     diagram.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 1).attr("y2", 1);
 
