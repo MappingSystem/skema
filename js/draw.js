@@ -67,8 +67,6 @@ var draw = {
 
                 } else if(type == 'scenetree'){
 
-                    $(".theme").val("simple");
-                    input = {theme: "simple", "font-size": 13};
                     js = '/' + kinds['sequence'] + '?t=' + $.now();
 
                     $.getScript(js, function( data, textStatus, jqxhr ) {
@@ -127,31 +125,7 @@ var draw = {
 
             switch(draw.type) {
 
-                case 'sequence':
-
-                    $('svg g.title').each(function( index ) {
-                        this.id = '00';
-                    });
-
-                    $('svg g.actor').each(function( index ) {
-                        this.id = '1' + (Math.floor(index/2) + 1).toString();
-                    });
-
-                    $('svg g.signal').each(function( index ) {
-                        this.id = '2' + (index + 1).toString();
-                    });
-
-                    draw.elements = $('svg g.title, svg g.actor, svg g.signal');
-                    draw.elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    });
-
-                break;
-
                 case 'flowchart':
-
 
                     $('svg rect.start-element').each(function() {
                         this.id = '00';
@@ -207,22 +181,28 @@ var draw = {
 
                 break;
 
-                case 'scenetree':
+                default:
 
-                    $('svg g').each(function( index ) {
-                        this.id = draw.pad(index, 5);
+                    $('svg g.title').each(function( index ) {
+                        this.id = '00';
                     });
 
-                    $('svg g').last().attr("id", "99999");
-                    
-                    draw.elements = $('svg g g g');
+                    $('svg g.actor').each(function( index ) {
+                        this.id = '1' + (Math.floor(index/2) + 1).toString();
+                    });
+
+                    $('svg g.signal').each(function( index ) {
+                        this.id = '2' + (index + 1).toString();
+                    });
+
+                    draw.elements = $('svg g.title, svg g.actor, svg g.signal');
                     draw.elements.hover(function() {
                         
                         $(this).hide(100).show(100);
 
-                    });
+                    }
 
-                break;
+                );
 
             }
 
@@ -243,6 +223,7 @@ var draw = {
                 var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
                 draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
+                if(itemIndex == index - 1) $(".theme").val("simple");
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
                 $("#json").attr("href", jsonfile);
