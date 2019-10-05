@@ -166,8 +166,11 @@ var draw = {
 
                 case 'railroad':
 
+                    $('svg path').first().attr("id", "000");
+                    $('svg path').last().attr("id", "999");
+
                     $('svg rect').each(function( index ) {
-                        this.id = draw.pad('0' + index, 3);
+                        this.id = draw.pad('0' + index + 1, 3);
                     });
 
                     draw.elements = $('svg rect');
@@ -182,9 +185,28 @@ var draw = {
                     $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
                     $('svg g g g').each(function( index ) {
-                        this.id = draw.pad('0' + index, 3);
+                        this.id = draw.pad('0' + index, 4);
                     });
 
+                    $('svg g g g').last().attr("id", "9999");
+                    
+                    draw.elements = $('svg g g g');
+                    draw.elements.hover(function() {
+                        
+                        $(this).hide(100).show(100);
+
+                    });
+
+                break;
+
+                case 'scenetree':
+
+                    $('svg g').each(function( index ) {
+                        this.id = draw.pad('0' + index, 5);
+                    });
+
+                    $('svg g').last().attr("id", "99999");
+                    
                     draw.elements = $('svg g g g');
                     draw.elements.hover(function() {
                         
