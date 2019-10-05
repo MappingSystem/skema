@@ -27,7 +27,7 @@ var draw = {
 
         var kinds = this.kind[0];
         var g = $('.diagram').get(0);
-        
+
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
