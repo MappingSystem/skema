@@ -167,7 +167,7 @@ var draw = {
                 case 'railroad':
 
                     $('svg rect').each(function( index ) {
-                        this.id = draw.pad('0' + index + 1, 3);
+                        this.id = draw.pad(index + 1, 3);
                     });
 
                     $('svg rect').css({'fill-opacity':'0.3'})
@@ -185,7 +185,7 @@ var draw = {
                     $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
                     $('svg g g g').each(function( index ) {
-                        this.id = draw.pad('0' + index, 4);
+                        this.id = draw.pad(index, 4);
                     });
 
                     $('svg g g g').last().attr("id", "9999");
@@ -202,7 +202,7 @@ var draw = {
                 case 'scenetree':
 
                     $('svg g').each(function( index ) {
-                        this.id = draw.pad('0' + index, 5);
+                        this.id = draw.pad(index, 5);
                     });
 
                     $('svg g').last().attr("id", "99999");
