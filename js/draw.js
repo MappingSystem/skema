@@ -223,7 +223,6 @@ var draw = {
                 var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
                 draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
-                if(itemIndex == index - 1) {$(".theme").val("simple"); $('.editor').html('');}
  
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
@@ -232,9 +231,9 @@ var draw = {
                 $.getJSON(jsonfile).done(function(result){
 
                     var obj = result.items[4].items[itemIndex];
-                    draw.input = obj.input;
-                    draw.skema = draw.encode(obj.query);
-                    editor.setValue(draw.skema);
+                    draw.input = obj.input; draw.skema = draw.encode(obj.query);
+                    if(itemIndex != index - 1) editor.setValue(draw.skema);
+                    else {$(".theme").val("simple"); $('.editor').html('');}
 
                 });
 
