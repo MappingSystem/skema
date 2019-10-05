@@ -67,6 +67,8 @@ var draw = {
 
                 } else if(type == 'scenetree'){
 
+                    $(".theme").val("simple");
+                    input = {theme: "simple", "font-size": 13};
                     js = '/' + kinds['sequence'] + '?t=' + $.now();
 
                     $.getScript(js, function( data, textStatus, jqxhr ) {
@@ -150,7 +152,6 @@ var draw = {
 
                 case 'flowchart':
 
-                    $(".theme").val("simple");
 
                     $('svg rect.start-element').each(function() {
                         this.id = '00';
