@@ -115,14 +115,14 @@ var draw = {
 
         } else {
 
-            $('svg').css({'position':'absolute',"top":0,"left":0});
-            $('.chetabahana-skema').height($('.editor').height() + 200);
-            $('.editor-wrapper').height($('.editor').height() + 3);
-            $('.editor').height($('.diagram').height() - 94);
-            $('.loadingImg').hide();
+            //$('svg').css({'position':'absolute',"top":0,"left":0});
+            //$('.chetabahana-skema').height($('.editor').height() + 200);
+            //$('.editor-wrapper').height($('.editor').height() + 3);
+            //$('.editor').height($('.diagram').height() - 94);
+            //$('.loadingImg').hide();
 
-            editor.clearSelection();
-            editor.gotoLine(1, 1);
+            //editor.clearSelection();
+            //editor.gotoLine(1, 1);
 
             switch(draw.type) {
 
