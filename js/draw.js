@@ -166,18 +166,17 @@ var draw = {
 
                 case 'railroad':
 
-                    $('svg path').first().attr("id", "000");
-                    $('svg path').last().attr("id", "999");
-
                     $('svg rect').each(function( index ) {
                         this.id = draw.pad('0' + index + 1, 3);
                     });
 
-                    draw.elements = $('svg rect');
-                    draw.elements.css({'fill-opacity':'0.3'})
-                               .mouseenter(function(){$(this).css('fill', 'cyan')})
-                               .mouseout(function(){$(this).css('fill','')});
-                    draw.elements = draw.elements.add($('svg path').first()).add($('svg path').last());
+                    $('svg rect').css({'fill-opacity':'0.3'})
+                       .mouseenter(function(){$(this).css('fill', 'cyan')})
+                       .mouseout(function(){$(this).css('fill','')});
+
+                    var el1 = $('svg path').first(); el1.attr("id", "000");
+                    var el2 = $('svg path').last(); el2.attr("id", "999");
+                    draw.elements = $('svg rect').add(el1).add(el2);
                     
                 break;
 
