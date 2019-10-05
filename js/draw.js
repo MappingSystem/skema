@@ -34,7 +34,6 @@ var draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
-        var d3 = Object.assign({}, require("d3-format"), require("d3-geo"), require("d3-geo-projection"));
 
         $('.diagram').html(''); $(".loadingImg").show();
         $('#type').text(type); $('#type')[0].href = '/' + type;
@@ -68,8 +67,8 @@ var draw = {
 
                 } else if(type == 'scenetree'){
 
-                    diagram = d3.create("svg").attr("viewBox", [0, 0, width, height]);
-                    g.prepend(diagram);
+                    diagram = d3.select("#viewport").append("svg").attr("width", 50).attr("height", 50);
+                    diagram.append("line").attr("x1", 100).attr("y1", 100).attr("x2", 200).attr("y2", 200);
 
                 }
 
