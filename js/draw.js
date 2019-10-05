@@ -146,7 +146,7 @@ var draw = {
                     $(".theme").val("simple");
 
                     $('svg rect.start-element').each(function() {
-                        this.id = draw.point;
+                        this.id = '00';
                     });
 
                     $('svg rect.flowchart, svg path.flowchart').each(function( index ) {
@@ -154,7 +154,7 @@ var draw = {
                     });
 
                     $('svg rect.end-element').each(function() {
-                        this.id = draw.point;
+                        this.id = '99';
                     });
 
                     draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
