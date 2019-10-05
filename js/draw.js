@@ -38,12 +38,8 @@ var draw = {
         $('.diagram').html(''); $(".loadingImg").show();
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
-        _.each(kinds, function(value, key){
-            if (key == type) {
-                js = '/' + value + '?t=' + $.now();
-                if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");
-            }
-        });
+        _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
