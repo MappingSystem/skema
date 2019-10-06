@@ -215,7 +215,7 @@ var draw = {
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
 
-        $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0);
+        $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0); console.log(draw.svg[draw.type]);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
@@ -265,7 +265,7 @@ var draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        this.params = params; console.log(this.params);
+        this.params = params;
         this.diagram();
 
     },
