@@ -225,7 +225,7 @@ var draw = {
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.encode(obj.query);
+            draw.input = obj.input; draw.skema = draw.encode(obj.query);console.log(draw.type);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
             else {$(".theme").val("simple"); draw.tChange();}
 console.log(draw.type);
