@@ -1,7 +1,6 @@
 $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.tChange();});
 $('.download').click(function(ev) {draw.xmlData();});
-var elements = []; elements.click(function() {alert("clicked");});
 
 var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
@@ -202,14 +201,12 @@ var draw = {
 
             draw.elements.css({'cursor':'pointer'}).each(function() {
                 this.parentNode.appendChild(this);
-            })
-
-            elements.push(draw.elements);
+            }).click(function() {draw.click});
 
         }
     },
 
-     objClick : function() {
+     click : function() {
 
                 var kinds = draw.kind[0];
                 draw.svg[draw.type] = $('svg').get(0);
