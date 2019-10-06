@@ -216,7 +216,7 @@ var draw = {
         $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0); console.log(draw.svg[draw.type]);
 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);console.log(itemIndex);
-        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.svg[draw.type]);
+        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.type);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
