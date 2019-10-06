@@ -218,7 +218,7 @@ var draw = {
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);console.log(itemIndex);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.type);
 
-        var jsonfile = '/assets/feed.json?t=' + $.now();
+        var jsonfile = '/assets/feed.json?t=' + $.now();console.log(draw.type);
         jsonfile = jsonfile.replace('assets', el.id);console.log(draw.type);
         $("#json").attr("href", jsonfile);
 console.log(draw.type);
