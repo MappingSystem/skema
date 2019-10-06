@@ -67,8 +67,7 @@ var draw = {
 
                 } else if(type == 'scenetree'){
 
-                    js = '/' + kinds['sequence'] + '?t=' + $.now();
-
+                    //js = '/' + kinds['sequence'] + '?t=' + $.now();
                     //$.getScript(js, function( data, textStatus, jqxhr ) {
                     //    diagram = Diagram.parse(skema);
                     //    diagram.drawSVG(g, input);
@@ -76,6 +75,7 @@ var draw = {
 
                     //diagram = d3.select("#viewport").append("svg").attr("width", 1).attr("height", 1);
                     //diagram.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 1).attr("y2", 1);
+                    g.prepend(draw.svg['sequence']);
 
                 }
 
@@ -217,6 +217,7 @@ var draw = {
             .click(function() {
 
                 var kinds = draw.kind[0];
+                draw.svg[draw.type] = $('.diagram').get(0); console.log(draw.svg[draw.type]);
                 var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
                 var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
@@ -285,5 +286,8 @@ var draw = {
         while (s.length < (size || 2)) {s = "0" + s;}
         return s;
 
-    }
+    },
+
+    svg : {}
+    
 }
