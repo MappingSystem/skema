@@ -213,9 +213,9 @@ var draw = {
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;};console.log(draw.svg[draw.type]);
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
-        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);console.log(itemIndex);
-
         $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0); console.log(draw.svg[draw.type]);
+
+        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);console.log(itemIndex);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.svg[draw.type]);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
