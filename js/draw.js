@@ -201,24 +201,24 @@ var draw = {
 
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function(e) {draw.elClick($(this));});
+            }).css({'cursor':'pointer'}).click(function() {draw.elClick(this);});
 
         }
     },
 
-    elClick : function(this) {
+    elClick : function(el) {
 
         var kinds = draw.kind[0];
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
 
        //$(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', this.id);
+        jsonfile = jsonfile.replace('assets', el.id);
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
