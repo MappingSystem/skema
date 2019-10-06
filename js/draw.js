@@ -217,7 +217,7 @@ var draw = {
             .click(function() {
 
                 var kinds = draw.kind[0];
-                draw.svg[draw.type] = $('svg'); console.log(draw.svg[draw.type]);
+                draw.svg[draw.type] = $('.diagram').get(0).innerHTML; console.log(draw.svg[draw.type]);
                 var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
                 var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
