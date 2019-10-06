@@ -288,6 +288,6 @@ var draw = {
 
     },
 
-    svg : {}
+    svg : []
     
 }
