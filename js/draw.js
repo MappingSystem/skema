@@ -1,6 +1,7 @@
 $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.tChange();});
 $('.download').click(function(ev) {draw.xmlData();});
+var elements = []; elements.click(function() {alert("clicked");});
 
 var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
@@ -190,7 +191,7 @@ var draw = {
 
                     draw.elements = $('svg g.title, svg g.actor, svg g.signal');
                     draw.elements.hover(function() {
-                        
+
                         $(this).hide(100).show(100);
 
                     }
@@ -199,15 +200,16 @@ var draw = {
 
             }
 
-            draw.elements.css({'cursor':'pointer'})
-
-            .each(function() {
-
+            draw.elements.css({'cursor':'pointer'}).each(function() {
                 this.parentNode.appendChild(this);
-
             })
 
-            .click(function() {
+            elements.push(draw.elements);
+
+        }
+    },
+
+     objClick : function() {
 
                 var kinds = draw.kind[0];
                 draw.svg[draw.type] = $('svg').get(0);
@@ -217,7 +219,6 @@ var draw = {
                 var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
                 draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
- 
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
                 $("#json").attr("href", jsonfile);
@@ -231,10 +232,7 @@ var draw = {
 
                 });
 
-            });
-
-        } 
-    },
+            },
 
     xmlData : function() {
 
