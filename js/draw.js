@@ -228,7 +228,7 @@ var draw = {
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
             else {$(".theme").val("simple"); draw.tChange();}
-
+console.log(draw.type);
         });
 
     },
