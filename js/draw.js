@@ -26,12 +26,12 @@ var draw = {
         var diagram;
 
         var kinds = this.kind[0];
-        var g = $('.diagram').get(0);console.log(g);
+        var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
-        var type = (!draw.type)? 'sequence': draw.type;console.log(type);
+        var type = (!draw.type)? 'sequence': draw.type;console.log(draw.type+type);
         var skema = (draw.skema)? draw.skema: editor.getValue();console.log(skema);
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};console.log(input);
 
@@ -39,7 +39,7 @@ var draw = {
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(js);
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(draw.type+js);
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -210,13 +210,13 @@ var draw = {
     elClick : function(el) {
 
         var kinds = draw.kind[0];
-        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
+        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;};console.log(draw.svg[key+draw.type]);
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
-        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
+        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);console.log(itemIndex);
 
         $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0); console.log(draw.svg[draw.type]);
-        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.svg[draw.type]);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
