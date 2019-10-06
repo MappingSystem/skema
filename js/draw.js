@@ -206,7 +206,7 @@ var draw = {
         }
     },
 
-     elClick : function() {
+    elClick : function() {
 
         var kinds = draw.kind[0];
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
