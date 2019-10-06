@@ -201,12 +201,12 @@ var draw = {
 
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function() {draw.elClick(e);});
+            }).css({'cursor':'pointer'}).click(function() {draw.elClick();});
 
         }
     },
 
-    elClick : function(e) {
+    elClick : function() {
 
         var kinds = draw.kind[0];
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
@@ -231,7 +231,7 @@ var draw = {
 
     },
 
-    xmlData : function(e) {
+    xmlData : function() {
 
         var a = $(this);
         var svg = $(".diagram").find('svg')[0];
