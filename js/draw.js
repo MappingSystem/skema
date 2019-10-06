@@ -26,20 +26,20 @@ var draw = {
         var diagram;
 
         var kinds = this.kind[0];
-        var g = $('.diagram').get(0);
+        var g = $('.diagram').get(0);console.log(g);
 
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
-        var type = (!draw.type)? 'sequence': draw.type;
-        var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
+        var type = (!draw.type)? 'sequence': draw.type;console.log(type);
+        var skema = (draw.skema)? draw.skema: editor.getValue();console.log(skema);
+        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};console.log(input);
 
         $('.diagram').html(''); $(".loadingImg").show();
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(js);
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
