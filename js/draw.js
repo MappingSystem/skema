@@ -33,7 +33,7 @@ var draw = {
 
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
+        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
         $('.diagram').html(''); $(".loadingImg").show();
         $('#type').text(type); $('#type')[0].href = '/' + type;
@@ -111,7 +111,6 @@ var draw = {
             //$('.chetabahana-skema').height($('.editor').height() + 200);
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.editor').height($('.diagram').height() - 94);
-            $('.loadingImg').hide();
 
             editor.clearSelection();
             editor.gotoLine(1, 1);
@@ -202,6 +201,8 @@ var draw = {
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
             }).css({'cursor':'pointer'}).click(function() {draw.elClick(this);});
+
+            if ($(".theme").val() == "hand") $('.loadingImg').hide();
 
         }
     },
