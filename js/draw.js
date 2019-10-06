@@ -219,16 +219,16 @@ var draw = {
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.type);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', el.id);
+        jsonfile = jsonfile.replace('assets', el.id);console.log(draw.type);
         $("#json").attr("href", jsonfile);
-
+console.log(draw.type);
         $.getJSON(jsonfile).done(function(result){
-
+console.log(draw.type);
             var obj = result.items[4].items[itemIndex];
             draw.input = obj.input; draw.skema = draw.encode(obj.query);console.log(draw.type);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
             else {$(".theme").val("simple"); draw.tChange();}
-console.log(draw.type);
+
         });
 
     },
