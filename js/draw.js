@@ -201,7 +201,7 @@ var draw = {
 
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function() {draw.elClick();});
+            }).css({'cursor':'pointer'}).click(function() {draw.elClick(e);});
 
         }
     },
