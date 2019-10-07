@@ -108,13 +108,13 @@ var draw = {
 
         } else {
 
+            editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 1000));
+            editor.clearSelection(); editor.gotoLine(1, 1);
+
             //$('.chetabahana-skema').height($('.editor').height() + 200);
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.editor').height($('.diagram').height() - 94);
             $('.loadingImg').hide();
-
-            editor.clearSelection();
-            editor.gotoLine(1, 1);
 
             switch(draw.type) {
 
@@ -202,7 +202,11 @@ var draw = {
             draw.elements.css({'cursor':'pointer'}).each(function() {
                 this.parentNode.appendChild(this);}).click(function() {draw.elClick(this.id);});
 
+            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
+            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
+
         } 
+
     },
 
     elClick : function(id) {
