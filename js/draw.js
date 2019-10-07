@@ -69,7 +69,7 @@ var draw = {
             } finally {
 
                 draw.type = type;
-                draw.checkReady(editor, draw.type);
+                draw.checkReady(draw.type);
 
             }
 
@@ -94,7 +94,7 @@ var draw = {
 
     }, 
 
-    checkReady : function(editor, type) {
+    checkReady : function(type) {
 
         if (!$('.diagram').find('svg')[0]) {
 
@@ -107,8 +107,10 @@ var draw = {
             //$('.editor').height($('.diagram').height() - 94);
             $('.loadingImg').hide();
 
-            editor.clearSelection();
-            editor.gotoLine(1, 1);
+            var editor = draw.editor();
+            editor.clearSelection(); editor.gotoLine(1, 1);
+            editor.getSession().setMode("ace/mode/asciidoc");
+            editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
 
             switch(type) {
 
@@ -219,6 +221,7 @@ var draw = {
 
         $.getJSON(jsonfile).done(function(result){
 
+            var editor = draw.editor();
             var obj = result.items[4].items[itemIndex];
             draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
@@ -261,8 +264,6 @@ var draw = {
         var editor = ace.edit("graphiql");
         editor.setOptions({fontSize: "10pt"});
         editor.setTheme("ace/theme/crimson_editor");
-        editor.getSession().setMode("ace/mode/asciidoc");
-        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
         return editor;
 
     },
