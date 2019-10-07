@@ -6,6 +6,7 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
+editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
 
 var draw = {
 
@@ -107,13 +108,13 @@ var draw = {
 
         } else {
 
-            editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 1000));
-            editor.clearSelection(); editor.gotoLine(1, 1);
-
             //$('.chetabahana-skema').height($('.editor').height() + 200);
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.editor').height($('.diagram').height() - 94);
             $('.loadingImg').hide();
+
+            editor.clearSelection();
+            editor.gotoLine(1, 1);
 
             switch(draw.type) {
 
@@ -198,9 +199,15 @@ var draw = {
 
             }
 
-            draw.elements.css({'cursor':'pointer'}).each(function() {
+            draw.elements.css({'cursor':'pointer'})
+
+            .each(function() {
+
                 this.parentNode.appendChild(this);
-            }).click(function() {
+
+            })
+
+            .click(function() {
 
                 var kinds = draw.kind[0];
                 draw.svg[draw.type] = $('svg').get(0);
@@ -209,6 +216,7 @@ var draw = {
                 var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
                 var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
                 draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+
  
                 var jsonfile = '/assets/feed.json?t=' + $.now();
                 jsonfile = jsonfile.replace('assets', this.id);
@@ -226,14 +234,6 @@ var draw = {
             });
 
         } 
-    },
-
-    pad : function(data, size) {
-
-        var s = String(data);
-        while (s.length < (size || 2)) {s = "0" + s;}
-        return s;
-
     },
 
     xmlData : function() {
