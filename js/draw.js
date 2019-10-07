@@ -203,6 +203,9 @@ var draw = {
                 this.parentNode.appendChild(this);
             }).click(function() {draw.elClick(this.id);});
 
+            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
+            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
+
         } 
     },
 
@@ -225,7 +228,7 @@ var draw = {
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.encode(obj.query);
+            draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
             else {$(".theme").val("simple"); draw.tChange();}
 
@@ -246,7 +249,7 @@ var draw = {
 
     },
 
-    encode : function(data) {
+    txEncode : function(data) {
 
         return data.replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
@@ -266,6 +269,8 @@ var draw = {
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         this.params = params; console.log(this.params);
+
+        $(".theme").val("simple"); 
         this.diagram();
 
     },
