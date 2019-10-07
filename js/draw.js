@@ -209,13 +209,7 @@ var draw = {
 
     elClick : function(el) {
 
-        var kinds = draw.kind[0];
-        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;};
-
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
         $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0);
-
-        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
@@ -223,9 +217,16 @@ var draw = {
         
         $.getJSON(jsonfile).done(function(result){
 
+            var kinds = draw.kind[0];
+            var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;};
+
+            var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
+            var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
             draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+
             var obj = result.items[4].items[itemIndex];console.log(draw.type);
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
+
             if(itemIndex != index - 1) editor.setValue(draw.skema);
             else {$(".theme").val("simple"); draw.tChange();}
 
