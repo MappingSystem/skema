@@ -6,7 +6,6 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
 
 var draw = {
 
@@ -134,8 +133,8 @@ var draw = {
 
                     draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
                     draw.elements.css({'fill-opacity':'0.1'})
-                               .mouseenter(function(){$(this).css('fill','teal')})
-                               .mouseout(function(){$(this).css('fill','')});
+                       .mouseenter(function(){$(this).css('fill','teal')})
+                       .mouseout(function(){$(this).css('fill','')});
 
                 break;
 
