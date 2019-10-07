@@ -200,7 +200,7 @@ var draw = {
 
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function(e) {draw.elClick(e);});
+            }).css({'cursor':'pointer'}).click(function(e) {draw.elClick(this);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
