@@ -199,9 +199,9 @@ var draw = {
 
             }
 
-            draw.elements.css({'cursor':'pointer'}).each(function() {
-                this.parentNode.appendChild(this);
-            }).click(function() {draw.elClick(this.id);});
+            draw.elements.css({'cursor':'pointer'})
+            .each(function() {draw.node(this);})
+            .click(function() {draw.click(this);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
@@ -209,7 +209,7 @@ var draw = {
         } 
     },
 
-    elClick : function(id) {
+    click : function(e) {
 
         //if ($(".theme").val() == "hand") this.tChange();
         this.svg[this.type] = $('svg').get(0);
@@ -217,12 +217,12 @@ var draw = {
         var kinds = this.kind[0];
         var index = 0; for (key in kinds) {if(key == this.type) nIndex = index; index++;}
 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(id);
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         this.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', id);
+        jsonfile = jsonfile.replace('assets', e.id);
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
@@ -275,7 +275,13 @@ var draw = {
 
     },
 
-    pad : function(data, size) {
+    node : function(e) {
+
+        e.parentNode.appendChild(e);
+
+    },
+
+     pad : function(data, size) {
 
         var s = String(data);
         while (s.length < (size || 2)) {s = "0" + s;}
