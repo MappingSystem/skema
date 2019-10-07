@@ -7,7 +7,6 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {$(".theme").val("hand"); draw.diagram();}, 100));
 
 var draw = {
 
@@ -113,8 +112,8 @@ var draw = {
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.editor').height($('.diagram').height() - 94);
 
-            editor.clearSelection();
-            editor.gotoLine(1, 1);
+            editor.clearSelection(); editor.gotoLine(1, 1);
+            editor.getSession().on('change', _.debounce(function() {$(".theme").val("hand"); draw.diagram();}, 100));
 
             switch(type) {
 
