@@ -199,13 +199,8 @@ var draw = {
 
             }
 
-            draw.elements.css({'cursor':'pointer'})
-
-            .each(function() {
-
-                this.parentNode.appendChild(this);
-
-            }).click(function() {draw.elClick(this.id);});
+            draw.elements.css({'cursor':'pointer'}).each(function() {
+                this.parentNode.appendChild(this);}).click(function() {draw.elClick(this.id);});
 
         } 
     },
