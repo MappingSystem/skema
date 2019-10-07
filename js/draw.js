@@ -40,7 +40,7 @@ var draw = {
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(type+js);
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(js);
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
