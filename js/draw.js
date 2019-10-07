@@ -6,7 +6,7 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', draw.editorBounce(););
+editor.getSession().on('change', function() {draw.deBounce()});
 
 var draw = {
 
@@ -271,7 +271,7 @@ var draw = {
 
     },
 
-    editorBounce : function() {
+    deBounce : function() {
 
 
 this.diagram = _.debounce(function(){
