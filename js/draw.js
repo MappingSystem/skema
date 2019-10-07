@@ -6,7 +6,7 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {console.log(draw.type);draw.diagram();}, 100));
+editor.getSession().on('change', draw.editorBounce());
 
 var draw = {
 
@@ -268,6 +268,12 @@ var draw = {
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         this.params = params;
         this.diagram();
+
+    },
+
+    editorBounce : function(data, size) {
+
+        _.debounce(function() {console.log(draw.type); draw.diagram();}, 100)
 
     },
 
