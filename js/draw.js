@@ -109,8 +109,6 @@ var draw = {
 
             var editor = draw.editor();
             editor.clearSelection(); editor.gotoLine(1, 1);
-            editor.getSession().setMode("ace/mode/asciidoc");
-            editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
 
             switch(type) {
 
@@ -264,6 +262,8 @@ var draw = {
         var editor = ace.edit("graphiql");
         editor.setOptions({fontSize: "10pt"});
         editor.setTheme("ace/theme/crimson_editor");
+        editor.getSession().setMode("ace/mode/asciidoc");
+        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
         return editor;
 
     },
