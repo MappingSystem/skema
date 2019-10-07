@@ -7,7 +7,7 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {console.log(type);draw.diagram();}, 100));
+editor.getSession().on('change', _.debounce(function() {console.log(type); draw.diagram();}, 100));
 
 var draw = {
 
@@ -40,7 +40,7 @@ var draw = {
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(draw.type+js);
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(type+js);
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
