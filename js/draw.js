@@ -2,11 +2,12 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.tChange();});
 $('.download').click(function(e) {draw.xmlData();});
 
+var type = 'sequence';
 var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {console.log(draw.type);draw.diagram();}, 100));
+editor.getSession().on('change', _.debounce(function() {console.log(type);draw.diagram();}, 100));
 
 var draw = {
 
@@ -31,7 +32,7 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
-        var type = (!draw.type)? 'sequence': draw.type;
+        //var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
@@ -74,7 +75,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type;
+                //draw.type = type;
                 draw.checkReady();
 
             }
@@ -115,7 +116,7 @@ var draw = {
             editor.clearSelection();
             editor.gotoLine(1, 1);
 
-            switch(draw.type) {
+            switch(type) {
 
                 case 'flowchart':
 
@@ -209,7 +210,7 @@ var draw = {
 
     elClick : function(el) {
 
-        //$(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0);
+        $(".theme").val("simple"); draw.tChange(); draw.svg[type] = $('svg').get(0);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
@@ -218,13 +219,13 @@ var draw = {
         $.getJSON(jsonfile).done(function(result){
 
             var kinds = draw.kind[0];
-            var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;};
+            var index = 0; for (key in kinds) {if(key == type) nIndex = index; index++;};
 
             var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
             var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-            draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+            type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
-            var obj = result.items[4].items[itemIndex];console.log(draw.type);
+            var obj = result.items[4].items[itemIndex];console.log(type);
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
 
             if(itemIndex != index - 1) editor.setValue(draw.skema);
