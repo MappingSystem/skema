@@ -199,9 +199,7 @@ var draw = {
 
             }
 
-            draw.elements.css({'cursor':'pointer'})
-            .each(function() {draw.node(this);})
-            .click(function() {draw.click(this);});
+            draw.elements.each(function() {draw.node(this);}).click(function() {draw.click(this);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
@@ -277,6 +275,7 @@ var draw = {
 
     node : function(e) {
 
+        e.css({'cursor':'pointer'})
         e.parentNode.appendChild(e);
 
     },
