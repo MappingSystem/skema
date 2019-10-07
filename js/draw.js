@@ -1,12 +1,12 @@
 $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.tChange();});
-$('.download').click(function(e) {draw.xmlData();});
+$('.download').click(function(ev) {draw.xmlData();});
 
-var type = 'sequence';
 var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
+editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
 
 var draw = {
 
@@ -31,15 +31,15 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
+        var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        if( typeof type  === 'undefined' || type  === null ) type = 'sequence';
-        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
-
-        _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
+        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
         $('.diagram').html(''); $(".loadingImg").show();
         $('#type').text(type); $('#type')[0].href = '/' + type;
+
+        _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -74,7 +74,7 @@ var draw = {
 
             } finally {
 
-                //draw.type = type;
+                draw.type = type;
                 draw.checkReady();
 
             }
@@ -111,11 +111,12 @@ var draw = {
             //$('.chetabahana-skema').height($('.editor').height() + 200);
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.editor').height($('.diagram').height() - 94);
+            $('.loadingImg').hide();
 
-            editor.clearSelection(); editor.gotoLine(1, 1);
-            editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 1000));
+            editor.clearSelection();
+            editor.gotoLine(1, 1);
 
-            switch(type) {
+            switch(draw.type) {
 
                 case 'flowchart':
 
@@ -189,7 +190,7 @@ var draw = {
 
                     draw.elements = $('svg g.title, svg g.actor, svg g.signal');
                     draw.elements.hover(function() {
-
+                        
                         $(this).hide(100).show(100);
 
                     }
@@ -198,40 +199,41 @@ var draw = {
 
             }
 
-            draw.elements.each(function() {
+            draw.elements.css({'cursor':'pointer'})
+
+            .each(function() {
+
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function() {draw.elClick(this);});
 
-            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
-            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
-        }
-    },
+            })
 
-    elClick : function(el) {
+            .click(function() {
 
-        //if ($(".theme").val() == "hand") draw.tChange();
+                var kinds = draw.kind[0];
+                draw.svg[draw.type] = $('svg').get(0);
+                var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
-        var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', el.id);
-        $("#json").attr("href", jsonfile);
-        
-        $.getJSON(jsonfile).done(function(result){
+                var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
+                var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
+                draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
-            var kinds = draw.kind[0];
-            var index = 0; for (key in kinds) {if(key == type) nIndex = index; index++;};
+ 
+                var jsonfile = '/assets/feed.json?t=' + $.now();
+                jsonfile = jsonfile.replace('assets', this.id);
+                $("#json").attr("href", jsonfile);
 
-            var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
-            var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-            type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+                $.getJSON(jsonfile).done(function(result){
 
-            var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.encode(obj.query);
+                    var obj = result.items[4].items[itemIndex];
+                    draw.input = obj.input; draw.skema = draw.encode(obj.query);
+                    if(itemIndex != index - 1) editor.setValue(draw.skema);
+                    else {$(".theme").val("simple"); draw.tChange();}
 
-            if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {draw.tChange();}
+                });
 
-        });
+            });
 
+        } 
     },
 
     xmlData : function() {
@@ -266,9 +268,7 @@ var draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        this.params = params;
-
-        $(".theme").val("simple"); 
+        this.params = params; console.log(this.params);
         this.diagram();
 
     },
