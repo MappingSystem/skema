@@ -107,9 +107,6 @@ var draw = {
             //$('.editor').height($('.diagram').height() - 94);
             $('.loadingImg').hide();
 
-            var editor = draw.editor();
-            editor.clearSelection(); editor.gotoLine(1, 1);
-
             switch(type) {
 
                 case 'flowchart':
