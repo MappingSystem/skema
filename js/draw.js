@@ -198,41 +198,40 @@ var draw = {
 
             }
 
-            draw.elements.css({'cursor':'pointer'})
-
-            .each(function() {
-
+            draw.elements.each(function() {
                 this.parentNode.appendChild(this);
+            }).css({'cursor':'pointer'}).click(function(e) {draw.elClick(this);});
 
-            })
+            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
+            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
+        }
+    },
 
-            .click(function() {
+    elClick : function() {
 
-                var kinds = draw.kind[0];
-                draw.svg[draw.type] = $('svg').get(0);
-                var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
+        //if ($(".theme").val() == "hand") draw.tChange();
+        draw.svg[draw.type] = $('svg').get(0);
 
-                var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
-                var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-                draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+        var jsonfile = '/assets/feed.json?t=' + $.now();
+        jsonfile = jsonfile.replace('assets', this.id);
+        $("#json").attr("href", jsonfile);
 
- 
-                var jsonfile = '/assets/feed.json?t=' + $.now();
-                jsonfile = jsonfile.replace('assets', this.id);
-                $("#json").attr("href", jsonfile);
+        $.getJSON(jsonfile).done(function(result){
 
-                $.getJSON(jsonfile).done(function(result){
+            var kinds = draw.kind[0];
+            var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
-                    var obj = result.items[4].items[itemIndex];
-                    draw.input = obj.input; draw.skema = draw.encode(obj.query);
-                    if(itemIndex != index - 1) editor.setValue(draw.skema);
-                    else {$(".theme").val("simple"); draw.tChange();}
+            var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
+            var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
+            draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
-                });
+            var obj = result.items[4].items[itemIndex];
+            draw.input = obj.input; draw.skema = draw.encode(obj.query);
+            if(itemIndex != index - 1) editor.setValue(draw.skema);
+            else {$(".theme").val("simple"); draw.tChange();}
 
-            });
+        });
 
-        } 
     },
 
     xmlData : function() {
