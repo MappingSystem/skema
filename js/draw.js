@@ -200,28 +200,28 @@ var draw = {
 
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function() {draw.elClick(this);});
+            }).css({'cursor':'pointer'}).click(function() {draw.elClick(this.id);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
         }
     },
 
-    elClick : function(e) {
+    elClick : function(id) {
 
         //if ($(".theme").val() == "hand") draw.tChange();
         draw.svg[draw.type] = $('svg').get(0);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', this.id);
+        jsonfile = jsonfile.replace('assets', id);
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
 
             var kinds = draw.kind[0];
             var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
-
-            var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(this.id);
+id
+            var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(id);
             var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
             draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
