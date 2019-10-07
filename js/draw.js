@@ -231,7 +231,6 @@ var draw = {
             var obj = result.items[4].items[itemIndex];
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {$(".theme").val("simple"); draw.tChange();}
             else {draw.tChange();}
 
         });
@@ -271,6 +270,8 @@ var draw = {
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         this.params = params; console.log(this.params);
+
+        $(".theme").val("simple"); 
         this.diagram();
 
     },
