@@ -7,7 +7,7 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {console.log(type); draw.diagram(type);}, 100));
+editor.getSession().on('change', _.debounce(function() {console.log(type); draw.diagram();}, 100));
 
 var draw = {
 
@@ -21,7 +21,7 @@ var draw = {
         }
     ],
 
-    diagram : function(type) {
+    diagram : function() {
 
         var js;
         var diagram;
