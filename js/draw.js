@@ -202,8 +202,8 @@ var draw = {
                 this.parentNode.appendChild(this);
             }).css({'cursor':'pointer'}).click(function() {draw.elClick(this);});
 
-            if ($(".theme").val() == "hand") $('.loadingImg').hide();
-            else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
+            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
+            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
         }
     },
 
