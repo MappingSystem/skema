@@ -209,7 +209,7 @@ var draw = {
 
     elClick : function(el) {
 
-        $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0);
+        //$(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
