@@ -273,13 +273,7 @@ var draw = {
 
     deBounce : function() {
 
-
-this.diagram = _.debounce(function(){
-    console.log(this.type);
-},100);
-
-
-
+        _.debounce(function() {console.log(draw.type); draw.diagram();}, 100);
 
     },
 
