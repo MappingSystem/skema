@@ -223,7 +223,7 @@ var draw = {
         
         $.getJSON(jsonfile).done(function(result){
 
-            draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.type);
+            draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
             var obj = result.items[4].items[itemIndex];console.log(draw.type);
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
