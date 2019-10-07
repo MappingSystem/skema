@@ -6,12 +6,7 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-
-editor.getSession().on('change', _.debounce(function(type = 'sequence') {
-    console.log(type);
-    draw.diagram(type);
-    }, 100)
-);
+editor.getSession().on('change', _.debounce(function() {console.log(draw.type);draw.diagram();}, 100));
 
 var draw = {
 
@@ -25,7 +20,7 @@ var draw = {
         }
     ],
 
-    diagram : function(type) {
+    diagram : function() {
 
         var js;
         var diagram;
@@ -36,6 +31,7 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
+        var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
@@ -43,7 +39,7 @@ var draw = {
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(draw.type+js);
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
