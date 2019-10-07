@@ -6,7 +6,12 @@ var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', function() {draw.deBounce()});
+
+editor.getSession().on('change', _.debounce(function(type = 'sequence') {
+    console.log(type);
+    draw.diagram(type);
+    }, 100)
+);
 
 var draw = {
 
@@ -20,7 +25,7 @@ var draw = {
         }
     ],
 
-    diagram : function() {
+    diagram : function(type) {
 
         var js;
         var diagram;
@@ -31,7 +36,6 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
-        var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
@@ -268,12 +272,6 @@ var draw = {
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         this.params = params;
         this.diagram();
-
-    },
-
-    deBounce : function() {
-
-        _.debounce(function() {console.log(draw.type); draw.diagram();}, 100);
 
     },
 
