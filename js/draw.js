@@ -113,7 +113,7 @@ var draw = {
             //$('.editor').height($('.diagram').height() - 94);
 
             editor.clearSelection(); editor.gotoLine(1, 1);
-            editor.getSession().on('change', _.debounce(function() {$(".theme").val("hand"); draw.diagram();}, 1000));
+            editor.getSession().on('change', _.debounce(function() draw.diagram();}, 1000));
 
             switch(type) {
 
