@@ -275,7 +275,7 @@ var draw = {
 
     node : function(e) {
 
-        e.css({'cursor':'pointer'});
+        $(e).css({'cursor':'pointer'});
         e.parentNode.appendChild(e);
 
     },
