@@ -31,7 +31,7 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
-        if (!type)? type = 'sequence';
+        if (!type) type = 'sequence';
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
