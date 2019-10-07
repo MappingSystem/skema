@@ -209,7 +209,7 @@ var draw = {
 
     elClick : function(el) {
 
-        if ($(".theme").val() == "hand") draw.tChange();
+        //if ($(".theme").val() == "hand") draw.tChange();
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
