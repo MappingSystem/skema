@@ -204,13 +204,13 @@ var draw = {
             }).css({'cursor':'pointer'}).click(function() {draw.elClick(this);});
 
             if ($(".theme").val() == "hand") $('.loadingImg').hide();
-
+            else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
         }
     },
 
     elClick : function(el) {
 
-        $(".theme").val("simple"); draw.tChange(); draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);
+        if ($(".theme").val() == "hand") draw.tChange();
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
@@ -229,7 +229,7 @@ console.log(type);
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
 
             if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {$(".theme").val("simple"); draw.tChange();}
+            else {draw.tChange();}
 
         });
 
@@ -268,6 +268,8 @@ console.log(type);
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         this.params = params;
+
+        $(".theme").val("simple"); 
         this.diagram();
 
     },
