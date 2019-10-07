@@ -216,14 +216,13 @@ var draw = {
         $(".theme").val("simple"); draw.tChange(); draw.svg[draw.type] = $('svg').get(0); console.log(draw.svg[draw.type]);
 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);console.log(itemIndex);
-        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.type);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();console.log(draw.type);
         jsonfile = jsonfile.replace('assets', el.id);console.log(draw.type);
         $("#json").attr("href", jsonfile);
-console.log(draw.type);
         $.getJSON(jsonfile).done(function(result){
-console.log(draw.type);
+
+            draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});console.log(draw.type);
             var obj = result.items[4].items[itemIndex];console.log(draw.type);
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
