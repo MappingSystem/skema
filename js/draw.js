@@ -228,9 +228,9 @@ var draw = {
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[itemIndex];
-            this.input = obj.input; this.skema = this.txEncode(obj.query);
-            if(itemIndex != index - 1) editor.setValue(this.skema);
-            else {$(".theme").val("simple"); this.tChange();}
+            draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
+            if(itemIndex != index - 1) editor.setValue(draw.skema);
+            else {$(".theme").val("simple"); draw.tChange();}
 
         });
 
