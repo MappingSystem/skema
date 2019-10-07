@@ -31,15 +31,15 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
-        if (!type) type = 'sequence';
         var skema = (draw.skema)? draw.skema: editor.getValue();
+        if( typeof type  === 'undefined' || type  === null ) type = 'sequence';
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
-
-        $('.diagram').html(''); $(".loadingImg").show();
-        $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
         if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
+
+        $('.diagram').html(''); $(".loadingImg").show();
+        $('#type').text(type); $('#type')[0].href = '/' + type;
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
