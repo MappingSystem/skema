@@ -2,12 +2,6 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.tChange();});
 $('.download').click(function(ev) {draw.xmlData();});
 
-var editor = ace.edit("graphiql");
-editor.setOptions({fontSize: "10pt"});
-editor.setTheme("ace/theme/crimson_editor");
-editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
-
 var draw = {
 
     kind : [
@@ -26,11 +20,11 @@ var draw = {
         var diagram;
 
         var kinds = this.kind[0];
+        var editor = this.editor();
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
-
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
@@ -75,7 +69,7 @@ var draw = {
             } finally {
 
                 draw.type = type;
-                draw.checkReady();
+                draw.checkReady(editor, draw.type);
 
             }
 
@@ -100,7 +94,7 @@ var draw = {
 
     }, 
 
-    checkReady : function() {
+    checkReady : function(editor, type) {
 
         if (!$('.diagram').find('svg')[0]) {
 
@@ -116,7 +110,7 @@ var draw = {
             editor.clearSelection();
             editor.gotoLine(1, 1);
 
-            switch(draw.type) {
+            switch(type) {
 
                 case 'flowchart':
 
@@ -261,6 +255,17 @@ var draw = {
         ;
 
     }, 
+
+    editor : function() {
+
+        var editor = ace.edit("graphiql");
+        editor.setOptions({fontSize: "10pt"});
+        editor.setTheme("ace/theme/crimson_editor");
+        editor.getSession().setMode("ace/mode/asciidoc");
+        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
+        return editor;
+
+    },
 
     tChange : function() {
 
