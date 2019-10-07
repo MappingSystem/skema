@@ -200,14 +200,14 @@ var draw = {
 
             draw.elements.each(function() {
                 this.parentNode.appendChild(this);
-            }).css({'cursor':'pointer'}).click(function(e) {draw.elClick();});
+            }).css({'cursor':'pointer'}).click(function(e) {draw.elClick(e);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
         }
     },
 
-    elClick : function() {
+    elClick : function(e) {
 
         //if ($(".theme").val() == "hand") draw.tChange();
         draw.svg[draw.type] = $('svg').get(0);
