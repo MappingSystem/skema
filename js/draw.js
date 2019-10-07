@@ -2,7 +2,7 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.tChange();});
 $('.download').click(function(ev) {draw.xmlData();});
 
-var editor = ace.edit("editor");
+var editor = ace.edit("graphiql");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
@@ -16,7 +16,7 @@ var draw = {
             'flowchart' : 'flowchart/flowchart-latest.js',
             'railroad'  : 'railroad/railroad-diagrams.js',
             'nodelinks' : 'nodelinks/release/go.js',
-            'scenetree' : 'graphql/build.js'
+            'scenetree' : 'scenetree/build.js'
         }
     ],
 
@@ -27,7 +27,7 @@ var draw = {
 
         var kinds = this.kind[0];
         var g = $('.diagram').get(0);
-        
+
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 12: 13;
 
@@ -35,13 +35,11 @@ var draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        $('#type').text(type);
-        $('#type')[0].href = '/' + type;
-        $('.diagram').html(''); $("#loadingImg").show();
+        $('.diagram').html(''); $(".loadingImg").show();
+        $('#type').text(type); $('#type')[0].href = '/' + type;
 
-        _.each(kinds, function(value, key){
-            if (key == type) js = '/' + value + '?t=' + $.now();
-        });
+        _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -67,6 +65,11 @@ var draw = {
                     diagram = draw.makeSvg(input, skema);
                     g.prepend(diagram);
 
+                } else if(type == 'scenetree'){
+
+                    diagram = d3.select(".diagram");
+                    g.prepend(draw.svg['sequence']);
+
                 }
 
             } finally {
@@ -80,6 +83,23 @@ var draw = {
 
     },
 
+    makeSvg : function(input, skema) {
+
+        var $ = go.GraphObject.make;
+        var myDiagram = $(go.Diagram, "viewport");
+        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
+
+        myDiagram.nodeTemplate = $(go.Node, "Auto",
+            $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+            $(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+        );
+
+        var svg = myDiagram.makeSvg({scale: 2});
+        myDiagram.div = null;
+        return svg;
+
+    }, 
+
     checkReady : function() {
 
         if (!$('.diagram').find('svg')[0]) {
@@ -88,20 +108,73 @@ var draw = {
 
         } else {
 
-            $('.chetabahana-skema').height($('.editor').height() + 200);
-            $('.editor-wrapper').height($('.editor').height() + 3);
-            $('.editor').height($('.diagram').height() - 94);
-
-            $('#diagram canvas').remove();
-            $('#diagram div').remove();
-            $('#loadingImg').hide();
+            //$('.chetabahana-skema').height($('.editor').height() + 200);
+            //$('.editor-wrapper').height($('.editor').height() + 3);
+            //$('.editor').height($('.diagram').height() - 94);
+            $('.loadingImg').hide();
 
             editor.clearSelection();
             editor.gotoLine(1, 1);
 
             switch(draw.type) {
 
-                case 'sequence':
+                case 'flowchart':
+
+                    $('svg rect.start-element').each(function() {
+                        this.id = '00';
+                    });
+
+                    $('svg rect.flowchart, svg path.flowchart').each(function( index ) {
+                        this.id = draw.pad(index + 1, 2);
+                    });
+
+                    $('svg rect.end-element').each(function() {
+                        this.id = '99';
+                    });
+
+                    draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
+                    draw.elements.css({'fill-opacity':'0.1'})
+                       .mouseenter(function(){$(this).css('fill','teal')})
+                       .mouseout(function(){$(this).css('fill','')});
+
+                break;
+
+                case 'railroad':
+
+                    $('svg rect').each(function( index ) {
+                        this.id = draw.pad(index + 1, 3);
+                    });
+
+                    draw.elements = $('svg rect').css({'fill-opacity':'0.3'})
+                       .mouseenter(function(){$(this).css('fill', 'cyan')})
+                       .mouseout(function(){$(this).css('fill','')});
+
+                    var el1 = $('svg path').first(); el1.attr("id", "000");
+                    var el2 = $('svg path').last(); el2.attr("id", "999");
+                    draw.elements = draw.elements.add(el1).add(el2);
+                    
+                break;
+
+                case 'nodelinks':
+
+                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
+
+                    $('svg g g g').each(function( index ) {
+                        this.id = draw.pad(index, 4);
+                    });
+
+                    $('svg g g g').last().attr("id", "9999");
+                    
+                    draw.elements = $('svg g g g');
+                    draw.elements.hover(function() {
+                        
+                        $(this).hide(100).show(100);
+
+                    });
+
+                break;
+
+                default:
 
                     $('svg g.title').each(function( index ) {
                         this.id = '00';
@@ -120,97 +193,47 @@ var draw = {
                         
                         $(this).hide(100).show(100);
 
-                    });
+                    }
 
-                break;
-
-                case 'flowchart':
-
-                    $(".theme").val("simple");
-
-                    $('svg rect.start-element').each(function() {
-                        this.id = draw.point;
-                    });
-
-                    $('svg rect.flowchart, svg path.flowchart').each(function( index ) {
-                        this.id = draw.pad(index + 1, 2);
-                    });
-
-                    $('svg rect.end-element').each(function() {
-                        this.id = draw.point;
-                    });
-
-                    draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
-                    draw.elements.css({'fill-opacity':'0.1'})
-                               .mouseenter(function(){$(this).css('fill','teal')})
-                               .mouseout(function(){$(this).css('fill','')});
-
-                break;
-
-                case 'railroad':
-
-                    $('svg rect').each(function( index ) {
-                        this.id = draw.pad('0' + index, 3);
-                    });
-
-                    draw.elements = $('svg rect');
-                    draw.elements.css({'fill-opacity':'0.3'})
-                               .mouseenter(function(){$(this).css('fill', 'cyan')})
-                               .mouseout(function(){$(this).css('fill','')});
-
-                break;
-
-                case 'nodelinks':
-
-                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-
-                    $('svg g g g').each(function( index ) {
-                        this.id = draw.pad('0' + index, 3);
-                    });
-
-                    draw.elements = $('svg g g g');
-                    draw.elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    });
-
-                break;
+                );
 
             }
 
-            draw.elements.css({'cursor':'pointer'})
-
-            .each(function() {
-
+            draw.elements.css({'cursor':'pointer'}).each(function() {
                 this.parentNode.appendChild(this);
+            }).click(function() {draw.elClick(this.id);});
 
-            })
-
-            .click(function() {
-
-                var kinds = draw.kind[0];
-                var index = 0; for (key in kinds) {if(key == draw.type) drawIndex = index; index++;}
-
-                var itemIndex = (drawIndex + 1 == index)? 0: drawIndex + 1;
-                draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
-
-                var jsonfile = '/assets/feed.json?t=' + $.now();
-                jsonfile = jsonfile.replace('assets', this.id);
-                $("#json").attr("href", jsonfile);
-                
-                $.getJSON(jsonfile).done(function(result){
-
-                    var obj = result.items[4].items[itemIndex];
-                    draw.input = obj.input;
-                    draw.skema = draw.encode(obj.query);
-                    editor.setValue(draw.skema);
-
-                });
-
-            });
+            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
+            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
 
         } 
+    },
+
+    elClick : function(id) {
+
+        //if ($(".theme").val() == "hand") draw.tChange();
+        draw.svg[draw.type] = $('svg').get(0);
+
+        var kinds = draw.kind[0];
+        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
+
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(id);
+        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
+        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+
+        var jsonfile = '/assets/feed.json?t=' + $.now();
+        jsonfile = jsonfile.replace('assets', id);
+        $("#json").attr("href", jsonfile);
+
+        $.getJSON(jsonfile).done(function(result){
+
+            var obj = result.items[4].items[itemIndex];
+            draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
+            if(itemIndex != index - 1) editor.setValue(draw.skema);
+            else {$(".theme").val("simple"); draw.tChange();}
+
+        });
+
     },
 
     xmlData : function() {
@@ -226,24 +249,7 @@ var draw = {
 
     },
 
-    makeSvg : function(input, skema) {
-
-        var $ = go.GraphObject.make;
-        var myDiagram = $(go.Diagram, "diagram");
-        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
-
-        myDiagram.nodeTemplate = $(go.Node, "Auto",
-            $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-            $(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
-        );
-
-        var svg = myDiagram.makeSvg({scale: 2});
-        myDiagram.div = null;
-        return svg;
-
-    }, 
-
-    encode : function(data) {
+    txEncode : function(data) {
 
         return data.replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
@@ -263,6 +269,8 @@ var draw = {
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         this.params = params; console.log(this.params);
+
+        $(".theme").val("simple"); 
         this.diagram();
 
     },
@@ -273,5 +281,8 @@ var draw = {
         while (s.length < (size || 2)) {s = "0" + s;}
         return s;
 
-    }
+    },
+
+    svg : {}
+
 }
