@@ -224,8 +224,8 @@ var draw = {
             var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(el.id);
             var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
             type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
-
-            var obj = result.items[4].items[itemIndex];console.log(type);
+console.log(type);
+            var obj = result.items[4].items[itemIndex];
             draw.input = obj.input; draw.skema = draw.encode(obj.query);
 
             if(itemIndex != index - 1) editor.setValue(draw.skema);
