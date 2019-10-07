@@ -40,7 +40,7 @@ var draw = {
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});console.log(js);
+        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -210,7 +210,7 @@ var draw = {
 
     elClick : function(el) {
 
-        $(".theme").val("simple"); draw.tChange(); draw.svg[type] = $('svg').get(0);
+        $(".theme").val("simple"); draw.tChange(); draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', el.id);
