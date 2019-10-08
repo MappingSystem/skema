@@ -53,8 +53,14 @@ var draw = {
 
             } finally {
 
+                //$('.editor').height($('.diagram').height() - 94);
+                //$('.editor-wrapper').height($('.editor').height() + 3);
+                //$('.chetabahana-skema').height($('.editor').height() + 200);
+                editor.clearSelection(); editor.gotoLine(1, 1);
+
+                $('.loadingImg').hide();
                 draw.type = type;
-                draw.element(type, select);
+                draw.element();
 
             }
 
@@ -62,7 +68,7 @@ var draw = {
 
     },
 
-    element : function(type, select) {
+    element : function() {
 
         if (!$('.diagram').find('svg')[0]) {
 
@@ -71,13 +77,9 @@ var draw = {
         } else if(select != 'hand') {
 
             var elements;
-            $('.loadingImg').hide();
-
-            //$('.editor').height($('.diagram').height() - 94);
-            //$('.editor-wrapper').height($('.editor').height() + 3);
-            //$('.chetabahana-skema').height($('.editor').height() + 200);
-            editor.clearSelection(); editor.gotoLine(1, 1);
-
+            var type= draw.type;
+            var select = $(".theme").val();
+            
             if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
