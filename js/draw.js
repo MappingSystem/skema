@@ -216,9 +216,7 @@ var draw = {
 
         $.getJSON(jsonfile).done(function(result){
 
-            $('.diagram').html('');
             var editor = draw.editor();
-
             var obj = result.items[4].items[itemIndex];
             draw.input = obj.input;
             draw.skema = draw.encode(obj.query);
@@ -267,6 +265,7 @@ var draw = {
 
     editor : function() {
 
+        $('.editor').html('');
         var editor = ace.edit("graphiql");
         editor.setOptions({fontSize: "10pt"});
         editor.setTheme("ace/theme/crimson_editor");
