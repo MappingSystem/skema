@@ -25,7 +25,7 @@ var draw = {
         var js;
         var diagram;
 
-        var kinds = this.kind[0];
+        var kinds = draw.kind[0];
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
@@ -53,10 +53,63 @@ var draw = {
 
             } finally {
 
+                //$('.editor').height($('.diagram').height() - 94);
+                //$('.editor-wrapper').height($('.editor').height() + 3);
+                //$('.chetabahana-skema').height($('.editor').height() + 200);
+                editor.clearSelection(); editor.gotoLine(1, 1);
+
+                $('.loadingImg').hide();
                 draw.type = type;
-                draw.element(draw.type);
+                draw.element();
 
             }
+
+        });
+
+    },
+
+    element : function() {
+
+        var elements;
+        var type= draw.type;
+        var select = $(".theme").val();
+        
+        if (!$('.diagram').find('svg')[0]) {
+
+            window.requestAnimationFrame(draw.element);
+
+        } else if(select != 'hand') {
+
+            if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if(type == 'nodelinks') {elements = $('svg g g g');}
+            else {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+
+        } 
+    },
+
+    click : function(e) {
+
+
+        var kinds = draw.kind[0];
+        draw.svg[draw.type] = $('svg').get(0);
+        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
+
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
+        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
+        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+
+        var jsonfile = '/assets/feed.json?t=' + $.now();
+        jsonfile = jsonfile.replace('assets', e.id);
+        $("#json").attr("href", jsonfile);
+
+        $.getJSON(jsonfile).done(function(result){
+
+            var obj = result.items[4].items[itemIndex];
+            draw.input = obj.input; draw.skema = draw.encode(obj.query);
+            if(itemIndex != index - 1) editor.setValue(draw.skema);
+            else {$(".theme").val("simple"); draw.change();}
 
         });
 
@@ -78,56 +131,6 @@ var draw = {
         return svg;
 
     }, 
-
-    element : function(type) {
-
-        if (!$('.diagram').find('svg')[0]) {
-
-            window.requestAnimationFrame(draw.element);
-
-        } else {
-
-            $('.loadingImg').hide();
-            //$('.editor').height($('.diagram').height() - 94);
-            //$('.editor-wrapper').height($('.editor').height() + 3);
-            //$('.chetabahana-skema').height($('.editor').height() + 200);
-            editor.clearSelection(); editor.gotoLine(1, 1);
-
-            var elements;
-            if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
-            else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
-            else if(type == 'nodelinks') {elements = $('svg g g g');}
-            else {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
-
-        } 
-    },
-
-    click : function(e) {
-
-
-        var kinds = this.kind[0];
-        this.svg[this.type] = $('svg').get(0);
-        var index = 0; for (key in kinds) {if(key == this.type) nIndex = index; index++;}
-
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
-        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        this.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
-
-        var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', e.id);
-        $("#json").attr("href", jsonfile);
-
-        $.getJSON(jsonfile).done(function(result){
-
-            var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.encode(obj.query);
-            if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {$(".theme").val("simple"); draw.change();}
-
-        });
-
-    },
 
     xmlData : function() {
 
@@ -161,10 +164,10 @@ var draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        this.params = params; console.log(this.params);
+        draw.params = params; console.log(draw.params);
 
         $(".theme").val("simple"); 
-        this.diagram();
+        draw.diagram();
 
     },
 
