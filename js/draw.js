@@ -121,10 +121,9 @@ var draw = {
 
                 case 'nodelinks':
 
-                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-
                     elements = $('svg g g g');
                     elements.hover(function() {$(this).hide(100).show(100);});
+                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
                 break;
 
