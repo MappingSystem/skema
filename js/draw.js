@@ -2,7 +2,13 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
-var type, skema, editor, draw = {
+var editor = ace.edit("graphiql");
+editor.setOptions({fontSize: "10pt"});
+editor.setTheme("ace/theme/crimson_editor");
+editor.getSession().setMode("ace/mode/asciidoc");
+editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 200) );
+
+var draw = {
 
     kind : [
         { 
@@ -26,6 +32,7 @@ var type, skema, editor, draw = {
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
+        var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
         $('.diagram').html(''); $(".loadingImg").show();
@@ -33,7 +40,6 @@ var type, skema, editor, draw = {
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
         if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
-        if (draw.skema) skema = draw.skema; else {draw.editor(); skema = editor.getValue();}
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -109,17 +115,6 @@ var type, skema, editor, draw = {
 
     },
 
-
-    editor : function() {
-
-        editor = ace.edit("graphiql");
-        editor.setOptions({fontSize: "10pt"});
-        editor.setTheme("ace/theme/crimson_editor");
-        editor.getSession().setMode("ace/mode/asciidoc");
-        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
-
-    },
-    
     makeSvg : function(input, skema) {
 
         var $ = go.GraphObject.make;
@@ -171,6 +166,7 @@ var type, skema, editor, draw = {
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         draw.params = params; console.log(draw.params);
 
+        $(".theme").val("simple"); 
         draw.diagram();
 
     },
