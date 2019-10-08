@@ -116,13 +116,11 @@ var draw = {
             } else if(type == 'nodelinks') {
 
                 elements = $('svg g g g');
-                elements.hover(function() {$(this).hide(100).show(100);});
                 $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
             } else {
 
                 elements = $('svg g.title, svg g.actor, svg g.signal');
-                elements.hover(function() {$(this).hide(100).show(100);});
 
             }
 
