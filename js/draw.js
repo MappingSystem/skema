@@ -120,19 +120,7 @@ var draw = {
             switch(draw.type) {
 
                 case 'flowchart':
-/*
-                    $('svg rect.start-element').each(function() {
-                        this.id = '00';
-                    });
 
-                    $('svg rect.flowchart, svg path.flowchart').each(function( index ) {
-                        this.id = draw.pad(index + 1, 2);
-                    });
-
-                    $('svg rect.end-element').each(function() {
-                        this.id = '99';
-                    });
-*/
                     elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
                     elements.css({'fill-opacity':'0.1'})
                        .mouseenter(function(){$(this).css('fill','teal')})
@@ -141,11 +129,7 @@ var draw = {
                 break;
 
                 case 'railroad':
-/*
-                    $('svg rect').each(function( index ) {
-                        this.id = draw.pad(index + 1, 3);
-                    });
-*/
+
                     elements = $('svg rect').css({'fill-opacity':'0.3'})
                        .mouseenter(function(){$(this).css('fill', 'cyan')})
                        .mouseout(function(){$(this).css('fill','')});
@@ -159,13 +143,7 @@ var draw = {
                 case 'nodelinks':
 
                     $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-/*
-                    $('svg g g g').each(function( index ) {
-                        this.id = draw.pad(index, 4);
-                    });
 
-                    $('svg g g g').last().attr("id", "9999");
-*/
                     elements = $('svg g g g');
                     elements.hover(function() {
                         
@@ -176,19 +154,7 @@ var draw = {
                 break;
 
                 default:
-/*
-                    $('svg g.title').each(function( index ) {
-                        this.id = '00';
-                    });
 
-                    $('svg g.actor').each(function( index ) {
-                        this.id = '1' + (Math.floor(index/2) + 1).toString();
-                    });
-
-                    $('svg g.signal').each(function( index ) {
-                        this.id = '2' + (index + 1).toString();
-                    });
-*/
                     elements = $('svg g.title, svg g.actor, svg g.signal');
                     elements.hover(function() {
                         
