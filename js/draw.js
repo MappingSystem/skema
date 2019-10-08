@@ -87,43 +87,17 @@ var draw = {
 
         } else {
 
-            //$('.chetabahana-skema').height($('.editor').height() + 200);
-            //$('.editor-wrapper').height($('.editor').height() + 3);
-            //$('.editor').height($('.diagram').height() - 94);
             $('.loadingImg').hide();
-
-            editor.clearSelection();
-            editor.gotoLine(1, 1);
+            //$('.editor').height($('.diagram').height() - 94);
+            //$('.editor-wrapper').height($('.editor').height() + 3);
+            //$('.chetabahana-skema').height($('.editor').height() + 200);
+            editor.clearSelection();editor.gotoLine(1, 1);
 
             var elements;
-            if (type == 'flowchart') {
-
-                elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
-                elements.css({'fill-opacity':'0.1'})
-                   .mouseenter(function(){$(this).css('fill','teal')})
-                   .mouseout(function(){$(this).css('fill','')});
-
-            } else if(type == 'railroad') {
-
-                elements = $('svg rect').css({'fill-opacity':'0.3'})
-                   .mouseenter(function(){$(this).css('fill', 'cyan')})
-                   .mouseout(function(){$(this).css('fill','')});
-
-                var el1 = $('svg path').first(); el1.attr("id", "000");
-                var el2 = $('svg path').last(); el2.attr("id", "999");
-                elements = elements.add(el1).add(el2);
-
-            } else if(type == 'nodelinks') {
-
-                elements = $('svg g g g');
-                $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-
-            } else {
-
-                elements = $('svg g.title, svg g.actor, svg g.signal');
-
-            }
-
+            if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if(type == 'nodelinks') {elements = $('svg g g g');}
+            else {elements = $('svg g.title, svg g.actor, svg g.signal');}
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
@@ -196,10 +170,11 @@ var draw = {
 
     node : function(i, e) {
 
-        $(e).hover(function() {$(this).hide(100).show(100);});
-        $(e).css({'cursor':'pointer'});
-        e.parentNode.appendChild(e);
         e.id = draw.pad(i, 2);
+        e.parentNode.appendChild(e);
+        $(e).css({'cursor':'pointer','fill-opacity':'0.1'});
+        $(e).hover(function() {$(this).hide(100).show(100);});
+        $(e).mouseenter(function(){$(this).css('fill', 'teal')}).mouseout(function(){$(this).css('fill','')});
 
     },
 
