@@ -53,8 +53,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type;
-                draw.element(draw.type);
+                draw.element(type, select);
 
             }
 
@@ -79,7 +78,7 @@ var draw = {
 
     }, 
 
-    element : function(type) {
+    element : function(type, select) {
 
         if (!$('.diagram').find('svg')[0]) {
 
@@ -97,7 +96,7 @@ var draw = {
             if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
-            else {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            else if(select != 'hand') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
