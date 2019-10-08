@@ -39,7 +39,7 @@ var draw = {
         $('#type').text(type); $('#type')[0].href = '/' + type;
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') {$('.editor').html(''); $(" <canvas></canvas> ").appendTo(".diagram");}}});
+        if (type == 'scenetree') {editor.destroy(); $(" <canvas></canvas> ").appendTo(".diagram");}}});
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
