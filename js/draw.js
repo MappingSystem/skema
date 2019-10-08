@@ -70,16 +70,16 @@ var draw = {
 
     element : function() {
 
+        var elements;
+        var type= draw.type;
+        var select = $(".theme").val();
+        
         if (!$('.diagram').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
         } else if(select != 'hand') {
 
-            var elements;
-            var type= draw.type;
-            var select = $(".theme").val();
-            
             if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
