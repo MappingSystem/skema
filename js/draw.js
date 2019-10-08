@@ -198,6 +198,7 @@ var draw = {
 
     node : function(i, e) {
 
+        $(e).hover(function() {$(this).hide(100).show(100);});
         $(e).css({'cursor':'pointer'});
         e.parentNode.appendChild(e);
         e.id = draw.pad(i, 2);
