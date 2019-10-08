@@ -150,6 +150,21 @@ var type, skema, editor, draw = {
 
     },
 
+    encode : function(data) {
+
+        return data.replace(/&apos;/g, "'")
+                   .replace(/&quot;/g, '"')
+                   .replace(/&gt;/g, '>')
+                   .replace(/&lt;/g, '<')
+                   .replace(/&amp;/g, '&')
+                   .replace(/<p>/g, '')
+                   .replace(/<\/p>/g, '')
+                   .replace(/‘/g, "'")
+                   .replace(/’/g, "'")
+        ;
+
+    }, 
+
     change : function() {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
@@ -177,21 +192,6 @@ var type, skema, editor, draw = {
         return s;
 
     },
-
-    encode : function(data) {
-
-        return data.replace(/&apos;/g, "'")
-                   .replace(/&quot;/g, '"')
-                   .replace(/&gt;/g, '>')
-                   .replace(/&lt;/g, '<')
-                   .replace(/&amp;/g, '&')
-                   .replace(/<p>/g, '')
-                   .replace(/<\/p>/g, '')
-                   .replace(/‘/g, "'")
-                   .replace(/’/g, "'")
-        ;
-
-    }, 
 
     svg : {}
 
