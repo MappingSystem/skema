@@ -53,6 +53,7 @@ var draw = {
 
             } finally {
 
+                draw.type = type;
                 draw.element(type, select);
 
             }
@@ -60,23 +61,6 @@ var draw = {
         });
 
     },
-
-    makeSvg : function(input, skema) {
-
-        var $ = go.GraphObject.make;
-        var myDiagram = $(go.Diagram, "viewport");
-        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
-
-        myDiagram.nodeTemplate = $(go.Node, "Auto",
-            $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
-            $(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
-        );
-
-        var svg = myDiagram.makeSvg({scale: 2});
-        myDiagram.div = null;
-        return svg;
-
-    }, 
 
     element : function(type, select) {
 
@@ -128,6 +112,23 @@ var draw = {
         });
 
     },
+
+    makeSvg : function(input, skema) {
+
+        var $ = go.GraphObject.make;
+        var myDiagram = $(go.Diagram, "viewport");
+        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
+
+        myDiagram.nodeTemplate = $(go.Node, "Auto",
+            $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
+            $(go.TextBlock, { margin: 3 }, new go.Binding("text", "key"))
+        );
+
+        var svg = myDiagram.makeSvg({scale: 2});
+        myDiagram.div = null;
+        return svg;
+
+    }, 
 
     xmlData : function() {
 
