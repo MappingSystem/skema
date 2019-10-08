@@ -216,12 +216,12 @@ var draw = {
 
         $.getJSON(jsonfile).done(function(result){
 
-            var editor = draw.editor();
             var obj = result.items[4].items[itemIndex];
             draw.input = obj.input;
             draw.skema = draw.encode(obj.query);
 
             if(itemIndex != index - 1) {
+                var editor = draw.editor();
                 editor.setValue(draw.skema);
                 editor.clearSelection();
                 editor.gotoLine(1, 1);
