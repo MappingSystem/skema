@@ -1,5 +1,5 @@
 $(window).load(function() {draw.diagram();});
-$('.theme').change(function() {draw.tChange();});
+$('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
 var editor = ace.edit("graphiql");
@@ -54,7 +54,7 @@ var draw = {
             } finally {
 
                 draw.type = type;
-                draw.checkReady(draw.type);
+                draw.element(draw.type);
 
             }
 
@@ -79,11 +79,11 @@ var draw = {
 
     }, 
 
-    checkReady : function(type) {
+    element : function(type) {
 
         if (!$('.diagram').find('svg')[0]) {
 
-            window.requestAnimationFrame(draw.checkReady);
+            window.requestAnimationFrame(draw.element);
 
         } else {
 
@@ -149,9 +149,9 @@ var draw = {
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
+            draw.input = obj.input; draw.skema = draw.encode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {$(".theme").val("simple"); draw.tChange();}
+            else {$(".theme").val("simple"); draw.change();}
 
         });
 
@@ -170,7 +170,7 @@ var draw = {
 
     },
 
-    txEncode : function(data) {
+    encode : function(data) {
 
         return data.replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
@@ -185,7 +185,7 @@ var draw = {
 
     }, 
 
-    tChange : function() {
+    change : function() {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
