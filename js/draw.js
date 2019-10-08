@@ -115,7 +115,7 @@ var type, skema, editor, draw = {
         editor.setOptions({fontSize: "10pt"});
         editor.setTheme("ace/theme/crimson_editor");
         editor.getSession().setMode("ace/mode/asciidoc");
-        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 200) );
+        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100) );
 
     },
     
