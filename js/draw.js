@@ -112,7 +112,7 @@ var draw = {
                 var el1 = $('svg path').first(); el1.attr("id", "000");
                 var el2 = $('svg path').last(); el2.attr("id", "999");
                 elements = elements.add(el1).add(el2);
-                    
+
             } else if(type == 'nodelinks') {
 
                 elements = $('svg g g g');
@@ -121,8 +121,8 @@ var draw = {
 
             } else {
 
-                    elements = $('svg g.title, svg g.actor, svg g.signal');
-                    elements.hover(function() {$(this).hide(100).show(100);});
+                elements = $('svg g.title, svg g.actor, svg g.signal');
+                elements.hover(function() {$(this).hide(100).show(100);});
 
             }
 
