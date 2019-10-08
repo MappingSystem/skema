@@ -173,6 +173,8 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
+        $(e).mouseenter(function(){$(this).css('fill','teal')})
+            .mouseout(function(){$(this).css('fill','')});
 
     },
 
