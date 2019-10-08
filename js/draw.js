@@ -221,6 +221,7 @@ var draw = {
             draw.skema = draw.encode(obj.query);
 
             if(itemIndex != index - 1) {
+                $('.editor').html('');
                 var editor = draw.editor();
                 editor.setValue(draw.skema);
                 editor.clearSelection();
@@ -265,7 +266,6 @@ var draw = {
 
     editor : function() {
 
-        $('.editor').html('');
         var editor = ace.edit("graphiql");
         editor.setOptions({fontSize: "10pt"});
         editor.setTheme("ace/theme/crimson_editor");
