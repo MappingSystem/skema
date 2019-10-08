@@ -116,24 +116,13 @@ var draw = {
             editor.clearSelection();
             editor.gotoLine(1, 1);
 
+            var elements;
             switch(draw.type) {
 
                 case 'flowchart':
 
-                    $('svg rect.start-element').each(function() {
-                        this.id = '00';
-                    });
-
-                    $('svg rect.flowchart, svg path.flowchart').each(function( index ) {
-                        this.id = draw.pad(index + 1, 2);
-                    });
-
-                    $('svg rect.end-element').each(function() {
-                        this.id = '99';
-                    });
-
-                    draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
-                    draw.elements.css({'fill-opacity':'0.1'})
+                    elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
+                    elements.css({'fill-opacity':'0.1'})
                        .mouseenter(function(){$(this).css('fill','teal')})
                        .mouseout(function(){$(this).css('fill','')});
 
@@ -141,17 +130,13 @@ var draw = {
 
                 case 'railroad':
 
-                    $('svg rect').each(function( index ) {
-                        this.id = draw.pad(index + 1, 3);
-                    });
-
-                    draw.elements = $('svg rect').css({'fill-opacity':'0.3'})
+                    elements = $('svg rect').css({'fill-opacity':'0.3'})
                        .mouseenter(function(){$(this).css('fill', 'cyan')})
                        .mouseout(function(){$(this).css('fill','')});
 
                     var el1 = $('svg path').first(); el1.attr("id", "000");
                     var el2 = $('svg path').last(); el2.attr("id", "999");
-                    draw.elements = draw.elements.add(el1).add(el2);
+                    elements = elements.add(el1).add(el2);
                     
                 break;
 
@@ -159,14 +144,8 @@ var draw = {
 
                     $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
-                    $('svg g g g').each(function( index ) {
-                        this.id = draw.pad(index, 4);
-                    });
-
-                    $('svg g g g').last().attr("id", "9999");
-                    
-                    draw.elements = $('svg g g g');
-                    draw.elements.hover(function() {
+                    elements = $('svg g g g');
+                    elements.hover(function() {
                         
                         $(this).hide(100).show(100);
 
@@ -176,20 +155,8 @@ var draw = {
 
                 default:
 
-                    $('svg g.title').each(function( index ) {
-                        this.id = '00';
-                    });
-
-                    $('svg g.actor').each(function( index ) {
-                        this.id = '1' + (Math.floor(index/2) + 1).toString();
-                    });
-
-                    $('svg g.signal').each(function( index ) {
-                        this.id = '2' + (index + 1).toString();
-                    });
-
-                    draw.elements = $('svg g.title, svg g.actor, svg g.signal');
-                    draw.elements.hover(function() {
+                    elements = $('svg g.title, svg g.actor, svg g.signal');
+                    elements.hover(function() {
                         
                         $(this).hide(100).show(100);
 
@@ -199,7 +166,7 @@ var draw = {
 
             }
 
-            draw.elements.each(function() {draw.node(this);}).click(function() {draw.click(this);});
+            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
@@ -273,10 +240,11 @@ var draw = {
 
     },
 
-    node : function(e) {
+    node : function(i, e) {
 
         $(e).css({'cursor':'pointer'});
         e.parentNode.appendChild(e);
+        e.id = draw.pad(i, 2);
 
     },
 
