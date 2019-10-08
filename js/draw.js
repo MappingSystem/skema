@@ -84,19 +84,20 @@ var draw = {
 
             window.requestAnimationFrame(draw.element);
 
-        } else {
+        } else if(select != 'hand') {
 
+            var elements;
             $('.loadingImg').hide();
+
             //$('.editor').height($('.diagram').height() - 94);
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.chetabahana-skema').height($('.editor').height() + 200);
             editor.clearSelection(); editor.gotoLine(1, 1);
 
-            var elements;
             if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
-            else if(select != 'hand') {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            else  {elements = $('svg g.title, svg g.actor, svg g.signal');}
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
