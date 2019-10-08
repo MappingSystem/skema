@@ -2,13 +2,7 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
-var editor = ace.edit("graphiql");
-editor.setOptions({fontSize: "10pt"});
-editor.setTheme("ace/theme/crimson_editor");
-editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 200) );
-
-var draw = {
+var type, skema, editor, draw = {
 
     kind : [
         { 
@@ -32,7 +26,6 @@ var draw = {
         var font_size = (select == 'hand')? 12: 13;
 
         var type = (!draw.type)? 'sequence': draw.type;
-        var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
         $('.diagram').html(''); $(".loadingImg").show();
@@ -40,6 +33,7 @@ var draw = {
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
         if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
+        if (draw.skema)? skema = draw.skema; else {draw.editor(); skema = editor.getValue();}
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -115,6 +109,16 @@ var draw = {
 
     },
 
+    editor : function() {
+
+        editor = ace.edit("graphiql");
+        editor.setOptions({fontSize: "10pt"});
+        editor.setTheme("ace/theme/crimson_editor");
+        editor.getSession().setMode("ace/mode/asciidoc");
+        editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 200) );
+
+    },
+    
     makeSvg : function(input, skema) {
 
         var $ = go.GraphObject.make;
@@ -145,29 +149,14 @@ var draw = {
 
     },
 
-    encode : function(data) {
-
-        return data.replace(/&apos;/g, "'")
-                   .replace(/&quot;/g, '"')
-                   .replace(/&gt;/g, '>')
-                   .replace(/&lt;/g, '<')
-                   .replace(/&amp;/g, '&')
-                   .replace(/<p>/g, '')
-                   .replace(/<\/p>/g, '')
-                   .replace(/‘/g, "'")
-                   .replace(/’/g, "'")
-        ;
-
-    }, 
-
     change : function() {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         draw.params = params; console.log(draw.params);
 
-        $(".theme").val("simple"); 
-        draw.diagram();
+        if ($(".theme").val() != "hand") draw.diagram();
+        else {$('.editor').html(''); draw.editor(); editor.setValue(draw.skema);}
 
     },
 
@@ -188,6 +177,21 @@ var draw = {
         return s;
 
     },
+
+    encode : function(data) {
+
+        return data.replace(/&apos;/g, "'")
+                   .replace(/&quot;/g, '"')
+                   .replace(/&gt;/g, '>')
+                   .replace(/&lt;/g, '<')
+                   .replace(/&amp;/g, '&')
+                   .replace(/<p>/g, '')
+                   .replace(/<\/p>/g, '')
+                   .replace(/‘/g, "'")
+                   .replace(/’/g, "'")
+        ;
+
+    }, 
 
     svg : {}
 
