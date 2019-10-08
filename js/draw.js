@@ -33,7 +33,7 @@ var type, skema, editor, draw = {
 
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
         if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
-        if (draw.skema)? skema = draw.skema; else {draw.editor(); skema = editor.getValue();}
+        if (draw.skema) skema = draw.skema; else {draw.editor(); skema = editor.getValue();}
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
