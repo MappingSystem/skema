@@ -145,22 +145,14 @@ var draw = {
                     $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
                     elements = $('svg g g g');
-                    elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    });
+                    elements.hover(function() {$(this).hide(100).show(100);}
 
                 break;
 
                 default:
 
                     elements = $('svg g.title, svg g.actor, svg g.signal');
-                    elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    }
+                    elements.hover(function() {$(this).hide(100).show(100);}
 
                 );
 
