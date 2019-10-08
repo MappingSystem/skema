@@ -156,7 +156,6 @@ var type, skema, editor, draw = {
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         draw.params = params; console.log(draw.params);
 
-        $(".theme").val("simple"); 
         draw.diagram();
 
     },
