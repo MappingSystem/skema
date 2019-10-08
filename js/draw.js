@@ -25,7 +25,7 @@ var draw = {
         var js;
         var diagram;
 
-        var kinds = this.kind[0];
+        var kinds = draw.kind[0];
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
@@ -92,13 +92,13 @@ var draw = {
     click : function(e) {
 
 
-        var kinds = this.kind[0];
-        this.svg[this.type] = $('svg').get(0);
-        var index = 0; for (key in kinds) {if(key == this.type) nIndex = index; index++;}
+        var kinds = draw.kind[0];
+        draw.svg[draw.type] = $('svg').get(0);
+        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        this.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', e.id);
@@ -164,10 +164,10 @@ var draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        this.params = params; console.log(this.params);
+        draw.params = params; console.log(draw.params);
 
         $(".theme").val("simple"); 
-        this.diagram();
+        draw.diagram();
 
     },
 
