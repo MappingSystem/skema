@@ -47,7 +47,7 @@ var draw = {
 
                 if(type == 'sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'railroad') {diagram = eval(skema).format(); diagram.addTo(g);}
+                else if(type == 'railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
                 else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
 
