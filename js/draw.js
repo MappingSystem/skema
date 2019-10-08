@@ -54,7 +54,7 @@ var draw = {
             } finally {
 
                 draw.type = type;
-                draw.checkReady();
+                draw.checkReady(draw.type);
 
             }
 
@@ -79,7 +79,7 @@ var draw = {
 
     }, 
 
-    checkReady : function() {
+    checkReady : function(type) {
 
         if (!$('.diagram').find('svg')[0]) {
 
@@ -96,38 +96,30 @@ var draw = {
             editor.gotoLine(1, 1);
 
             var elements;
-            switch(draw.type) {
+            if (type == 'flowchart') {
 
-                case 'flowchart':
+                elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
+                elements.css({'fill-opacity':'0.1'})
+                   .mouseenter(function(){$(this).css('fill','teal')})
+                   .mouseout(function(){$(this).css('fill','')});
 
-                    elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
-                    elements.css({'fill-opacity':'0.1'})
-                       .mouseenter(function(){$(this).css('fill','teal')})
-                       .mouseout(function(){$(this).css('fill','')});
+            } else if(type == 'railroad') {
 
-                break;
+                elements = $('svg rect').css({'fill-opacity':'0.3'})
+                   .mouseenter(function(){$(this).css('fill', 'cyan')})
+                   .mouseout(function(){$(this).css('fill','')});
 
-                case 'railroad':
-
-                    elements = $('svg rect').css({'fill-opacity':'0.3'})
-                       .mouseenter(function(){$(this).css('fill', 'cyan')})
-                       .mouseout(function(){$(this).css('fill','')});
-
-                    var el1 = $('svg path').first(); el1.attr("id", "000");
-                    var el2 = $('svg path').last(); el2.attr("id", "999");
-                    elements = elements.add(el1).add(el2);
+                var el1 = $('svg path').first(); el1.attr("id", "000");
+                var el2 = $('svg path').last(); el2.attr("id", "999");
+                elements = elements.add(el1).add(el2);
                     
-                break;
+            } else if(type == 'nodelinks') {
 
-                case 'nodelinks':
+                elements = $('svg g g g');
+                elements.hover(function() {$(this).hide(100).show(100);});
+                $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
-                    elements = $('svg g g g');
-                    elements.hover(function() {$(this).hide(100).show(100);});
-                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-
-                break;
-
-                default:
+            } else {
 
                     elements = $('svg g.title, svg g.actor, svg g.signal');
                     elements.hover(function() {$(this).hide(100).show(100);});
@@ -136,15 +128,11 @@ var draw = {
 
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
-            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
-            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
-
         } 
     },
 
     click : function(e) {
 
-        //if ($(".theme").val() == "hand") this.tChange();
         this.svg[this.type] = $('svg').get(0);
 
         var kinds = this.kind[0];
