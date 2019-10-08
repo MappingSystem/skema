@@ -91,7 +91,7 @@ var draw = {
             //$('.editor').height($('.diagram').height() - 94);
             //$('.editor-wrapper').height($('.editor').height() + 3);
             //$('.chetabahana-skema').height($('.editor').height() + 200);
-            editor.clearSelection();editor.gotoLine(1, 1);
+            editor.clearSelection(); editor.gotoLine(1, 1);
 
             var elements;
             if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
@@ -105,9 +105,9 @@ var draw = {
 
     click : function(e) {
 
-        this.svg[this.type] = $('svg').get(0);
 
         var kinds = this.kind[0];
+        this.svg[this.type] = $('svg').get(0);
         var index = 0; for (key in kinds) {if(key == this.type) nIndex = index; index++;}
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
