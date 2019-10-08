@@ -200,7 +200,7 @@ var draw = {
 
             }
 
-            elements.each(function() {draw.node(index, this);}).click(function() {draw.click(this);});
+            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
