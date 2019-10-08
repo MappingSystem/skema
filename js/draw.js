@@ -216,11 +216,22 @@ var draw = {
 
         $.getJSON(jsonfile).done(function(result){
 
+            $('.diagram').html('');
             var editor = draw.editor();
+
             var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
-            if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {$(".theme").val("simple"); draw.tChange();}
+            draw.input = obj.input;
+            draw.skema = draw.encode(obj.query);
+
+            if(itemIndex != index - 1) {
+                editor.setValue(draw.skema);
+                editor.clearSelection();
+                editor.gotoLine(1, 1);
+            }
+            else {
+                $(".theme").val("simple");
+                draw.tChange();
+            }
 
         });
 
@@ -239,7 +250,7 @@ var draw = {
 
     },
 
-    txEncode : function(data) {
+    encode : function(data) {
 
         return data.replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
