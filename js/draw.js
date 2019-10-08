@@ -156,7 +156,7 @@ var type, skema, editor, draw = {
         draw.params = params; console.log(draw.params);
 
         if ($(".theme").val() != "hand") draw.diagram();
-        else {$('.editor').html(''); draw.editor(); editor.setValue(draw.skema);}
+        else {draw.editor(); editor.setValue(draw.skema);}
 
     },
 
