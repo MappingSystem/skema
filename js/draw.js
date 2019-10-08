@@ -1,5 +1,5 @@
 $(window).load(function() {draw.diagram();});
-$('.theme').change(function() {draw.tChange();});
+$('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
 var editor = ace.edit("graphiql");
@@ -45,37 +45,16 @@ var draw = {
 
             try {
 
-                if(type == 'sequence') {
-
-                    diagram = Diagram.parse(skema);
-                    diagram.drawSVG(g, input);
-
-                } else if(type == 'flowchart'){
-
-                    diagram = flowchart.parse(skema);
-                    diagram.drawSVG(g, input);
-
-                } else if(type == 'railroad'){
-
-                    diagram = eval(skema).format();
-                    diagram.addTo(g);
-
-                } else if(type == 'nodelinks'){
-
-                    diagram = draw.makeSvg(input, skema);
-                    g.prepend(diagram);
-
-                } else if(type == 'scenetree'){
-
-                    diagram = d3.select(".diagram");
-                    g.prepend(draw.svg['sequence']);
-
-                }
+                if(type == 'sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
+                else if(type == 'flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
+                else if(type == 'railroad') {diagram = eval(skema).format(); diagram.addTo(g);}
+                else if(type == 'nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
+                else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
 
             } finally {
 
                 draw.type = type;
-                draw.checkReady();
+                draw.element(draw.type);
 
             }
 
@@ -100,11 +79,11 @@ var draw = {
 
     }, 
 
-    checkReady : function() {
+    element : function(type) {
 
         if (!$('.diagram').find('svg')[0]) {
 
-            window.requestAnimationFrame(draw.checkReady);
+            window.requestAnimationFrame(draw.element);
 
         } else {
 
@@ -116,121 +95,63 @@ var draw = {
             editor.clearSelection();
             editor.gotoLine(1, 1);
 
-            switch(draw.type) {
+            var elements;
+            if (type == 'flowchart') {
 
-                case 'flowchart':
+                elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
+                elements.css({'fill-opacity':'0.1'})
+                   .mouseenter(function(){$(this).css('fill','teal')})
+                   .mouseout(function(){$(this).css('fill','')});
 
-                    $('svg rect.start-element').each(function() {
-                        this.id = '00';
-                    });
+            } else if(type == 'railroad') {
 
-                    $('svg rect.flowchart, svg path.flowchart').each(function( index ) {
-                        this.id = draw.pad(index + 1, 2);
-                    });
+                elements = $('svg rect').css({'fill-opacity':'0.3'})
+                   .mouseenter(function(){$(this).css('fill', 'cyan')})
+                   .mouseout(function(){$(this).css('fill','')});
 
-                    $('svg rect.end-element').each(function() {
-                        this.id = '99';
-                    });
+                var el1 = $('svg path').first(); el1.attr("id", "000");
+                var el2 = $('svg path').last(); el2.attr("id", "999");
+                elements = elements.add(el1).add(el2);
 
-                    draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
-                    draw.elements.css({'fill-opacity':'0.1'})
-                       .mouseenter(function(){$(this).css('fill','teal')})
-                       .mouseout(function(){$(this).css('fill','')});
+            } else if(type == 'nodelinks') {
 
-                break;
+                elements = $('svg g g g');
+                elements.hover(function() {$(this).hide(100).show(100);});
+                $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
 
-                case 'railroad':
+            } else {
 
-                    $('svg rect').each(function( index ) {
-                        this.id = draw.pad(index + 1, 3);
-                    });
-
-                    draw.elements = $('svg rect').css({'fill-opacity':'0.3'})
-                       .mouseenter(function(){$(this).css('fill', 'cyan')})
-                       .mouseout(function(){$(this).css('fill','')});
-
-                    var el1 = $('svg path').first(); el1.attr("id", "000");
-                    var el2 = $('svg path').last(); el2.attr("id", "999");
-                    draw.elements = draw.elements.add(el1).add(el2);
-                    
-                break;
-
-                case 'nodelinks':
-
-                    $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-
-                    $('svg g g g').each(function( index ) {
-                        this.id = draw.pad(index, 4);
-                    });
-
-                    $('svg g g g').last().attr("id", "9999");
-                    
-                    draw.elements = $('svg g g g');
-                    draw.elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    });
-
-                break;
-
-                default:
-
-                    $('svg g.title').each(function( index ) {
-                        this.id = '00';
-                    });
-
-                    $('svg g.actor').each(function( index ) {
-                        this.id = '1' + (Math.floor(index/2) + 1).toString();
-                    });
-
-                    $('svg g.signal').each(function( index ) {
-                        this.id = '2' + (index + 1).toString();
-                    });
-
-                    draw.elements = $('svg g.title, svg g.actor, svg g.signal');
-                    draw.elements.hover(function() {
-                        
-                        $(this).hide(100).show(100);
-
-                    }
-
-                );
+                elements = $('svg g.title, svg g.actor, svg g.signal');
+                elements.hover(function() {$(this).hide(100).show(100);});
 
             }
 
-            draw.elements.css({'cursor':'pointer'}).each(function() {
-                this.parentNode.appendChild(this);
-            }).click(function() {draw.elClick(this.id);});
-
-            //if ($(".theme").val() == "hand") $('.loadingImg').hide();
-            //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
+            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
     },
 
-    elClick : function(id) {
+    click : function(e) {
 
-        //if ($(".theme").val() == "hand") draw.tChange();
-        draw.svg[draw.type] = $('svg').get(0);
+        this.svg[this.type] = $('svg').get(0);
 
-        var kinds = draw.kind[0];
-        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
+        var kinds = this.kind[0];
+        var index = 0; for (key in kinds) {if(key == this.type) nIndex = index; index++;}
 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(id);
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+        this.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', id);
+        jsonfile = jsonfile.replace('assets', e.id);
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.txEncode(obj.query);
+            draw.input = obj.input; draw.skema = draw.encode(obj.query);
             if(itemIndex != index - 1) editor.setValue(draw.skema);
-            else {$(".theme").val("simple"); draw.tChange();}
+            else {$(".theme").val("simple"); draw.change();}
 
         });
 
@@ -249,7 +170,7 @@ var draw = {
 
     },
 
-    txEncode : function(data) {
+    encode : function(data) {
 
         return data.replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
@@ -264,7 +185,7 @@ var draw = {
 
     }, 
 
-    tChange : function() {
+    change : function() {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
@@ -275,7 +196,15 @@ var draw = {
 
     },
 
-    pad : function(data, size) {
+    node : function(i, e) {
+
+        $(e).css({'cursor':'pointer'});
+        e.parentNode.appendChild(e);
+        e.id = draw.pad(i, 2);
+
+    },
+
+     pad : function(data, size) {
 
         var s = String(data);
         while (s.length < (size || 2)) {s = "0" + s;}
