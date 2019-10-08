@@ -116,6 +116,7 @@ var draw = {
             editor.clearSelection();
             editor.gotoLine(1, 1);
 
+            var elements;
             switch(draw.type) {
 
                 case 'flowchart':
@@ -132,8 +133,8 @@ var draw = {
                         this.id = '99';
                     });
 */
-                    draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
-                    draw.elements.css({'fill-opacity':'0.1'})
+                    elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
+                    elements.css({'fill-opacity':'0.1'})
                        .mouseenter(function(){$(this).css('fill','teal')})
                        .mouseout(function(){$(this).css('fill','')});
 
@@ -145,13 +146,13 @@ var draw = {
                         this.id = draw.pad(index + 1, 3);
                     });
 */
-                    draw.elements = $('svg rect').css({'fill-opacity':'0.3'})
+                    elements = $('svg rect').css({'fill-opacity':'0.3'})
                        .mouseenter(function(){$(this).css('fill', 'cyan')})
                        .mouseout(function(){$(this).css('fill','')});
 
                     var el1 = $('svg path').first(); el1.attr("id", "000");
                     var el2 = $('svg path').last(); el2.attr("id", "999");
-                    draw.elements = draw.elements.add(el1).add(el2);
+                    elements = elements.add(el1).add(el2);
                     
                 break;
 
@@ -165,8 +166,8 @@ var draw = {
 
                     $('svg g g g').last().attr("id", "9999");
 */
-                    draw.elements = $('svg g g g');
-                    draw.elements.hover(function() {
+                    elements = $('svg g g g');
+                    elements.hover(function() {
                         
                         $(this).hide(100).show(100);
 
@@ -188,8 +189,8 @@ var draw = {
                         this.id = '2' + (index + 1).toString();
                     });
 */
-                    draw.elements = $('svg g.title, svg g.actor, svg g.signal');
-                    draw.elements.hover(function() {
+                    elements = $('svg g.title, svg g.actor, svg g.signal');
+                    elements.hover(function() {
                         
                         $(this).hide(100).show(100);
 
@@ -199,7 +200,7 @@ var draw = {
 
             }
 
-            draw.elements.each(function() {draw.node(this);}).click(function() {draw.click(this);});
+            elements.each(function() {draw.node(index, this);}).click(function() {draw.click(this);});
 
             //if ($(".theme").val() == "hand") $('.loadingImg').hide();
             //else {draw.svg[type] = $('svg').get(0); console.log(draw.svg[type]);}
