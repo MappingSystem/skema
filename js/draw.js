@@ -119,7 +119,7 @@ var draw = {
             switch(draw.type) {
 
                 case 'flowchart':
-
+/*
                     $('svg rect.start-element').each(function() {
                         this.id = '00';
                     });
@@ -131,7 +131,7 @@ var draw = {
                     $('svg rect.end-element').each(function() {
                         this.id = '99';
                     });
-
+*/
                     draw.elements = $('svg rect.start-element, svg rect.flowchart, svg path.flowchart, svg rect.end-element');
                     draw.elements.css({'fill-opacity':'0.1'})
                        .mouseenter(function(){$(this).css('fill','teal')})
@@ -140,11 +140,11 @@ var draw = {
                 break;
 
                 case 'railroad':
-
+/*
                     $('svg rect').each(function( index ) {
                         this.id = draw.pad(index + 1, 3);
                     });
-
+*/
                     draw.elements = $('svg rect').css({'fill-opacity':'0.3'})
                        .mouseenter(function(){$(this).css('fill', 'cyan')})
                        .mouseout(function(){$(this).css('fill','')});
@@ -158,13 +158,13 @@ var draw = {
                 case 'nodelinks':
 
                     $('#type')[0].href = 'nodelinks/api/symbols/Diagram.html#makeSvg';
-
+/*
                     $('svg g g g').each(function( index ) {
                         this.id = draw.pad(index, 4);
                     });
 
                     $('svg g g g').last().attr("id", "9999");
-                    
+*/
                     draw.elements = $('svg g g g');
                     draw.elements.hover(function() {
                         
@@ -175,7 +175,7 @@ var draw = {
                 break;
 
                 default:
-
+/*
                     $('svg g.title').each(function( index ) {
                         this.id = '00';
                     });
@@ -187,7 +187,7 @@ var draw = {
                     $('svg g.signal').each(function( index ) {
                         this.id = '2' + (index + 1).toString();
                     });
-
+*/
                     draw.elements = $('svg g.title, svg g.actor, svg g.signal');
                     draw.elements.hover(function() {
                         
@@ -273,10 +273,11 @@ var draw = {
 
     },
 
-    node : function(e) {
+    node : function(i, e) {
 
         $(e).css({'cursor':'pointer'});
         e.parentNode.appendChild(e);
+        e.id = draw.pad(i, 2);
 
     },
 
