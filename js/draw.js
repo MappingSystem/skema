@@ -54,12 +54,12 @@ var draw = {
                     editor.destroy();
                     $(".editor").removeClass();
 
-                    $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").height(375).css({'position':'absolute','top':0,'left':0});
-
                     //$('.editor').height($('.diagram').height() - 94);
                     //$('.editor-wrapper').height($('.editor').height() + 3);
                     //$('.chetabahana-skema').height($('.editor').height() + 200);
+
+                    $('.diagram').html(" <canvas></canvas> ");
+                    $("#graphiql").height(375).css({'position':'absolute','top':0,'left':0});
 
                 }
             }
