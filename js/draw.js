@@ -29,9 +29,9 @@ var draw = {
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
-        var type = (!draw.type)? 'sequence': draw.type;
-
         var font_size = (select == 'hand')? 14: 13;
+
+        var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
