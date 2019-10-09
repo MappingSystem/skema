@@ -44,8 +44,9 @@ var draw = {
 
                 if (type != 'scenetree') {
 
-                    $('.diagram').html('');
+                    $('.diagram').html('')
                     editor.clearSelection(); editor.gotoLine(1, 1);
+                    if (type != 'sequence') $('.diagram').css({'overflow': 'hidden';});
 
                 }
                 else {
@@ -54,7 +55,7 @@ var draw = {
                     $(".editor").removeClass().html('');
 
                     $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").height(375).css({position:'absolute',top:0,left:0});
+                    $("#graphiql").height(375).css({'position':'absolute','top':0,'left':0});
 
                     //$('.editor').height($('.diagram').height() - 94);
                     //$('.editor-wrapper').height($('.editor').height() + 3);
