@@ -54,7 +54,7 @@ var draw = {
                     $(".editor").removeClass().html('');
 
                     $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").css({position: 'absolute',height:375px,top:0,left:0});
+                    $("#graphiql").height(375).css({position:'absolute',top:0,left:0});
 
                     //$('.editor').height($('.diagram').height() - 94);
                     //$('.editor-wrapper').height($('.editor').height() + 3);
