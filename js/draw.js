@@ -56,9 +56,7 @@ var draw = {
                     //$('.chetabahana-skema').height($('.editor').height() + 200);
 
                     $('.diagram').html(' <canvas></canvas> ');
-                    var div = document.createElement('div'); div.setAttribute('id', 'graphiql');
-                    $('#graphiql').height(375).css({'position':'absolute','top':0,'left':0}).append('.contact_left');
-
+                    //$('<div/>', {id: 'graphiql'}).appendTo('.contact_left');
                 }
             }
         });
