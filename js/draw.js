@@ -51,9 +51,7 @@ var draw = {
                 }
                 else {
 
-                    //$('.editor').height($('.diagram').height() - 94);
-                    //$('.editor-wrapper').height($('.editor').height() + 3);
-                    //$('.chetabahana-skema').height($('.editor').height() + 200);
+                    $('#graphiql').parent().append($('#graphiql'));
                     $('.diagram').html(' <canvas></canvas> ');
 
                 }
@@ -75,7 +73,7 @@ var draw = {
                 if (type == 'scenetree') {
 
                      $('#graphiql').show(); $('#editor').hide();
-                     editor.destroy(); $("#editor").remove();
+                     //editor.destroy(); $("#editor").remove();
 
                 }
 
