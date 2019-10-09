@@ -48,7 +48,7 @@ var draw = {
                 else {
                     editor.destroy();
                     $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").removeClass().html('').css({position: 'absolute',top:0,left:0});
+                    $("#graphiql").removeClass().html('').css({position: 'absolute',height:375px;top:0,left:0});
                 }
             }
         });
