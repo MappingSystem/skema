@@ -31,8 +31,9 @@ var draw = {
         var select = $(".theme").val();
         var type = (!draw.type)? 'sequence': draw.type;
 
+        var font_size = (select == 'hand')? 14: 13;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type!='sequence')? draw.input: {theme: select, "font-size": 13};
+        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
         _.each(kinds, function(value, key) {
             if (key == type) {
