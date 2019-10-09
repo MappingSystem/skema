@@ -52,7 +52,7 @@ var draw = {
                 else {
 
                     editor.destroy();
-                    $(".editor").removeClass().html('');
+                    $(".editor").removeClass();
 
                     $('.diagram').html(" <canvas></canvas> ");
                     $("#graphiql").height(375).css({'position':'absolute','top':0,'left':0});
