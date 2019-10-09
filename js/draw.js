@@ -44,12 +44,18 @@ var draw = {
 
                 if (type != 'scenetree') {
                     $('.diagram').html('');
+                    editor.clearSelection(); editor.gotoLine(1, 1);
                 }
                 else {
                     editor.destroy();
                     $(".editor").removeClass().html('');
                     $('.diagram').html(" <canvas></canvas> ");
                     $("#graphiql").css({position: 'absolute',height:375px,top:0,left:0});
+
+                    //$('.editor').height($('.diagram').height() - 94);
+                    //$('.editor-wrapper').height($('.editor').height() + 3);
+                    //$('.chetabahana-skema').height($('.editor').height() + 200);
+
                 }
             }
         });
@@ -65,11 +71,6 @@ var draw = {
                 else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
 
             } finally {
-
-                //$('.editor').height($('.diagram').height() - 94);
-                //$('.editor-wrapper').height($('.editor').height() + 3);
-                //$('.chetabahana-skema').height($('.editor').height() + 200);
-                editor.clearSelection(); editor.gotoLine(1, 1);
 
                 $('.loadingImg').hide();
                 draw.type = type;
