@@ -35,11 +35,10 @@ var draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        $('.diagram').html(''); $(".loadingImg").show();
-        $('#type').text(type); $('#type')[0].href = '/' + type;
-
         _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') {$('.editor').html(''); $(" <canvas></canvas> ").appendTo(".diagram");}}});
+        if (type != 'scenetree') {$('.diagram').html('');} else {editor.destroy();
+        $("#graphiql").removeClass().html(''); $('.diagram').html(" <canvas></canvas> ");}}});
+        $('#type').text(type); $('#type')[0].href = '/' + type; $(".loadingImg").show();
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -166,7 +165,6 @@ var draw = {
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         draw.params = params; console.log(draw.params);
 
-        $(".theme").val("simple"); 
         draw.diagram();
 
     },
