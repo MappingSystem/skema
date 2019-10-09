@@ -75,6 +75,7 @@ var draw = {
 
             } finally {
 
+                if (type == 'scenetree') {editor.destroy(); $("#editor").remove();} //editor.setValue("");
                 $('.loadingImg').hide();
                 draw.type = type;
                 draw.element();
@@ -97,7 +98,6 @@ var draw = {
 
         } else if(select != 'hand') {
 
-            if (type == 'scenetree') {editor.destroy(); $("#editor").remove();} //editor.setValue("");
             if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
