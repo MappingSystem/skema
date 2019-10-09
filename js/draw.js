@@ -51,8 +51,6 @@ var draw = {
                 }
                 else {
 
-                    editor.destroy();
-                    $(".editor").removeClass();
 
                     //$('.editor').height($('.diagram').height() - 94);
                     //$('.editor-wrapper').height($('.editor').height() + 3);
@@ -103,6 +101,8 @@ var draw = {
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
             else {elements = $('svg g.title, svg g.actor, svg g.signal');}
+
+            if(type == 'scenetree') {editor.destroy(); $(".editor").removeClass();}
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
