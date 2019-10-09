@@ -46,7 +46,7 @@ var draw = {
 
                     $('.diagram').html('')
                     editor.clearSelection(); editor.gotoLine(1, 1);
-                    if (type != 'sequence') $('.diagram').css({'overflow': 'hidden';});
+                    if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
 
                 }
                 else {
