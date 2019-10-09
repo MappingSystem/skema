@@ -51,9 +51,7 @@ var draw = {
                 }
                 else {
 
-                    //$('.editor').height($('.diagram').height() - 94);
-                    //$('.editor-wrapper').height($('.editor').height() + 3);
-                    //$('.chetabahana-skema').height($('.editor').height() + 200);
+                    $('#graphiql').parent().append($('#graphiql'));
                     $('.diagram').html(' <canvas></canvas> ');
 
                 }
@@ -72,15 +70,9 @@ var draw = {
 
             } finally {
 
-                if (type == 'scenetree') {
-                     $('#graphiql').show();
-                     editor.destroy(); //editor.setValue("");
-                     $("#editor").remove();
-                }
-
+                (type == 'scenetree')? $('#graphiql').show(): $('#graphiql').hide();
+                draw.type = type; draw.element();
                 $('.loadingImg').hide();
-                draw.type = type;
-                draw.element();
 
             }
 
