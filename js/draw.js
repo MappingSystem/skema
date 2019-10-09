@@ -51,7 +51,6 @@ var draw = {
                 }
                 else {
 
-
                     //$('.editor').height($('.diagram').height() - 94);
                     //$('.editor-wrapper').height($('.editor').height() + 3);
                     //$('.chetabahana-skema').height($('.editor').height() + 200);
