@@ -2,7 +2,7 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
-var editor = ace.edit("graphiql");
+var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
@@ -56,8 +56,9 @@ var draw = {
                     //$('.editor-wrapper').height($('.editor').height() + 3);
                     //$('.chetabahana-skema').height($('.editor').height() + 200);
 
-                    $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").height(375).css({'position':'absolute','top':0,'left':0});
+                    $('.diagram').html(' <canvas></canvas> ');
+                    var div = document.createElement('div'); div.setAttribute('id', 'graphiql');
+                    $('#graphiql').height(375).css({'position':'absolute','top':0,'left':0}).append('.editor-wrapper');
 
                 }
             }
@@ -75,6 +76,11 @@ var draw = {
 
             } finally {
 
+
+                if(type == 'scenetree') {
+                    editor.destroy(); $(".editor").remove(); //editor.setValue("");
+                }
+                
                 $('.loadingImg').hide();
                 draw.type = type;
                 draw.element();
@@ -101,8 +107,6 @@ var draw = {
             else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if(type == 'nodelinks') {elements = $('svg g g g');}
             else {elements = $('svg g.title, svg g.actor, svg g.signal');}
-
-            if(type == 'scenetree') {editor.destroy(); $(".editor").removeClass();}
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
