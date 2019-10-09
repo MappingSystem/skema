@@ -75,8 +75,7 @@ var draw = {
                 if (type == 'scenetree') {
 
                      $('#graphiql').show(); $('#editor').hide();
-                     editor.setValue(""); editor.destroy(); 
-                     $("#editor").remove();
+                     editor.destroy(); $("#editor").remove();
 
                 }
 
