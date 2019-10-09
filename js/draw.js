@@ -70,12 +70,8 @@ var draw = {
 
             } finally {
 
-                if (type == 'scenetree') {
-
-                     $('#graphiql').show(); $('#editor').hide();
-                     //editor.destroy(); $("#editor").remove();
-
-                }
+                if (type == 'scenetree') $('#graphiql').show();
+                else $('#graphiql').hide();
 
                 $('.loadingImg').hide();
                 draw.type = type;
