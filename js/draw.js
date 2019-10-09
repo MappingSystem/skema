@@ -70,12 +70,9 @@ var draw = {
 
             } finally {
 
-                if (type == 'scenetree') $('#graphiql').show();
-                else $('#graphiql').hide();
-
+                (type == 'scenetree')? $('#graphiql').show(): $('#graphiql').hide();
+                draw.type = type; draw.element();
                 $('.loadingImg').hide();
-                draw.type = type;
-                draw.element();
 
             }
 
