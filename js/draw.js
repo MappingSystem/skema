@@ -29,7 +29,7 @@ var draw = {
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
-        var font_size = (select == 'hand')? 12: 13;
+        var font_size = (select == 'hand')? 13: 14;
 
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
@@ -43,12 +43,23 @@ var draw = {
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
                 if (type != 'scenetree') {
+
                     $('.diagram').html('');
+                    editor.clearSelection(); editor.gotoLine(1, 1);
+
                 }
                 else {
+
                     editor.destroy();
+                    $(".editor").removeClass().html('');
+
                     $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").removeClass().html('').css({position: 'absolute',top:0,left:0});
+                    $("#graphiql").height(375).css({position:'absolute',top:0,left:0});
+
+                    //$('.editor').height($('.diagram').height() - 94);
+                    //$('.editor-wrapper').height($('.editor').height() + 3);
+                    //$('.chetabahana-skema').height($('.editor').height() + 200);
+
                 }
             }
         });
@@ -64,11 +75,6 @@ var draw = {
                 else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
 
             } finally {
-
-                //$('.editor').height($('.diagram').height() - 94);
-                //$('.editor-wrapper').height($('.editor').height() + 3);
-                //$('.chetabahana-skema').height($('.editor').height() + 200);
-                editor.clearSelection(); editor.gotoLine(1, 1);
 
                 $('.loadingImg').hide();
                 draw.type = type;
