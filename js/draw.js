@@ -35,10 +35,23 @@ var draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type != 'scenetree') {$('.diagram').html('');} else {editor.destroy();
-        $("#graphiql").removeClass().html(''); $('.diagram').html(" <canvas></canvas> ");}}});
-        $('#type').text(type); $('#type')[0].href = '/' + type; $(".loadingImg").show();
+        _.each(kinds, function(value, key) {
+            if (key == type) {
+
+                $(".loadingImg").show();
+                js = '/' + value + '?t=' + $.now();
+                $('#type').text(type); $('#type')[0].href = '/' + type;
+
+                if (type != 'scenetree') {
+                    $('.diagram').html('');
+                }
+                else {
+                    editor.destroy();
+                    $('.diagram').html(" <canvas></canvas> ");
+                    $("#graphiql").removeClass().html('').css({position: 'absolute',top:0,left:0});
+                }
+            }
+        });
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
