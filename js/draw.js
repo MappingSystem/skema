@@ -70,19 +70,8 @@ var draw = {
 
             } finally {
 
-<<<<<<< HEAD
-                if (type == 'scenetree') {
-
-                     $('#graphiql').show(); $('#editor').hide();
-                     editor.setValue(""); editor.destroy(); 
-                     $("#editor").remove();
-
-                }
-
-=======
                 (type == 'scenetree')? $('#graphiql').show(): $('#graphiql').hide();
                 draw.type = type; draw.element();
->>>>>>> gh-pages
                 $('.loadingImg').hide();
 
             }
