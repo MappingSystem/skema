@@ -29,11 +29,10 @@ var draw = {
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
-        var font_size = (select == 'hand')? 13: 14;
-
         var type = (!draw.type)? 'sequence': draw.type;
+
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
+        var input = (type!='sequence')? draw.input: {theme: select, "font-size": 13};
 
         _.each(kinds, function(value, key) {
             if (key == type) {
