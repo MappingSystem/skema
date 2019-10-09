@@ -49,7 +49,7 @@ var draw = {
                     editor.destroy();
                     $(".editor").removeClass().html('');
                     $('.diagram').html(" <canvas></canvas> ");
-                    $("#graphiql").css({position: 'absolute',height:375px;top:0,left:0});
+                    $("#graphiql").css({position: 'absolute',height:375px,top:0,left:0});
                 }
             }
         });
