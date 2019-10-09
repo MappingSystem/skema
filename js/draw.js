@@ -2,7 +2,7 @@ $(window).load(function() {draw.diagram();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
-var editor = ace.edit("graphiql");
+var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
@@ -29,17 +29,36 @@ var draw = {
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
-        var font_size = (select == 'hand')? 12: 13;
+        var font_size = (select == 'hand')? 13: 14;
 
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type!='sequence')? draw.input: {theme: select, "font-size": font_size};
+        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        $('.diagram').html(''); $(".loadingImg").show();
-        $('#type').text(type); $('#type')[0].href = '/' + type;
+        _.each(kinds, function(value, key) {
+            if (key == type) {
 
-        _.each(kinds, function(value, key){if (key == type) {js = '/' + value + '?t=' + $.now();
-        if (type == 'scenetree') $(" <canvas></canvas> ").appendTo(".diagram");}});
+                $(".loadingImg").show();
+                js = '/' + value + '?t=' + $.now();
+                $('#type').text(type); $('#type')[0].href = '/' + type;
+
+                if (type != 'scenetree') {
+
+                    $('.diagram').html('')
+                    editor.clearSelection(); editor.gotoLine(1, 1);
+                    if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
+
+                }
+                else {
+
+                    //$('.editor').height($('.diagram').height() - 94);
+                    //$('.editor-wrapper').height($('.editor').height() + 3);
+                    //$('.chetabahana-skema').height($('.editor').height() + 200);
+                    $('.diagram').html(' <canvas></canvas> ');
+
+                }
+            }
+        });
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -53,10 +72,11 @@ var draw = {
 
             } finally {
 
-                //$('.editor').height($('.diagram').height() - 94);
-                //$('.editor-wrapper').height($('.editor').height() + 3);
-                //$('.chetabahana-skema').height($('.editor').height() + 200);
-                editor.clearSelection(); editor.gotoLine(1, 1);
+                if (type == 'scenetree') {
+                     $('#graphiql').show();
+                     editor.destroy(); //editor.setValue("");
+                     $("#editor").remove();
+                }
 
                 $('.loadingImg').hide();
                 draw.type = type;
@@ -166,7 +186,6 @@ var draw = {
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
         draw.params = params; console.log(draw.params);
 
-        $(".theme").val("simple"); 
         draw.diagram();
 
     },
