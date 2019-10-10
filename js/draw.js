@@ -94,9 +94,12 @@ var draw = {
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g');}
-            //else if (type == 'scenetree') {$('.CodeMirror-code').change(function() {draw.change(this);});}
-            //else if (type == 'scenetree') {elements = $('button.execute-button');}
-            else if (type == 'scenetree') {elements = $('svg path');}
+            else if (type == 'scenetree') {
+                $('body').on('DOMSubtreeModified', '.CodeMirror-code', function() {alert('modified');});
+                $('.CodeMirror-code').change(function() {alert('changed');});
+                elements = $('button.execute-button svg path');
+            }
+
             if(elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
