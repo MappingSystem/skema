@@ -166,7 +166,8 @@ var draw = {
 
     query : function() {
 
-        _.debounce(function() {console.log($('#graphiql .resultWrap').text());}, 100);
+        var resultWrap = $('#graphiql .resultWrap').text();
+        console.log(resultWrap);
 
     },
 
