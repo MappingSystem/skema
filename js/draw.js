@@ -50,7 +50,7 @@ var draw = {
 
                 } else {
 
-                    $('#diagram').hide();
+                    $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
 
                 }
@@ -84,7 +84,7 @@ var draw = {
         var type= draw.type;
         var select = $(".theme").val();
         
-        if (!$('#diagram #graphiql').find('svg')[0]) {
+        if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
