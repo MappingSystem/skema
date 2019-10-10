@@ -51,8 +51,8 @@ var draw = {
                 }
                 else {
 
-                    $('#graphiql').parent().append($('#graphiql'));
-                    $('.diagram').html(' <canvas></canvas> ');
+                    //$('#graphiql').parent().append($('#graphiql'));
+                    //$('.diagram').html(' <canvas></canvas> ');
 
                 }
             }
