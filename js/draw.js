@@ -51,7 +51,7 @@ var draw = {
                 } else {
 
                     $('#diagram').hide();
-                    //editor.destroy();
+                    $('#viewport').html('<canvas></canvas>');
 
                 }
             }
