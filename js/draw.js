@@ -102,7 +102,6 @@ var draw = {
 
     click : function(e) {
 
-
         var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
