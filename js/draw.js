@@ -95,8 +95,7 @@ var draw = {
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g');}
             else if (type == 'scenetree') {
-                $('body').on('DOMSubtreeModified', '.CodeMirror-code', function() {console.log('modified');});
-                $('.CodeMirror-code').change(function() {console.log('changed');});
+                $('body').on('DOMSubtreeModified', '.CodeMirror', function() {console.log('modified');});
                 elements = $('button.execute-button svg path');
             }
 
