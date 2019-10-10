@@ -84,7 +84,7 @@ var draw = {
         var type= draw.type;
         var select = $(".theme").val();
         
-        if (!$('.diagram').find('svg')[0]) {
+        if (!$('#diagram').find('svg')[0] || !$('#graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
