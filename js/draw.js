@@ -165,8 +165,12 @@ var draw = {
     },
 
     query : function() {
+var data = [];
+console.log('changed');
+var resultWrap = $('#graphiql .resultWrap');
+var result = CodeMirror.fromTextArea(resultWrap, {lineNumbers : true});
+console.log(result.getValue());
 
-        console.log('changed');
 
     },
 
