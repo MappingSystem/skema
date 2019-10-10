@@ -69,9 +69,8 @@ var draw = {
 
             } finally {
 
-                draw.type = type;
+                draw.type = type; draw.element();
                 $('.loadingImg').hide();
-                if (type != 'scenetree') draw.element();
 
             }
 
@@ -91,11 +90,12 @@ var draw = {
 
         } else if(select != 'hand') {
 
-            if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
-            else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
-            else if(type == 'nodelinks') {elements = $('svg g g g');}
-            else {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+            if (type == 'sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'nodelinks') {elements = $('svg g g g');}
+            else if (type == 'scenetree') ($('.CodeMirror-code').change(function() {draw.change();});)
+            if(elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
     },
