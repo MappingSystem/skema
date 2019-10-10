@@ -70,7 +70,7 @@ var draw = {
 
             } finally {
 
-                (type == 'scenetree')? $('#graphiql').show(): $('#graphiql').hide();
+                (type == 'scenetree')? $('#diagram').hide(): $('#diagram').show();
                 draw.type = type; draw.element();
                 $('.loadingImg').hide();
 
