@@ -190,7 +190,7 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
-        $(e).filter('.title, .actor, .signal').hover(show(100), hide(100));
+        $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
         if ($(e).hasClass('execute-button')) $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.button();});
 
