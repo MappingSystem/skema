@@ -167,7 +167,7 @@ var draw = {
     query : function() {
 
         var resultWrap = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-        console.log(resultWrap); (draw.isJson(resultWrap))? console.log("true"): console.log("false");
+        console.log(resultWrap); console.log(resultWrap.isJSON());
 
     },
 
@@ -204,17 +204,6 @@ var draw = {
         ;
 
     }, 
-
-    isJson : function(str) {
-
-        try {
-            JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
-        return true;
-
-    },
 
     svg : {}
 
