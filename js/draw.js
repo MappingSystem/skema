@@ -94,12 +94,8 @@ var draw = {
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g');}
-            else if (type == 'scenetree') {
-                $('body').on('DOMSubtreeModified', '.CodeMirror', function() {console.log('modified');});
-                elements = $('button.execute-button svg path');
-            }
-
-            if(elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+            else if (type == 'scenetree') {elements = $('button.execute-button svg path');};
+            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
     },
@@ -183,13 +179,19 @@ var draw = {
 
     },
 
+    button : function() {
+
+        console.log('changed');
+
+    },
+
     node : function(i, e) {
 
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
-        $(e).mouseenter(function(){$(this).css('fill','teal')})
-            .mouseout(function(){$(this).css('fill','')});
+        $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
+        if ($(e).hasClass('execute-button')) $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.button();});
 
     },
 
