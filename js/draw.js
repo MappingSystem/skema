@@ -94,7 +94,7 @@ var draw = {
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'scenetree') {elements = $('button.execute-button svg path');};
+            else if (type == 'scenetree') {elements = $('button.execute-button svg path').prop('class', 'exec-query');};
             elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         } 
@@ -192,7 +192,7 @@ var draw = {
         $(e).css({'cursor':'pointer'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).hasClass('execute-button')) $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.button();});
+        if ($(e).hasClass('exec-query')) $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.button();});
 
     },
 
