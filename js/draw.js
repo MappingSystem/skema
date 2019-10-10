@@ -166,7 +166,7 @@ var draw = {
 
     query : function() {
 
-        var resultWrap = $('#graphiql .resultWrap').text();
+        var resultWrap = "{" + $('#graphiql .resultWrap').text().split("{").pop();
         console.log(resultWrap);
 
     },
