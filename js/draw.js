@@ -179,7 +179,7 @@ console.log(resultWrap);
         $(e).css({'cursor':'pointer'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).attr('class') == 'eQuery') $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.query();});
+        if ($(e).attr('class') == 'eQuery') $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
     },
 
