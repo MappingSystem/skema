@@ -164,7 +164,7 @@ var draw = {
 
     },
 
-    button : function() {
+    query : function() {
 
         console.log('changed');
 
@@ -177,7 +177,7 @@ var draw = {
         $(e).css({'cursor':'pointer'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).hasClass('exec-query')) $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.button();});
+        if ($(e).hasClass('exec-query')) $('body').on('DOMSubtreeModified', '.CodeMirror', function() {draw.query();});
 
     },
 
