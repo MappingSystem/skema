@@ -167,7 +167,7 @@ var draw = {
     query : function() {
 
         var resultWrap = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-        console.log(resultWrap);
+        if (draw.isJson(resultWrap)) console.log(resultWrap);
 
     },
 
