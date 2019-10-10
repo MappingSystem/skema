@@ -6,7 +6,7 @@ var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 200) );
+editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
 var draw = {
 
@@ -165,10 +165,8 @@ var draw = {
     },
 
     query : function() {
-console.log('changed');
-var resultWrap = $('#graphiql .resultWrap').text();
-console.log(resultWrap);
 
+        _.debounce(function() {console.log($('#graphiql .resultWrap').text());}, 100);
 
     },
 
