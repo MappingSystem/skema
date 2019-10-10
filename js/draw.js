@@ -44,15 +44,13 @@ var draw = {
 
                 if (type != 'scenetree') {
 
-                    $('.diagram').html('')
+                    $('#diagram').show().html('');
                     editor.clearSelection(); editor.gotoLine(1, 1);
                     if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
 
-                }
-                else {
+                } else {
 
-                    //$('#graphiql').parent().append($('#graphiql'));
-                    //$('.diagram').html(' <canvas></canvas> ');
+                    $('#diagram').hide();
 
                 }
             }
@@ -66,13 +64,13 @@ var draw = {
                 else if(type == 'flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
-                else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
+                //else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
 
             } finally {
 
-                (type == 'scenetree')? $('#diagram').hide(): $('#diagram').show();
-                draw.type = type; draw.element();
+                draw.type = type;
                 $('.loadingImg').hide();
+                if (type != 'scenetree') draw.element();
 
             }
 
