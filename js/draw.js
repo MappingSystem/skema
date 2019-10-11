@@ -54,7 +54,6 @@ var draw = {
                     draw.test = false;
                     $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
-                    $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
             }
@@ -195,7 +194,7 @@ var draw = {
         $(e).css({'cursor':'pointer'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).attr('class') == 'eQuery') {$('button').clone().appendTo(('button').parent()); $(e).attr('id','01');};
+        if ($(e).attr('class') == 'eQuery') $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
     },
 
