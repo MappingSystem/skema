@@ -167,8 +167,8 @@ var draw = {
     query : function() {
 
         if (!draw.test) {
-            var resultWrap = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (resultWrap.isJSON()) {draw.test = !draw.test; console.log(resultWrap);}
+            var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
+            if (result.isJSON()) {draw.test = !draw.test; console.log(result);}
         }
 
     },
