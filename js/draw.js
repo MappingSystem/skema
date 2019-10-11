@@ -6,7 +6,7 @@ var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 200) );
+editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
 var draw = {
 
@@ -39,6 +39,7 @@ var draw = {
             if (key == type) {
 
                 $(".loadingImg").show();
+                $('#graphiql, #viewport').html('');
                 js = '/' + value + '?t=' + $.now();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
@@ -50,7 +51,8 @@ var draw = {
 
                 } else {
 
-                    $('#diagram').hide();
+                    draw.test = false;
+                    $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
 
                 }
@@ -65,13 +67,12 @@ var draw = {
                 else if(type == 'flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
-                //else if(type == 'scenetree') {diagram = d3.select(".diagram"); g.prepend(draw.svg['sequence']);}
+                else if(type == 'scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
-                draw.type = type;
+                draw.type = type; draw.element();
                 $('.loadingImg').hide();
-                if (type != 'scenetree') draw.element();
 
             }
 
@@ -84,35 +85,36 @@ var draw = {
         var elements;
         var type= draw.type;
         var select = $(".theme").val();
-        
-        if (!$('.diagram').find('svg')[0]) {
+
+        if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
         } else if(select != 'hand') {
 
-            if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
-            else if(type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
-            else if(type == 'nodelinks') {elements = $('svg g g g');}
-            else {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+            if (type == 'sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
+            else if (type == 'scenetree') {elements = $('button.execute-button svg path').attr('class', 'eQuery');};
+            if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
-        } 
+        }
+
     },
 
     click : function(e) {
-
 
         var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', e.id);
+        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
@@ -156,6 +158,54 @@ var draw = {
 
     },
 
+    change : function() {
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
+        while(match = regex.exec(url)) {params[match[1]] = match[2];}
+        draw.params = params;
+        draw.diagram();
+
+    },
+
+    isJSON : function(str) {
+
+        if (str == "{" ) return false;
+        if ( /^\s*$/.test(str)) return false;
+        str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
+        str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
+        str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
+        return (/^[\],:{}\s]*$/).test(str);
+
+    },
+
+    query : function() {
+
+        if (!draw.test) {
+            var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
+            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
+        }
+
+    },
+
+    node : function(i, e) {
+
+        e.id = draw.pad(i, 2);
+        e.parentNode.appendChild(e);
+        $(e).css({'cursor':'pointer'});
+        $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
+        $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
+        if ($(e).attr('class') == 'eQuery') $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
+
+    },
+
+    pad : function(data, size) {
+
+        var s = String(data);
+        while (s.length < (size || 2)) {s = "0" + s;}
+        return s;
+
+    },
+
     encode : function(data) {
 
         return data.replace(/&apos;/g, "'")
@@ -170,33 +220,6 @@ var draw = {
         ;
 
     }, 
-
-    change : function() {
-
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
-        draw.diagram();
-
-    },
-
-    node : function(i, e) {
-
-        e.id = draw.pad(i, 2);
-        e.parentNode.appendChild(e);
-        $(e).css({'cursor':'pointer'});
-        $(e).mouseenter(function(){$(this).css('fill','teal')})
-            .mouseout(function(){$(this).css('fill','')});
-
-    },
-
-     pad : function(data, size) {
-
-        var s = String(data);
-        while (s.length < (size || 2)) {s = "0" + s;}
-        return s;
-
-    },
 
     svg : {}
 
