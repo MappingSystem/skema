@@ -111,7 +111,6 @@ var draw = {
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
-        (console.log(draw.type)); (console.log($('.eQuery').attr("id"))); (console.log(draw.test)); 
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
@@ -181,6 +180,7 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
+            console.log(result); console.log(draw.isJSON(result)); (console.log($('.eQuery').attr("id"))); 
             if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
         }
 
