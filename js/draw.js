@@ -73,6 +73,7 @@ var draw = {
             } finally {
 
                 draw.type = type; draw.element();
+                $('.eQuery#01').click(false);
                 $('.loadingImg').hide();
 
             }
@@ -193,7 +194,7 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
-        $(e).filter('.eQuery#00').css({'pointer-events':'auto'});
+        $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
 
@@ -202,7 +203,6 @@ var draw = {
     clone : function(e) {
 
         var button = $('button.execute-button').clone();
-        $('button.execute-button').find('svg path').css({'pointer-events': 'none'});
         button.prependTo($('button.execute-button').parent()).css({'pointer-events': 'none'});
         button.find('svg path').css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
 
