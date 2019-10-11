@@ -99,7 +99,9 @@ var draw = {
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
-            if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+
+            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+            draw.elements = elements;
 
         }
 
@@ -107,8 +109,11 @@ var draw = {
 
     click : function(e) {
 
-        var kinds = draw.kind[0];
+        //disable anoher click events
+        $.each(draw.elements, function () {$(this).off('click');});
         draw.svg[draw.type] = $('svg').get(0);
+
+        var kinds = draw.kind[0];
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
