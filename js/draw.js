@@ -73,7 +73,6 @@ var draw = {
             } finally {
 
                 draw.type = type; draw.element();
-                $('.eQuery#01').off('click');
                 $('.loadingImg').hide();
 
             }
@@ -99,7 +98,9 @@ var draw = {
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
-            elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+
+            if (type != 'scenetree') elements.click(function() {draw.click(this);});
+            elements.each(function(index) {draw.node(index, this);})
 
         }
 
@@ -207,7 +208,9 @@ var draw = {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
-        button.attr('title','Back to previous session').off('click');  
+
+        button.attr('title','Back to previous session'};
+        button.click(function() {draw.click($('.eQuery#00'));};  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
