@@ -194,7 +194,7 @@ var draw = {
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
-        $(e).filter('.eQuery#00').css('transform':'rotate(180deg)','transform-origin':'center center');
+        $(e).filter('.eQuery#00').css({'transform':'rotate(180deg)','transform-origin':'center center'});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
 
     },
