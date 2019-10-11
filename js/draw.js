@@ -209,7 +209,7 @@ var draw = {
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
 
-        button.attr('title','Back to previous session'};
+        button.attr('title','Back to previous session');
         button.click(function() {draw.click($('.eQuery#00'));};  
 
         var svg = button.find('svg path');
