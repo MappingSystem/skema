@@ -168,7 +168,7 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (result.isJSON()) {draw.test = !draw.test; console.log(result);}
+            if (result.isJSON()) {draw.test = !draw.test; draw.click($('.eQuery'));}
         }
 
     },
