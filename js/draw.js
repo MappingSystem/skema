@@ -39,13 +39,13 @@ var draw = {
             if (key == type) {
 
                 $(".loadingImg").show();
+                $('#graphiql, #viewport').html('');
                 js = '/' + value + '?t=' + $.now();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
                 if (type != 'scenetree') {
 
                     $('#diagram').show().html('');
-                    $('#graphiql, #viewport').html('');
                     editor.clearSelection(); editor.gotoLine(1, 1);
                     if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
 
@@ -71,6 +71,7 @@ var draw = {
             } finally {
 
                 draw.type = type; draw.test = false; draw.element();
+                (console.log(type)); (console.log($('.eQuery')));
                 $('.loadingImg').hide();
 
             }
@@ -98,7 +99,8 @@ var draw = {
             else if (type == 'scenetree') {elements = $('button.execute-button svg path').attr('class', 'eQuery');};
             if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
-        } 
+        }
+
     },
 
     click : function(e) {
