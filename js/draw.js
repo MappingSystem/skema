@@ -54,6 +54,7 @@ var draw = {
                     draw.test = false;
                     $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
+                    $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
             }
@@ -96,7 +97,7 @@ var draw = {
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'scenetree') {elements = $('button.execute-button svg path').attr('class', 'eQuery');};
+            else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
             if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         }
@@ -182,7 +183,7 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
+            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery#01'));}
         }
 
     },
@@ -192,9 +193,17 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
+        $(e).filter('.eQuery#00').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).attr('class') == 'eQuery') $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
+
+    },
+
+    clone : function(e) {
+
+        var button = $('button.execute-button').clone();
+        button.prependTo($('button.execute-button').parent()).css({'pointer-events': 'none'});
+        button.find("svg path").css({'transform':'rotate(180deg)','transform-origin':'center center'});
 
     },
 
