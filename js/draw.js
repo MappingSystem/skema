@@ -165,7 +165,7 @@ var draw = {
 
     },
 
-    isJSON : function() {
+    isJSON : function(str) {
 
         if ( /^\s*$/.test(str)) return false;
         str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
