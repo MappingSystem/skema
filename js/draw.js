@@ -109,7 +109,7 @@ var draw = {
 
     click : function(e) {
 
-        //disable anoher click events
+        //disable another click events to avoid interruption
         $.each(draw.elements, function () {$(this).off('click');});
         draw.svg[draw.type] = $('svg').get(0);
 
