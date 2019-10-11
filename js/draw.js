@@ -207,7 +207,7 @@ var draw = {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
-        button.attr('title','Back to previous session'}.unbind('click');  
+        button.attr('title','Back to previous session').off('click');  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
