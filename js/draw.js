@@ -71,7 +71,7 @@ var draw = {
             } finally {
 
                 draw.type = type; draw.test = false; draw.element();
-                (console.log(type)); (console.log($('.eQuery').attr("id")));
+                (console.log(type)); (console.log($('.eQuery').attr("id"))); (console.log(draw.test)); 
                 $('.loadingImg').hide();
 
             }
