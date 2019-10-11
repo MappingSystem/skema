@@ -73,7 +73,7 @@ var draw = {
             } finally {
 
                 draw.type = type; draw.element();
-                $('.eQuery#01').click(function(){return false;});
+                $('.eQuery#01').unbind('click');
                 $('.loadingImg').hide();
 
             }
