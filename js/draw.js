@@ -51,6 +51,7 @@ var draw = {
 
                 } else {
 
+                    draw.test = false;
                     $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
 
@@ -70,7 +71,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type; draw.test = false; draw.element();
+                draw.type = type; draw.element();
                 $('.loadingImg').hide();
 
             }
