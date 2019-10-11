@@ -169,8 +169,18 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (result.isJSON()) {draw.test = !draw.test; draw.click($('.eQuery'));}
+            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
         }
+
+    },
+
+    isJson : function() {
+
+        if ( /^\s*$/.test(str)) return false;
+        str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
+        str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
+        str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
+        return (/^[\],:{}\s]*$/).test(str);
 
     },
 
@@ -185,7 +195,7 @@ var draw = {
 
     },
 
-     pad : function(data, size) {
+    pad : function(data, size) {
 
         var s = String(data);
         while (s.length < (size || 2)) {s = "0" + s;}
