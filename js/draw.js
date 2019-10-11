@@ -195,7 +195,7 @@ var draw = {
         $(e).css({'cursor':'pointer'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).attr('class') == 'eQuery') $(e).clone().appendTo($(e).parent());
+        if ($(e).attr('class') == 'eQuery') {$('button').clone().appendTo(('button').parent()); $(e).attr('id','01');};
 
     },
 
