@@ -183,7 +183,7 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
+            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery#01'));}
         }
 
     },
@@ -202,7 +202,7 @@ var draw = {
     clone : function(e) {
 
         var button = $('button.execute-button');
-        button.clone().appendTo(button.parent());
+        button.clone().prependTo(button.parent());
 
     },
 
