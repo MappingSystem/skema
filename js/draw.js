@@ -73,7 +73,6 @@ var draw = {
             } finally {
 
                 draw.type = type; draw.element();
-                $('.eQuery#01').click(false);
                 $('.loadingImg').hide();
 
             }
@@ -99,13 +98,18 @@ var draw = {
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
-            if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
+
+            if (type != 'scenetree') elements.click(function() {draw.click(this);});
+            elements.each(function(index) {draw.node(index, this);})
 
         }
 
     },
 
     click : function(e) {
+
+        //disable click events to avoid interruption
+        $('.mypointer').css('pointer-events', 'none');
 
         var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
@@ -193,18 +197,23 @@ var draw = {
 
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
-        $(e).css({'cursor':'pointer'});
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
 
     },
 
     clone : function(e) {
 
         var button = $('button.execute-button').clone();
-        button.prependTo($('button.execute-button').parent()).css({'pointer-events': 'none'});
-        button.find('svg path').css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
+        button.prependTo($('button.execute-button').parent());
+
+        button.attr('title','Back to previous session');
+        button.click(function() {draw.click($('.eQuery#00'));});  
+
+        var svg = button.find('svg path');
+        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
 
     },
 
