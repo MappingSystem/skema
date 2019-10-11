@@ -182,7 +182,6 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            console.log(result); console.log(draw.isJSON(result)); (console.log($('.eQuery').attr("id"))); 
             if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
         }
 
