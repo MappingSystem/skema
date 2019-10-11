@@ -206,8 +206,11 @@ var draw = {
     clone : function(e) {
 
         var button = $('button.execute-button').clone();
-        button.prependTo($('button.execute-button').parent()).css({'pointer-events': 'none'});
-        button.find('svg path').css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
+        button.prependTo($('button.execute-button').parent());
+        button.attr('title','Back to previous session'}.unbind('click');  
+
+        var svg = button.find('svg path');
+        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
 
     },
 
