@@ -193,7 +193,7 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
-        //if ($(e).attr('class') == 'eQuery') draw.clone());
+        $(e).filter('.eQuery #00').css('transform', 'rotate(180deg)');
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
 
