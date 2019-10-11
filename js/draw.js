@@ -110,10 +110,10 @@ var draw = {
     click : function(e) {
 
         //disable another click events to avoid interruption
-        $.each(draw.elements, function () {$(this).off('click');});
-        draw.svg[draw.type] = $('svg').get(0);
+        $('.mypointer').css('pointer-events', 'none');
 
         var kinds = draw.kind[0];
+        draw.svg[draw.type] = $('svg').get(0);
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
@@ -198,7 +198,7 @@ var draw = {
 
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
-        $(e).css({'cursor':'pointer'});
+        $(e).css({'cursor':'pointer'}).addClass('mypointer');
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
