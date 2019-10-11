@@ -39,6 +39,7 @@ var draw = {
             if (key == type) {
 
                 $(".loadingImg").show();
+                $('#graphiql, #viewport').html('');
                 js = '/' + value + '?t=' + $.now();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
@@ -50,6 +51,7 @@ var draw = {
 
                 } else {
 
+                    draw.test = false;
                     $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
 
@@ -69,7 +71,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type; draw.test = false; draw.element();
+                draw.type = type; draw.element();
                 $('.loadingImg').hide();
 
             }
@@ -83,7 +85,7 @@ var draw = {
         var elements;
         var type= draw.type;
         var select = $(".theme").val();
-        
+
         if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
@@ -97,7 +99,8 @@ var draw = {
             else if (type == 'scenetree') {elements = $('button.execute-button svg path').attr('class', 'eQuery');};
             if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
-        } 
+        }
+
     },
 
     click : function(e) {
@@ -106,12 +109,12 @@ var draw = {
         draw.svg[draw.type] = $('svg').get(0);
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', e.id);
+        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
@@ -164,11 +167,22 @@ var draw = {
 
     },
 
+    isJSON : function(str) {
+
+        if (str == "{" ) return false;
+        if ( /^\s*$/.test(str)) return false;
+        str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
+        str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
+        str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
+        return (/^[\],:{}\s]*$/).test(str);
+
+    },
+
     query : function() {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (result.isJSON()) {draw.test = !draw.test; console.log(result);}
+            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery'));}
         }
 
     },
@@ -184,7 +198,7 @@ var draw = {
 
     },
 
-     pad : function(data, size) {
+    pad : function(data, size) {
 
         var s = String(data);
         while (s.length < (size || 2)) {s = "0" + s;}
