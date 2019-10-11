@@ -97,7 +97,7 @@ var draw = {
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'scenetree') {elements = $('button.execute-button svg path').attr('class', 'eQuery');};
+            else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
             if (elements) elements.each(function(index) {draw.node(index, this);}).click(function() {draw.click(this);});
 
         }
@@ -193,7 +193,7 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
-        if ($(e).attr('class') == 'eQuery') draw.clone($(this));
+        //if ($(e).attr('class') == 'eQuery') draw.clone());
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
 
@@ -201,8 +201,8 @@ var draw = {
 
     clone : function(e) {
 
-        $('button.execute-button').clone().appendTo($('button.execute-button').parent());
-        $(e).attr('id','01'); $('#00').animate({svgTransform: 'rotate(180)'}, 2000);
+        var button = $('button.execute-button');
+        button.clone().appendTo(button.parent());
 
     },
 
