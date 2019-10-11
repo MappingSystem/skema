@@ -69,7 +69,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type; draw.element();
+                draw.type = type; draw.test = false; draw.element();
                 $('.loadingImg').hide();
 
             }
@@ -166,8 +166,10 @@ var draw = {
 
     query : function() {
 
-        var resultWrap = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-        console.log(resultWrap); console.log(resultWrap.isJSON());
+        if (!draw.test) {
+            var resultWrap = "{" + $('#graphiql .resultWrap').text().split("{").pop();
+            if (resultWrap.isJSON()) {draw.test = !draw.test; console.log(resultWrap);}
+        }
 
     },
 
