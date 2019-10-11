@@ -210,7 +210,7 @@ var draw = {
         button.prependTo($('button.execute-button').parent());
 
         button.attr('title','Back to previous session');
-        button.click(function() {draw.click($('.eQuery#00'));};  
+        button.click(function() {draw.click($('.eQuery#00'));});  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
