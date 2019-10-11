@@ -45,6 +45,7 @@ var draw = {
                 if (type != 'scenetree') {
 
                     $('#diagram').show().html('');
+                    $('#graphiql, #viewport').html('');
                     editor.clearSelection(); editor.gotoLine(1, 1);
                     if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
 
