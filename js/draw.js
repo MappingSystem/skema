@@ -54,6 +54,7 @@ var draw = {
                     draw.test = false;
                     $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
+                    $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
             }
@@ -192,9 +193,16 @@ var draw = {
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
         $(e).css({'cursor':'pointer'});
+        if ($(e).attr('class') == 'eQuery') draw.clone($(this));
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        if ($(e).attr('class') == 'eQuery') $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
+
+    },
+
+    clone : function(e) {
+
+        $('button.execute-button').clone().appendTo($('button.execute-button').parent());
+        $(e).attr('id','01'); $('#00').animate({svgTransform: 'rotate(180)'}, 2000);
 
     },
 
