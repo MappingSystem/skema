@@ -106,12 +106,12 @@ var draw = {
         draw.svg[draw.type] = $('svg').get(0);
         var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes(e.id);
+        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', e.id);
+        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
         $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
@@ -168,8 +168,7 @@ var draw = {
 
         if (!draw.test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (result.isJSON()) {draw.test = !draw.test; console.log($('.eQuery')); console.log($('.eQuery').attr("id")); 
-            draw.click($('.eQuery'));}
+            if (result.isJSON()) {draw.test = !draw.test; draw.click($('.eQuery'));}
         }
 
     },
