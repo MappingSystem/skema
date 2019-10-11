@@ -109,7 +109,7 @@ var draw = {
 
     click : function(e) {
 
-        //disable another click events to avoid interruption
+        //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
 
         var kinds = draw.kind[0];
@@ -198,10 +198,10 @@ var draw = {
 
         e.id = draw.pad(i, 2);
         e.parentNode.appendChild(e);
-        $(e).css({'cursor':'pointer'}).addClass('mypointer');
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
 
     },
 
