@@ -229,10 +229,11 @@ var draw = {
 
     reload : function(hash) {
 
-        window.stop();
-        window.location.hash = hash;
-        let target = window.location.hash;
-        $(target).click(); window.location.reload(true);
+        //window.stop();
+        let target = hash;
+        $(target).click(); 
+        //window.location.hash = hash;
+        window.location.reload();
 
     },
 
