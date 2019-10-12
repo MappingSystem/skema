@@ -55,7 +55,6 @@ var draw = {
                     $('#diagram').html('').hide();
                     $('#viewport').html('<canvas></canvas>');
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
-            $('body').on('ready click mousemove keyup', console.log('fired'));
 
                 }
             }
@@ -100,8 +99,10 @@ var draw = {
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
 
+            //set process with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
             if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
+            else {$('body').on('ready click mousemove keyup', _.debounce(function(){window.location.reload();}, 60000));};
 
         }
 
