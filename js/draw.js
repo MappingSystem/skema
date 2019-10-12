@@ -155,7 +155,7 @@ var draw = {
     xmlData : function() {
 
         var a = $(this);
-        var svg = $(".diagram").find('svg')[0];
+        var svg = $("#diagram").find('svg')[0];
         var width = parseInt(svg.width.baseVal.value);
         var height = parseInt(svg.height.baseVal.value);
         var xmldata = '<?xml version="1.0" encoding="utf-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[' + draw.skema + ']]></source>' + svg.innerHTML + '</svg>';
