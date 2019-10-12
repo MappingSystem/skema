@@ -101,7 +101,7 @@ var draw = {
 
             //set process with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
-            if (type != 'scenetree') {elements.click(function() {draw.click(this);});};
+            if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
             else {$('body').on('click mousemove keyup', _.debounce(function(){window.location.reload();}, 60000));};
 
         }
