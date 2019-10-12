@@ -47,7 +47,7 @@ var draw = {
 
                     $('#diagram').show().html('');
                     editor.clearSelection(); editor.gotoLine(1, 1);
-                    if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
+                    if (type == 'railroad') $('.diagram').css({'top':'-28px;'});
 
                 } else {
 
@@ -84,14 +84,13 @@ var draw = {
     element : function() {
 
         var elements;
-        var type= draw.type;
-        var select = $(".theme").val();
+        var type = draw.type;
 
         if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
-        } else if(select != 'hand') {
+        } else if($(".theme").val() != 'hand') {
 
             if (type == 'sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
@@ -102,7 +101,7 @@ var draw = {
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
             if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
-            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 60000));
+            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 600000));
 
         }
 
