@@ -47,7 +47,7 @@ var draw = {
 
                     $('#diagram').show().html('');
                     editor.clearSelection(); editor.gotoLine(1, 1);
-                    $('.diagram').css({'top':(type == 'railroad')? '-28px': '0'});
+                    $('.diagram').attr('class', 'diagram diagram-' + type);
 
                 } else {
 
