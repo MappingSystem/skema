@@ -230,7 +230,7 @@ var draw = {
     reload : function(hash) {
 
         var target = $("a").filter(function() {return this.hash == hash}); target.click();
-        window.stop(); window.location.hash = hash; window.location.reload(true);
+        window.location.hash = hash; window.location.reload(true);
 
     },
 
