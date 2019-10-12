@@ -26,10 +26,10 @@ var draw = {
         var diagram;
 
         var kinds = draw.kind[0];
-        var g = $('.diagram').get(0);
+        var g = $('#diagram').get(0);
 
         var select = $(".theme").val();
-        var font_size = (select == 'hand')? 12: 14;
+        var font_size = (select == 'hand')? 13: 14;
 
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
@@ -39,21 +39,21 @@ var draw = {
             if (key == type) {
 
                 $(".loadingImg").show();
-                $('#graphiql, #viewport').html('');
-                js = '/' + value + '?t=' + $.now();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
+
+                js = '/' + value + '?t=' + $.now();
+                editor.clearSelection(); editor.gotoLine(1, 1);
 
                 if (type != 'scenetree') {
 
-                    $('#diagram').show().html('');
-                    editor.clearSelection(); editor.gotoLine(1, 1);
-                    if (type != 'sequence') $('.diagram').css({'overflow': 'hidden'});
+                    $('#diagram').show();
+                    $('#diagram, #graphiql, #viewport').html('');
+                    $('#diagram').attr('class', 'diagram-' + type);
 
                 } else {
 
-                    draw.test = false;
-                    $('#diagram').html('').hide();
-                    $('#viewport').html('<canvas></canvas>');
+                    $('#diagram').hide();
+                    $('#diagram, #graphiql').html(''); $('#viewport').html('<canvas></canvas>'); 
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
@@ -72,7 +72,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type; draw.element();
+                draw.type = type; draw.test = false; draw.element();
                 $('.loadingImg').hide();
 
             }
@@ -84,14 +84,13 @@ var draw = {
     element : function() {
 
         var elements;
-        var type= draw.type;
-        var select = $(".theme").val();
+        var type = draw.type;
 
         if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
-        } else if(select != 'hand') {
+        } else if($(".theme").val() != 'hand') {
 
             if (type == 'sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
@@ -102,7 +101,7 @@ var draw = {
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
             if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
-            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 60000));
+            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 600000));
 
         }
 
@@ -156,7 +155,7 @@ var draw = {
     xmlData : function() {
 
         var a = $(this);
-        var svg = $(".diagram").find('svg')[0];
+        var svg = $("#diagram").find('svg')[0];
         var width = parseInt(svg.width.baseVal.value);
         var height = parseInt(svg.height.baseVal.value);
         var xmldata = '<?xml version="1.0" encoding="utf-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[' + draw.skema + ']]></source>' + svg.innerHTML + '</svg>';
@@ -229,8 +228,8 @@ var draw = {
 
     reload : function(hash) {
 
-        var target = $("a").filter(function() {return this.hash == hash}); target.click();
-        window.location.hash = hash; window.location.reload(true);
+        scrollTo(hash); window.stop();
+        location.hash = hash; location.reload(true);
 
     },
 
