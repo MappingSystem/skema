@@ -39,21 +39,20 @@ var draw = {
             if (key == type) {
 
                 $(".loadingImg").show();
-                $('#graphiql, #viewport').html('');
-                js = '/' + value + '?t=' + $.now();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
+
+                js = '/' + value + '?t=' + $.now();
+                editor.clearSelection(); editor.gotoLine(1, 1);
 
                 if (type != 'scenetree') {
 
-                    $('#diagram').show().html('');
-                    editor.clearSelection(); editor.gotoLine(1, 1);
-                    $('.diagram').attr('class', 'diagram diagram-' + type);
+                    $('#diagram').show();
+                    $('#diagram, #graphiql, #viewport').html('');
+                    $('#diagram').attr('class', 'diagram diagram-' + type);
 
                 } else {
-
-                    draw.test = false;
-                    $('#diagram').html('').hide();
-                    $('#viewport').html('<canvas></canvas>');
+                    $('#diagram').hide();
+                    $('#diagram, #graphiql').html(''); $('#viewport').html('<canvas></canvas>'); 
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
@@ -72,7 +71,7 @@ var draw = {
 
             } finally {
 
-                draw.type = type; draw.element();
+                draw.type = type; draw.test = false; draw.element();
                 $('.loadingImg').hide();
 
             }
