@@ -231,8 +231,8 @@ var draw = {
 
         window.stop();
         window.location.hash = hash;
-        let hash = window.location.hash;
-        $(hash).click(); window.location.reload(true);
+        let target = window.location.hash;
+        $(target).click(); window.location.reload(true);
 
     },
 
