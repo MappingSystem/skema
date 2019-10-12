@@ -102,7 +102,7 @@ var draw = {
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
             if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
-            $('body').on('click mousemove keyup', _.debounce(function(){window.location.reload();}, 60000));
+            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(true);}, 60000));
 
         }
 
@@ -224,6 +224,13 @@ var draw = {
         var s = String(data);
         while (s.length < (size || 2)) {s = "0" + s;}
         return s;
+
+    },
+
+    reload : function(forceGet) {
+
+        window.location.hash = "#chetabahana-skema";
+        location.reload(forceGet);
 
     },
 
