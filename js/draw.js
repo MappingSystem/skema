@@ -51,6 +51,7 @@ var draw = {
                     $('#diagram').attr('class', 'diagram diagram-' + type);
 
                 } else {
+
                     $('#diagram').hide();
                     $('#diagram, #graphiql').html(''); $('#viewport').html('<canvas></canvas>'); 
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
