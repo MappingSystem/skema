@@ -215,7 +215,7 @@ var draw = {
         button.click(function() {draw.click($('.eQuery#00'));});  
 
         var svg = button.find('svg path');
-        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
+        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
 
     },
 
