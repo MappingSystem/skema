@@ -29,7 +29,7 @@ var draw = {
         var g = $('.diagram').get(0);
 
         var select = $(".theme").val();
-        var font_size = (select == 'hand')? 13: 14;
+        var font_size = (select == 'hand')? 12: 14;
 
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
@@ -99,8 +99,10 @@ var draw = {
             else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
 
-            if (type != 'scenetree') elements.click(function() {draw.click(this);});
+            //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
+            if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
+            $('body').on('click mousemove keyup', _.debounce(function(){window.location.reload();}, 60000));
 
         }
 
@@ -213,7 +215,7 @@ var draw = {
         button.click(function() {draw.click($('.eQuery#00'));});  
 
         var svg = button.find('svg path');
-        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 48%'});
+        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
 
     },
 
