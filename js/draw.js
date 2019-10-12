@@ -48,7 +48,7 @@ var draw = {
 
                     $('#diagram').show();
                     $('#diagram, #graphiql, #viewport').html('');
-                    $('#diagram').attr('class', 'diagram diagram-' + type);
+                    $('#diagram').attr('class', 'diagram-' + type);
 
                 } else {
 
