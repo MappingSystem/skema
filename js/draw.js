@@ -231,6 +231,7 @@ var draw = {
 
         window.location.hash = "#chetabahana-skema";
         window.location.reload(true);
+        window.stop();
 
     },
 
