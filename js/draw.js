@@ -229,8 +229,8 @@ var draw = {
 
     reload : function(hash) {
 
-        var target = $("a").filter(function() {return this.hash == hash}); target.click();
-        window.location.hash = hash; window.location.reload(true);
+        scrollTo(hash); window.stop();
+        location.hash = hash; location.reload(true);
 
     },
 
