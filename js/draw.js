@@ -47,8 +47,7 @@ var draw = {
 
                     $('#diagram').show().html('');
                     editor.clearSelection(); editor.gotoLine(1, 1);
-                    if (type != 'railroad') {$('.diagram').css({'top':'0'});}
-                    else {$('.diagram').css({'top':'-28px'});}
+                    $('.diagram').css({'top':(type == 'railroad')? '-28px': '0'});
 
                 } else {
 
