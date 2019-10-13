@@ -10,16 +10,6 @@ editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
 var js, json, draw = {
 
-    kind : [
-        { 
-            'Sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
-            'Flowchart' : 'flowchart/flowchart-latest.js',
-            'Railroad'  : 'railroad/railroad-diagrams.js',
-            'Nodelinks' : 'nodelinks/release/go.js',
-            'Scenetree' : 'scenetree/build.js'
-        }
-    ],
-
     diagram : function() {
 
         var diagram;
