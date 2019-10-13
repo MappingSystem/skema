@@ -1,4 +1,4 @@
-$(window).load(function() {draw.diagram();});
+$(window).load(function() {draw.getJSON();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -20,7 +20,7 @@ var js, json, draw = {
         }
     ],
 
-    diagram : function() {
+    diagram : function(json) {
 
         var diagram;
 
@@ -34,7 +34,6 @@ var js, json, draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        if(!json) draw.getJSON();
         _.each(json, function(value, key) {
             if (value["title"] == type) {
 
@@ -168,7 +167,7 @@ var js, json, draw = {
     getJSON : function() {
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){json = result.items[4]; console.log(json);});
+        $.getJSON(jsonfile).done(function(result){console.log(result.items[4]); draw.diagram(result.items[4]);});
 
     },
 
