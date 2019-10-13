@@ -33,8 +33,14 @@ var js, json, draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
-console.log(json);console.log(json.items);
+
+        _.each(json.items, function(value, key) {
+console.log(value['title']);
+console.log(value['js']);
+        });
+
         _.each(kinds, function(value, key) {
+
             if (key == type) {
 
                 $(".loadingImg").show();
