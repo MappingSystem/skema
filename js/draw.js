@@ -8,24 +8,28 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var js, json, type, test, input, skema, draw = {
+var js, json, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
         var diagram;
+
+        test = false; 
+        select = $(".theme").val();
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type;
 
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
-        test = false; 
 
-        _.each(json.items, function(value, key) {
+       _.each(json.items, function(value, key) {
 
             if (value['title'] == type) {
 
                 $(".loadingImg").show();
+                js = '/' + value['js'] + '?t=' + $.now();
+
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -40,8 +44,7 @@ var js, json, type, test, input, skema, draw = {
 
                 }
 
-                js = '/' + value['js'] + '?t=' + $.now();
-                $('#js')[0].href = js;
+                if (select != 'hand') $('#js')[0].href = js;
                 draw.getScript();
 
             }
@@ -55,7 +58,6 @@ var js, json, type, test, input, skema, draw = {
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             var g = $('#diagram').get(0);
-            var select = $(".theme").val();
             var font_size = (select == 'hand')? 13: 15;
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
