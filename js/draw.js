@@ -26,7 +26,6 @@ var js, json, type, test, input, skema, draw = {
 
             if (value['title'] == type) {
 
-
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -56,7 +55,7 @@ var js, json, type, test, input, skema, draw = {
 
             var select = $(".theme").val();
             var font_size = (select == 'hand')? 13: 15;
-            if (type == 'Sequence')? input = {theme: select, "font-size": font_size};
+            if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
 
@@ -79,14 +78,13 @@ var js, json, type, test, input, skema, draw = {
 
     element : function() {
 
-        var elements;
-
         if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
         } else if($(".theme").val() != 'hand') {
 
+            var elements;
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
