@@ -36,7 +36,7 @@ var draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        var jsonfile = '/assets/feed.json?t=' + $.now();
+        var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[0];
