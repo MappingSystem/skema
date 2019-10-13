@@ -168,8 +168,7 @@ var js, json, draw = {
     getJSON : function(n) {
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){var obj = result.items[n];});
-        return obj;
+        $.getJSON(jsonfile).done(function(result){return result.items[n];});
 
     },
 
