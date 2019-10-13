@@ -45,6 +45,7 @@ var js, json, type, test, input, skema, draw = {
                 $('.loadingImg').hide();
 
             }
+
         });
 
     },
