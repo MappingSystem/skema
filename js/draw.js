@@ -13,20 +13,19 @@ var js, json, type, test, input, skema, draw = {
     diagram : function() {
 
         var diagram;
-        $(".loadingImg").show();
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type;
 
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
+        test = false; 
 
         _.each(json.items, function(value, key) {
 
             if (value['title'] == type) {
 
-                js = '/' + value['js'] + '?t=' + $.now();
-
+                $(".loadingImg").show();
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -41,6 +40,7 @@ var js, json, type, test, input, skema, draw = {
 
                 }
 
+                js = '/' + value['js'] + '?t=' + $.now();
                 draw.getScript();
 
             }
@@ -68,7 +68,6 @@ var js, json, type, test, input, skema, draw = {
 
             } finally {
 
-                test = false; 
                 draw.element();
                 $('.loadingImg').hide();
 
