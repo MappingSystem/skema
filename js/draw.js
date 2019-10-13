@@ -64,6 +64,7 @@ var js, json, type, test, input, skema, select, draw = {
 
             try {
 
+                //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
                 if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
@@ -92,6 +93,7 @@ var js, json, type, test, input, skema, select, draw = {
             var elements;
             var hash = '#chetabahana-skema';
 
+            //get svg elements type and theme of Skema to 'Progress' for processing 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
