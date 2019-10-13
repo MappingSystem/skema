@@ -22,8 +22,6 @@ var js, json, draw = {
 
     diagram : function() {
 
-        var kinds = draw.kind[0];
-
         var diagram;
         var g = $('#diagram').get(0);
 
