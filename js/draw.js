@@ -15,15 +15,17 @@ var js, json, type, test, input, skema, draw = {
         var diagram;
         var g = $('#diagram').get(0);
 
+        editor.clearSelection(); 
+        editor.gotoLine(1, 1);
+
         $('#type').text(type); 
         $('#type')[0].href = '/' + type;
         
+        $(".loadingImg").show();
         _.each(json.items, function(value, key) {
 
             if (value['title'] == type) {
 
-                $(".loadingImg").show();
-                editor.clearSelection(); editor.gotoLine(1, 1);
 
                 if (type != 'Scenetree') {
 
@@ -40,9 +42,15 @@ var js, json, type, test, input, skema, draw = {
                 }
 
                 js = '/' + value['js'] + '?t=' + $.now();
+                draw.getScript();
 
             }
         });
+        $('.loadingImg').hide();
+
+    },
+
+    getScript : function() {
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -60,8 +68,8 @@ var js, json, type, test, input, skema, draw = {
 
             } finally {
 
-                test = false; draw.element();
-                $('.loadingImg').hide();
+                test = false; 
+                draw.element();
 
             }
 
