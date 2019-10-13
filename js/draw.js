@@ -110,19 +110,19 @@ var js, json, draw = {
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
 
-        _.each(json.items, function(value, key) {
-            console.log(value['title']);
-            console.log(value['js']);
-        });
-
         var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
-        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
+
+        var index = 0;
+        _.each(json.items, function(value, key) {
+            if(value['title'] == draw.type) nIndex = index;
+            index++;
+        });
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
-
+console.log(json.items[itemIndex]['title']);
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
         $("#json").attr("href", jsonfile);
