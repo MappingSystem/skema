@@ -30,7 +30,7 @@ var js, json, type, test, input, skema, select, draw = {
 
                 if (select != 'hand') {
                     $('#tautan a').each(function(){
-                        (!value[this.id])? this.href = '#': this.href = value[this.id];
+                        (value[this.id])? this.href = value[this.id]: this.href = '#';
                     });
                 }
 
