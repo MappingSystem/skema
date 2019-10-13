@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var draw = {
+var js, json, draw = {
 
     kind : [
         { 
@@ -22,8 +22,6 @@ var draw = {
 
     diagram : function() {
 
-        var js;
-        var json;
         var diagram;
 
         var kinds = draw.kind[0];
