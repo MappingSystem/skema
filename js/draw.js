@@ -1,4 +1,4 @@
-$(window).load(function() {draw.diagram();});
+$(window).load(function() {draw.getJson();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var draw = {
+var js, json, draw = {
 
     kind : [
         { 
@@ -22,7 +22,6 @@ var draw = {
 
     diagram : function() {
 
-        var js;
         var diagram;
 
         var kinds = draw.kind[0];
@@ -34,7 +33,7 @@ var draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
-
+console.log(json);console.log(json.items);
         _.each(kinds, function(value, key) {
             if (key == type) {
 
@@ -165,12 +164,13 @@ var draw = {
 
     },
 
-    change : function() {
+    getJson : function() {
 
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
-        draw.diagram();
+        var jsonfile = '/feed.json?t=' + $.now();
+        $.getJSON(jsonfile).done(function(result){
+            json = result.items[4];
+            draw.diagram();
+        });
 
     },
 
@@ -182,6 +182,15 @@ var draw = {
         str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
         str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
         return (/^[\],:{}\s]*$/).test(str);
+
+    },
+
+    change : function() {
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
+        while(match = regex.exec(url)) {params[match[1]] = match[2];}
+        draw.params = params;
+        draw.diagram();
 
     },
 
