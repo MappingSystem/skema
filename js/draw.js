@@ -48,12 +48,6 @@ var js, json, draw = {
             }
         });
 
-        draw.getScript(js);
-
-    },
-
-    getScript : function(js) {
-
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             try {
