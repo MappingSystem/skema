@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var js, json, type, draw = {
+var js, json, type, test, draw = {
 
     diagram : function() {
 
@@ -59,7 +59,7 @@ var js, json, type, draw = {
 
             } finally {
 
-                draw.test = false; draw.element();
+                test = false; draw.element();
                 $('.loadingImg').hide();
 
             }
@@ -183,9 +183,9 @@ var js, json, type, draw = {
 
     query : function() {
 
-        if (!draw.test) {
+        if (!test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery#01'));}
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#01'));}
         }
 
     },
