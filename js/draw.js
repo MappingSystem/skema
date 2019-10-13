@@ -90,7 +90,7 @@ var js, json, type, test, input, skema, draw = {
             var hash = '#chetabahana-skema';
 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
