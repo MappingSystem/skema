@@ -113,9 +113,11 @@ var js, json, type, test, input, skema, select, draw = {
         $('.mypointer').css('pointer-events', 'none');
         draw.svg[type] = $('svg').get(0);
 
+        //Allow diagram to get the occurred index of a given object's 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var index = 0; _.each(json.items, function(value, key) {if(value['title'] == type) nIndex = index; index++;});
 
+        //Provide Forward and Backward on Workflows 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         type = json.items[itemIndex]['title'];
 
