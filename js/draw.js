@@ -113,8 +113,8 @@ var js, json, draw = {
         $('.mypointer').css('pointer-events', 'none');
 
         _.each(json.items, function(value, key) {
-console.log(value['title']);
-console.log(value['js']);
+            console.log(value['title']);
+            console.log(value['js']);
         });
 
         var kinds = draw.kind[0];
