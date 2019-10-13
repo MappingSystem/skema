@@ -1,4 +1,4 @@
-$(window).load(function() {draw.diagram();});
+$(window).load(function() {draw.getJson();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -8,47 +8,35 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var draw = {
-
-    kind : [
-        { 
-            'sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
-            'flowchart' : 'flowchart/flowchart-latest.js',
-            'railroad'  : 'railroad/railroad-diagrams.js',
-            'nodelinks' : 'nodelinks/release/go.js',
-            'scenetree' : 'scenetree/build.js'
-        }
-    ],
+var js, json, draw = {
 
     diagram : function() {
 
-        var js;
         var diagram;
-
-        var kinds = draw.kind[0];
         var g = $('#diagram').get(0);
 
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 13: 15;
 
-        var type = (!draw.type)? 'sequence': draw.type;
+        var type = (!draw.type)? 'Sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
+        var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        _.each(kinds, function(value, key) {
-            if (key == type) {
+        _.each(json.items, function(value, key) {
+
+            if (value['title'] == type) {
 
                 $(".loadingImg").show();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
-                js = '/' + value + '?t=' + $.now();
+                js = '/' + value['js'] + '?t=' + $.now();
                 editor.clearSelection(); editor.gotoLine(1, 1);
 
-                if (type != 'scenetree') {
+                if (type != 'Scenetree') {
 
                     $('#diagram').show();
                     $('#diagram, #graphiql, #viewport').html('');
-                    $('#diagram').attr('class', 'diagram-' + type);
+                    $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
@@ -64,11 +52,11 @@ var draw = {
 
             try {
 
-                if(type == 'sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
-                else if(type == 'nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
-                else if(type == 'scenetree') {diagram = d3.select('#viewport');}
+                if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
+                else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
+                else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
+                else if(type == 'Nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
+                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
@@ -92,15 +80,15 @@ var draw = {
 
         } else if($(".theme").val() != 'hand') {
 
-            if (type == 'sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
-            else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
-            else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
+            if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
+            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
 
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
-            if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
             $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 600000));
 
         }
@@ -111,14 +99,13 @@ var draw = {
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
-
-        var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
-        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
+        var index = 0; _.each(json.items, function(value, key) {if(value['title'] == draw.type) nIndex = index; index++;});
+
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+        draw.type = json.items[itemIndex]['title'];
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
@@ -165,12 +152,13 @@ var draw = {
 
     },
 
-    change : function() {
+    getJson : function() {
 
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
-        draw.diagram();
+        var jsonfile = '/feed.json?t=' + $.now();
+        $.getJSON(jsonfile).done(function(result){
+            json = result.items[4];
+            draw.diagram();
+        });
 
     },
 
@@ -182,6 +170,15 @@ var draw = {
         str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
         str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
         return (/^[\],:{}\s]*$/).test(str);
+
+    },
+
+    change : function() {
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
+        while(match = regex.exec(url)) {params[match[1]] = match[2];}
+        draw.params = params;
+        draw.diagram();
 
     },
 
