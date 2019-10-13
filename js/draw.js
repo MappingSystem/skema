@@ -20,10 +20,12 @@ var js, json, type, test, input, skema, draw = {
         $('#type').text(type); 
         $('#type')[0].href = '/' + type;
         
-        $(".loadingImg").show();
         _.each(json.items, function(value, key) {
 
             if (value['title'] == type) {
+
+                $(".loadingImg").show();
+                js = '/' + value['js'] + '?t=' + $.now();
 
                 if (type != 'Scenetree') {
 
@@ -39,12 +41,11 @@ var js, json, type, test, input, skema, draw = {
 
                 }
 
-                js = '/' + value['js'] + '?t=' + $.now();
                 draw.getScript();
+                $('.loadingImg').hide();
 
             }
         });
-        $('.loadingImg').hide();
 
     },
 
