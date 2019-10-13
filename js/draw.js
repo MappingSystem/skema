@@ -116,7 +116,7 @@ var js, json, draw = {
 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         draw.type = json.items[itemIndex]['title'];
-        
+
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
         $("#json").attr("href", jsonfile);
