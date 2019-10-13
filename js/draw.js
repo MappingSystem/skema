@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var draw = {
+var js, json, draw = {
 
     kind : [
         { 
@@ -20,9 +20,8 @@ var draw = {
         }
     ],
 
-    diagram : function() {
+    diagram : function(json) {
 
-        var js;
         var diagram;
 
         var kinds = draw.kind[0];
@@ -31,20 +30,20 @@ var draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 13: 15;
 
-        var type = (!draw.type)? 'sequence': draw.type;
+        var type = (!draw.type)? 'Sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
+        var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        _.each(kinds, function(value, key) {
-            if (key == type) {
+        _.each(json, function(value, key) {
+            if (value["title"] == type) {
 
                 $(".loadingImg").show();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
-                js = '/' + value + '?t=' + $.now();
+                js = '/' + value["js"] + '?t=' + $.now();
                 editor.clearSelection(); editor.gotoLine(1, 1);
 
-                if (type != 'scenetree') {
+                if (type != 'Scenetree') {
 
                     $('#diagram').show();
                     $('#diagram, #graphiql, #viewport').html('');
@@ -64,11 +63,11 @@ var draw = {
 
             try {
 
-                if(type == 'sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
-                else if(type == 'nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
-                else if(type == 'scenetree') {diagram = d3.select('#viewport');}
+                if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
+                else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
+                else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
+                else if(type == 'Nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
+                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
@@ -92,15 +91,15 @@ var draw = {
 
         } else if($(".theme").val() != 'hand') {
 
-            if (type == 'sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            else if (type == 'flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
-            else if (type == 'railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
-            else if (type == 'nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
+            if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
+            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
 
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
-            if (type != 'scenetree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
             $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 600000));
 
         }
@@ -168,7 +167,7 @@ var draw = {
     getJSON : function() {
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){console.log(result.items[4]); draw.diagram();});
+        $.getJSON(jsonfile).done(function(result){console.log(result.items[4]); draw.diagram(result.items[4]);});
 
     },
 
