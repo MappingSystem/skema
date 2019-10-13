@@ -12,19 +12,19 @@ var js, json, draw = {
 
     kind : [
         { 
-            'sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
-            'flowchart' : 'flowchart/flowchart-latest.js',
-            'railroad'  : 'railroad/railroad-diagrams.js',
-            'nodelinks' : 'nodelinks/release/go.js',
-            'scenetree' : 'scenetree/build.js'
+            'Sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
+            'Flowchart' : 'flowchart/flowchart-latest.js',
+            'Railroad'  : 'railroad/railroad-diagrams.js',
+            'Nodelinks' : 'nodelinks/release/go.js',
+            'Scenetree' : 'scenetree/build.js'
         }
     ],
 
     diagram : function() {
 
-        var diagram;
-
         var kinds = draw.kind[0];
+
+        var diagram;
         var g = $('#diagram').get(0);
 
         var select = $(".theme").val();
@@ -33,11 +33,6 @@ var js, json, draw = {
         var type = (!draw.type)? 'Sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
-
-        _.each(json.items, function(value, key) {
-console.log(value['title']);
-console.log(value['js']);
-        });
 
         _.each(json.items, function(value, key) {
 
@@ -116,6 +111,11 @@ console.log(value['js']);
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
+
+        _.each(json.items, function(value, key) {
+console.log(value['title']);
+console.log(value['js']);
+        });
 
         var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
