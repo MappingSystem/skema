@@ -46,6 +46,7 @@ var js, json, draw = {
 
                 }
             }
+
         });
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
