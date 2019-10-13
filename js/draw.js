@@ -1,4 +1,4 @@
-$(window).load(function() {draw.getJson();});
+$(window).load(function() {draw.getJSON();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -8,6 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
+// Put on process variables in to global type 
 var js, json, type, test, input, skema, select, draw = {
 
     diagram : function() {
@@ -163,8 +164,9 @@ var js, json, type, test, input, skema, select, draw = {
 
     },
 
-    getJson : function() {
+    getJSON : function() {
 
+        //Inject Workflows from getJSON
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
             if(!skema) skema = editor.getValue();
