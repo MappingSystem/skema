@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var js, json, draw = {
+var js, json, type, draw = {
 
     diagram : function() {
 
@@ -18,7 +18,6 @@ var js, json, draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 13: 15;
 
-        var type = (!draw.type)? 'Sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
@@ -60,7 +59,7 @@ var js, json, draw = {
 
             } finally {
 
-                draw.type = type; draw.test = false; draw.element();
+                draw.test = false; draw.element();
                 $('.loadingImg').hide();
 
             }
@@ -72,7 +71,6 @@ var js, json, draw = {
     element : function() {
 
         var elements;
-        var type = draw.type;
 
         if (!$('#diagram, #graphiql').find('svg')[0]) {
 
@@ -99,13 +97,13 @@ var js, json, draw = {
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
-        draw.svg[draw.type] = $('svg').get(0);
+        draw.svg[type] = $('svg').get(0);
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var index = 0; _.each(json.items, function(value, key) {if(value['title'] == draw.type) nIndex = index; index++;});
 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        draw.type = json.items[itemIndex]['title'];
+        type = json.items[itemIndex]['title'];
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
@@ -156,6 +154,7 @@ var js, json, draw = {
 
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
+            if(!type) type = 'Sequence';
             json = result.items[4];
             draw.diagram();
         });
