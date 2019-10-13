@@ -31,7 +31,7 @@ var js, json, type, test, input, skema, select, draw = {
                 if (select != 'hand') {
                     $('#tautan a').each(function(){
                         if (value[this.id]) {this.href = value[this.id];}
-                        else {this.href = '#'; this.attr('class','mypointer')}
+                        else {this.href = '#'; this.class = 'mypointer';}
                     });
                 }
 
