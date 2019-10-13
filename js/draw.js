@@ -28,9 +28,13 @@ var js, json, type, test, input, skema, select, draw = {
 
             if (value['title'] == type) {
 
-                $(".loadingImg").show();
-                js = '/' + value['js'] + '?t=' + $.now();
+                if (select != 'hand') {
+                    $('#tautan a').each(function(){
+                        (!value[this.id])? this.href = '#': this.href = value[this.id];
+                    });
+                }
 
+                $(".loadingImg").show();
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -45,7 +49,7 @@ var js, json, type, test, input, skema, select, draw = {
 
                 }
 
-                if (select != 'hand') $('#js')[0].href = js;
+                js = '/' + value['js'] + '?t=' + $.now();
                 draw.getScript();
 
             }
@@ -220,6 +224,7 @@ var js, json, type, test, input, skema, select, draw = {
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
 
     },
+
 
     clone : function(e) {
 
