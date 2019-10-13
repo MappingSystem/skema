@@ -165,15 +165,6 @@ var draw = {
 
     },
 
-    change : function() {
-
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
-        draw.diagram();
-
-    },
-
     isJSON : function(str) {
 
         if (str == "{" ) return false;
@@ -182,6 +173,15 @@ var draw = {
         str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
         str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
         return (/^[\],:{}\s]*$/).test(str);
+
+    },
+
+    change : function() {
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
+        while(match = regex.exec(url)) {params[match[1]] = match[2];}
+        draw.params = params;
+        draw.diagram();
 
     },
 
