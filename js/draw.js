@@ -1,4 +1,4 @@
-$(window).load(function() {draw.diagram();});
+$(window).load(function() {draw.getJson();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -176,7 +176,7 @@ var draw = {
 
     getJson : function() {
 
-        var jsonfile = '/assets/feed.json?t=' + $.now();
+        var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){draw.diagram(result);});
 
     },
