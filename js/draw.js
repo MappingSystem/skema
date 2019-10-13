@@ -30,12 +30,11 @@ var js, json, draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 13: 15;
 
-        var type = (!draw.type)? 'Sequence': draw.type;
+        var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
-
+        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
+console.log(json);console.log(json.items);
         _.each(kinds, function(value, key) {
-
             if (key == type) {
 
                 $(".loadingImg").show();
