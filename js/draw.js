@@ -48,7 +48,7 @@ var js, json, draw = {
 
                     $('#diagram').show();
                     $('#diagram, #graphiql, #viewport').html('');
-                    $('#diagram').attr('class', 'diagram-' + strtolower(type));
+                    $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
