@@ -8,28 +8,24 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var js, json, type, draw = {
+var js, json, type, test, input, skema, draw = {
 
     diagram : function() {
 
         var diagram;
-        var g = $('#diagram').get(0);
+        $(".loadingImg").show();
 
-        var select = $(".theme").val();
-        var font_size = (select == 'hand')? 13: 15;
+        $('#type').text(type); 
+        $('#type')[0].href = '/' + type;
 
-        var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
+        editor.clearSelection(); 
+        editor.gotoLine(1, 1);
 
         _.each(json.items, function(value, key) {
 
             if (value['title'] == type) {
 
-                $(".loadingImg").show();
-                $('#type').text(type); $('#type')[0].href = '/' + type;
-
                 js = '/' + value['js'] + '?t=' + $.now();
-                editor.clearSelection(); editor.gotoLine(1, 1);
 
                 if (type != 'Scenetree') {
 
@@ -44,22 +40,36 @@ var js, json, type, draw = {
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
+
+                draw.getScript();
+
             }
+
         });
 
+    },
+
+    getScript : function() {
+
         $.getScript(js, function( data, textStatus, jqxhr ) {
+
+            var g = $('#diagram').get(0);
+            var select = $(".theme").val();
+            var font_size = (select == 'hand')? 13: 15;
+            if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
 
                 if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
-                else if(type == 'Nodelinks') {diagram = draw.makeSvg(input, skema); g.prepend(diagram);}
+                else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
-                draw.test = false; draw.element();
+                test = false; 
+                draw.element();
                 $('.loadingImg').hide();
 
             }
@@ -70,16 +80,17 @@ var js, json, type, draw = {
 
     element : function() {
 
-        var elements;
-
         if (!$('#diagram, #graphiql').find('svg')[0]) {
 
             window.requestAnimationFrame(draw.element);
 
         } else if($(".theme").val() != 'hand') {
 
+            var elements;
+            var hash = '#chetabahana-skema';
+
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
-            else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');} 
+            else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
@@ -87,7 +98,7 @@ var js, json, type, draw = {
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
             if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
-            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload('#chetabahana-skema');}, 600000));
+            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
         }
 
@@ -112,15 +123,15 @@ var js, json, type, draw = {
         $.getJSON(jsonfile).done(function(result){
 
             var obj = result.items[4].items[itemIndex];
-            draw.input = obj.input; draw.skema = draw.encode(obj.query);
-            if(itemIndex != index - 1) editor.setValue(draw.skema);
+            input = obj.input; skema = draw.encode(obj.query);
+            if(itemIndex != index - 1) editor.setValue(skema);
             else {$(".theme").val("simple"); draw.change();}
 
         });
 
     },
 
-    makeSvg : function(input, skema) {
+    makeSvg : function() {
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "viewport");
@@ -143,7 +154,7 @@ var js, json, type, draw = {
         var svg = $("#diagram").find('svg')[0];
         var width = parseInt(svg.width.baseVal.value);
         var height = parseInt(svg.height.baseVal.value);
-        var xmldata = '<?xml version="1.0" encoding="utf-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[' + draw.skema + ']]></source>' + svg.innerHTML + '</svg>';
+        var xmldata = '<?xml version="1.0" encoding="utf-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" xmlns:xlink="http://www.w3.org/1999/xlink"><source><![CDATA[' + skema + ']]></source>' + svg.innerHTML + '</svg>';
         a.attr("download", "diagram.svg"); 
         var xml = encodeURIComponent(xmldata);
         a.attr("href", "data:image/svg+xml," + xml);
@@ -154,6 +165,7 @@ var js, json, type, draw = {
 
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
+            if(!skema) skema = editor.getValue();
             if(!type) type = 'Sequence';
             json = result.items[4];
             draw.diagram();
@@ -183,9 +195,9 @@ var js, json, type, draw = {
 
     query : function() {
 
-        if (!draw.test) {
+        if (!test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {draw.test = !draw.test; draw.click($('.eQuery#01'));}
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#01'));}
         }
 
     },
