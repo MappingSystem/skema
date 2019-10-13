@@ -1,4 +1,4 @@
-$(window).load(function() {draw.getJson();});
+$(window).load(function() {draw.getJSON();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -22,15 +22,15 @@ var js, json, draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
+        $(".loadingImg").show();
+        editor.clearSelection(); editor.gotoLine(1, 1);
+
         _.each(json.items, function(value, key) {
 
             if (value['title'] == type) {
 
-                $(".loadingImg").show();
-                $('#type').text(type); $('#type')[0].href = '/' + type;
-
-                js = '/' + value['js'] + '?t=' + $.now();
-                editor.clearSelection(); editor.gotoLine(1, 1);
+                $('#type').text(type);
+                $('#type')[0].href = '/' + type;
 
                 if (type != 'Scenetree') {
 
@@ -45,8 +45,19 @@ var js, json, draw = {
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
+ 
+                js = '/' + value['js'] + '?t=' + $.now();
+                draw.getScript(js);
+
             }
+
         });
+
+        $('.loadingImg').hide();
+
+     },
+
+   getScript : function(js) {
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
@@ -60,8 +71,8 @@ var js, json, draw = {
 
             } finally {
 
-                draw.type = type; draw.test = false; draw.element();
-                $('.loadingImg').hide();
+                draw.type = type; draw.test = false;
+                draw.element();
 
             }
 
@@ -152,7 +163,7 @@ var js, json, draw = {
 
     },
 
-    getJson : function() {
+    getJSON : function() {
 
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
