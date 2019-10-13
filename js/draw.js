@@ -41,6 +41,7 @@ var js, json, type, test, input, skema, draw = {
                 }
 
                 js = '/' + value['js'] + '?t=' + $.now();
+                $('#js')[0].href = js;
                 draw.getScript();
 
             }
