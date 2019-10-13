@@ -10,21 +10,9 @@ editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
 var js, json, draw = {
 
-    kind : [
-        { 
-            'sequence'  : 'sequence/js/sequence-diagram-snap-min.js',
-            'flowchart' : 'flowchart/flowchart-latest.js',
-            'railroad'  : 'railroad/railroad-diagrams.js',
-            'nodelinks' : 'nodelinks/release/go.js',
-            'scenetree' : 'scenetree/build.js'
-        }
-    ],
-
     diagram : function() {
 
         var diagram;
-
-        var kinds = draw.kind[0];
         var g = $('#diagram').get(0);
 
         var select = $(".theme").val();
@@ -33,11 +21,6 @@ var js, json, draw = {
         var type = (!draw.type)? 'Sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
-
-        _.each(json.items, function(value, key) {
-console.log(value['title']);
-console.log(value['js']);
-        });
 
         _.each(json.items, function(value, key) {
 
@@ -53,7 +36,7 @@ console.log(value['js']);
 
                     $('#diagram').show();
                     $('#diagram, #graphiql, #viewport').html('');
-                    $('#diagram').attr('class', 'diagram-' + strtolower(type));
+                    $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
@@ -116,14 +99,13 @@ console.log(value['js']);
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
-
-        var kinds = draw.kind[0];
         draw.svg[draw.type] = $('svg').get(0);
-        var index = 0; for (key in kinds) {if(key == draw.type) nIndex = index; index++;}
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
+        var index = 0; _.each(json.items, function(value, key) {if(value['title'] == draw.type) nIndex = index; index++;});
+
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        draw.type = _.findKey(kinds, function(item) {return _.indexOf(Object.values(kinds), item) == itemIndex;});
+        draw.type = json.items[itemIndex]['title'];
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
