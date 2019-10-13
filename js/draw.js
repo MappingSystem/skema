@@ -29,7 +29,7 @@ var draw = {
         var g = $('#diagram').get(0);
 
         var select = $(".theme").val();
-        var font_size = (select == 'hand')? 13: 14;
+        var font_size = (select == 'hand')? 13: 15;
 
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
