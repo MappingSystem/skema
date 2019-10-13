@@ -100,7 +100,7 @@ var js, json, type, draw = {
         draw.svg[type] = $('svg').get(0);
 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
-        var index = 0; _.each(json.items, function(value, key) {if(value['title'] == draw.type) nIndex = index; index++;});
+        var index = 0; _.each(json.items, function(value, key) {if(value['title'] == type) nIndex = index; index++;});
 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         type = json.items[itemIndex]['title'];
