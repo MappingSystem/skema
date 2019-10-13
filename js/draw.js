@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var draw = {
+var js, json, draw = {
 
     kind : [
         { 
@@ -20,12 +20,10 @@ var draw = {
         }
     ],
 
-    diagram : function(result) {
+    diagram : function(data) {
 
-        var js;
         var diagram;
 
-        var json = result;
         var kinds = draw.kind[0];
         var g = $('#diagram').get(0);
 
@@ -35,15 +33,7 @@ var draw = {
         var type = (!draw.type)? 'sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
-
-        var jsonfile = '/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){
-
-            var obj = result.items[4].items[0];
-            console.log (obj);
-
-        });
-
+console.log(json);
         _.each(kinds, function(value, key) {
             if (key == type) {
 
@@ -177,7 +167,10 @@ var draw = {
     getJson : function() {
 
         var jsonfile = '/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){draw.diagram(result);});
+        $.getJSON(jsonfile).done(function(result){
+            json = result.items[4];
+            draw.diagram();
+        });
 
     },
 
