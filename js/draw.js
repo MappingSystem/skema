@@ -34,13 +34,14 @@ var js, json, draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        _.each(json.items, function(value, key) {
-            if (value['title'] == type) {
+        _.each(kinds, function(value, key) {
+
+            if (key == type) {
 
                 $(".loadingImg").show();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
-                js = '/' + value['title'] + '?t=' + $.now();
+                js = '/' + value + '?t=' + $.now();
                 editor.clearSelection(); editor.gotoLine(1, 1);
 
                 if (type != 'scenetree') {
