@@ -30,17 +30,17 @@ var js, json, draw = {
         var select = $(".theme").val();
         var font_size = (select == 'hand')? 13: 15;
 
-        var type = (!draw.type)? 'sequence': draw.type;
+        var type = (!draw.type)? 'Sequence': draw.type;
         var skema = (draw.skema)? draw.skema: editor.getValue();
-        var input = (type != 'sequence')? draw.input: {theme: select, "font-size": font_size};
-console.log(json);
-        _.each(kinds, function(value, key) {
-            if (key == type) {
+        var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
+
+        _.each(json.items, function(value, key) {
+            if (value['title'] == type) {
 
                 $(".loadingImg").show();
                 $('#type').text(type); $('#type')[0].href = '/' + type;
 
-                js = '/' + value + '?t=' + $.now();
+                js = '/' + value['title'] + '?t=' + $.now();
                 editor.clearSelection(); editor.gotoLine(1, 1);
 
                 if (type != 'scenetree') {
