@@ -19,7 +19,7 @@ var js, json, type, test, input, skema, select, draw = {
         select = $(".theme").val();
 
         $('#type').text(type); 
-        $('#type')[0].href = '/' + type;
+        $('#type')[0].href = '/' + type.toLowerCase();
 
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
