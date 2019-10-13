@@ -13,7 +13,6 @@ var js, json, type, test, input, skema, draw = {
     diagram : function() {
 
         var diagram;
-        var g = $('#diagram').get(0);
 
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
@@ -53,6 +52,7 @@ var js, json, type, test, input, skema, draw = {
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
+            var g = $('#diagram').get(0);
             var select = $(".theme").val();
             var font_size = (select == 'hand')? 13: 15;
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
