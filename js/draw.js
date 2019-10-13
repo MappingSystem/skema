@@ -1,4 +1,4 @@
-$(window).load(function() {draw.diagram();});
+$(window).load(function() {draw.getJson();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -20,11 +20,12 @@ var draw = {
         }
     ],
 
-    diagram : function() {
+    diagram : function(result) {
 
         var js;
         var diagram;
 
+        var json = result;
         var kinds = draw.kind[0];
         var g = $('#diagram').get(0);
 
@@ -165,10 +166,10 @@ var draw = {
 
     },
 
-    getJSON : function() {
+    getJson : function() {
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){draw.diagram();});
+        $.getJSON(jsonfile).done(function(result){draw.diagram(result);});
 
     },
 
