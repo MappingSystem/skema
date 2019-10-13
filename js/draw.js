@@ -1,4 +1,4 @@
-$(window).load(function() {draw.diagram();});
+$(window).load(function() {draw.getJSON();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -162,6 +162,13 @@ var draw = {
         a.attr("download", "diagram.svg"); 
         var xml = encodeURIComponent(xmldata);
         a.attr("href", "data:image/svg+xml," + xml);
+
+    },
+
+    getJSON : function() {
+
+        var jsonfile = '/assets/feed.json?t=' + $.now();
+        $.getJSON(jsonfile).done(function(result){console.log(result.items[4]); draw.diagram();});
 
     },
 
