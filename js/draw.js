@@ -169,7 +169,11 @@ var draw = {
     getJson : function() {
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){draw.diagram(result);});
+        $.getJSON(jsonfile).done(function(result){
+
+            draw.diagram(result);
+
+        });
 
     },
 
