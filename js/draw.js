@@ -20,7 +20,7 @@ var js, json, draw = {
         }
     ],
 
-    diagram : function(data) {
+    diagram : function() {
 
         var diagram;
 
