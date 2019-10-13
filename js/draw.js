@@ -36,7 +36,7 @@ var draw = {
         var skema = (draw.skema)? draw.skema: editor.getValue();
         var input = (type != 'Sequence')? draw.input: {theme: select, "font-size": font_size};
 
-        if(!json) json = draw.getJSON[4];
+        if(!json) json = draw.getJSON[4]; console.log(json);
         _.each(json, function(value, key) {
             if (value["title"] == type) {
 
