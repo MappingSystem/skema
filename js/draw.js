@@ -154,7 +154,7 @@ var js, json, type, draw = {
 
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
-            if(!type)? type = 'Sequence';
+            if(!type) type = 'Sequence';
             json = result.items[4];
             draw.diagram();
         });
