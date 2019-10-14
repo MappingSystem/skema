@@ -213,7 +213,7 @@ var js, json, link, type, test, input, skema, select, draw = {
 
         $('#tautan a').each(function(key, value) {
 
-            if (select == 'hand' && !input) {
+            if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).attr('href');
             } else {
