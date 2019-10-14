@@ -214,6 +214,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
     },
 
     link : function(item) {
+
         //Extend workflows links on each skema
         $('#tautan a').each(function(key, value) {
 
@@ -259,6 +260,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     pad : function(i) {
 
+        //Utilize pad in to the workflows id
         var s = String(i);
         while (s.length < ((pad + 2) || 2)) {s = "0" + s;}
         return s;
