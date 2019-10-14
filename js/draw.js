@@ -115,7 +115,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
+        var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
+        n = array.includes($(e).attr("id"));
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
@@ -208,7 +209,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         if (!test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#01'));}
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
 
     },
@@ -251,7 +252,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         button.prependTo($('button.execute-button').parent());
 
         button.attr('title','Back to previous session');
-        button.click(function() {draw.click($('.eQuery#00'));});  
+        button.click(function() {draw.click($('.eQuery').first());});  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
