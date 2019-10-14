@@ -30,7 +30,7 @@ var js, json, link, type, test, input, skema, select, draw = {
 
                 $('#tautan a').each(function(value, key){
                     if (select == 'hand') {
-                        this.href = link[key].href;
+                        this.href = link.first().href;
                         $(this).css({'cursor':'pointer'});
                     } else {
                         if (item[this.id]) {this.href = item[this.id];}
