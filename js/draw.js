@@ -42,7 +42,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-                js = '/' + item['js'] + '?t=' + $.now();
+                pad = index; js = '/' + item['js'] + '?t=' + $.now();
                 draw.link(item); draw.getScript();
 
             }
@@ -174,10 +174,9 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if(!skema) skema = editor.getValue();
             if(!link) link = $('#tautan a');
-            if(!pad) pad = 0;
+            if(!type) type = 'Sequence';
 
             json = result.items[4].items;
-            type = json[0]['title'];
             size = json.length;
 
             draw.diagram();
