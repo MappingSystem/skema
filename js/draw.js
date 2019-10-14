@@ -21,6 +21,9 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if (item['title'] == type) {
 
+                pad = index;
+                draw.link(item);
+
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -35,8 +38,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-                pad = index; js = '/' + item['js'] + '?t=' + $.now();
-                draw.link(item); draw.getScript();
+                js = '/' + item['js'] + '?t=' + $.now();
+                draw.getScript();
 
             }
 
