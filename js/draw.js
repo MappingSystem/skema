@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
 // Put on process variables in to global type 
-var js, json, type, test, input, skema, select, draw = {
+var js, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
@@ -24,16 +24,19 @@ var js, json, type, test, input, skema, select, draw = {
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
 
-       _.each(json.items, function(value, key) {
+       _.each(json.items, function(item, index) {
 
-            if (value['title'] == type) {
+            if (item['title'] == type) {
 
-                if (select != 'hand') {
-                    $('#tautan a').each(function(){
-                        if (value[this.id]) {this.href = value[this.id];}
+                $('#tautan a').each(function(value, key){
+                    if (select == 'hand') {
+                        this.href = link[key].href;
+                        $(this).css({'cursor':'pointer'});
+                    } else {
+                        if (item[this.id]) {this.href = item[this.id];}
                         else {this.href = '#'; $(this).css({'cursor':'no-drop'}).click(false);}
-                    });
-                }
+                    }
+                });
 
                 $(".loadingImg").show();
                 if (type != 'Scenetree') {
@@ -179,6 +182,7 @@ var js, json, type, test, input, skema, select, draw = {
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
             if(!skema) skema = editor.getValue();
+            if(!link) link = $('#tautan a');
             if(!type) type = 'Sequence';
             json = result.items[4];
             draw.diagram();
