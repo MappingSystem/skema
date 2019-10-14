@@ -32,7 +32,7 @@ var js, json, link, type, test, input, skema, select, draw = {
 
                 $('#tautan a').each(function(value, key){
 
-                    if (select == 'hand') {
+                    if (select == 'hand' && !input ) {
                         this.href = link.slice(key,key+1).href;
                         $(this).css({'cursor':'pointer'});
                     } else {
