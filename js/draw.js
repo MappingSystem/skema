@@ -209,7 +209,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         if (!test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#01'));}
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#000001'));}
         }
 
     },
@@ -252,7 +252,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         button.prependTo($('button.execute-button').parent());
 
         button.attr('title','Back to previous session');
-        button.click(function() {draw.click($('.eQuery#00'));});  
+        button.click(function() {draw.click($('.eQuery#000000'));});  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
