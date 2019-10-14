@@ -210,7 +210,7 @@ var js, json, link, type, test, input, skema, select, draw = {
     },
 
     link : function(item) {
-
+        //Extend workflows links on each skema
         $('#tautan a').each(function(key, value) {
 
             if (select == 'hand') {
