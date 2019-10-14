@@ -1,4 +1,4 @@
-$(window).load(function() {draw.getJson();});
+$(window).load(function() {draw.getJSON();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
@@ -8,22 +8,25 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-var js, json, type, test, input, skema, draw = {
+// Put on process variables in to global type 
+var js, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
         var diagram;
 
+        test = false; 
+        select = $(".theme").val();
+
         $('#type').text(type); 
-        $('#type')[0].href = '/' + type;
+        $('#type')[0].href = '/' + type.toLowerCase();
 
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
-        test = false; 
 
-        _.each(json.items, function(value, key) {
+       _.each(json.items, function(item, index) {
 
-            if (value['title'] == type) {
+            if (item['title'] == type) {
 
                 $(".loadingImg").show();
                 if (type != 'Scenetree') {
@@ -40,8 +43,8 @@ var js, json, type, test, input, skema, draw = {
 
                 }
 
-                js = '/' + value['js'] + '?t=' + $.now();
-                draw.getScript();
+                js = '/' + item['js'] + '?t=' + $.now();
+                draw.link(item); draw.getScript();
 
             }
 
@@ -54,12 +57,12 @@ var js, json, type, test, input, skema, draw = {
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             var g = $('#diagram').get(0);
-            var select = $(".theme").val();
             var font_size = (select == 'hand')? 13: 15;
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
 
+                //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
                 if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
@@ -88,6 +91,7 @@ var js, json, type, test, input, skema, draw = {
             var elements;
             var hash = '#chetabahana-skema';
 
+            //get svg elements type and theme of Skema to 'Progress' for processing 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
@@ -109,9 +113,11 @@ var js, json, type, test, input, skema, draw = {
         $('.mypointer').css('pointer-events', 'none');
         draw.svg[type] = $('svg').get(0);
 
+        //Allow diagram to get the occurred index of a given object's 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
         var index = 0; _.each(json.items, function(value, key) {if(value['title'] == type) nIndex = index; index++;});
 
+        //Provide Forward and Backward on Workflows 
         var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
         type = json.items[itemIndex]['title'];
 
@@ -160,11 +166,13 @@ var js, json, type, test, input, skema, draw = {
 
     },
 
-    getJson : function() {
+    getJSON : function() {
 
+        //Inject Workflows from getJSON
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
             if(!skema) skema = editor.getValue();
+            if(!link) link = $('#tautan a');
             if(!type) type = 'Sequence';
             json = result.items[4];
             draw.diagram();
@@ -201,6 +209,23 @@ var js, json, type, test, input, skema, draw = {
 
     },
 
+    link : function(item) {
+
+        $('#tautan a').each(function(key, value) {
+
+            if (select == 'hand') {
+                $(this).css({'cursor':'pointer'});
+                this.href = link.slice(key,key+1).attr('href');
+            } else {
+                if (item[this.id]) {this.href = item[this.id];}
+                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
+            }
+
+        });
+
+    },
+
+
     node : function(i, e) {
 
         e.id = draw.pad(i, 2);
@@ -211,6 +236,7 @@ var js, json, type, test, input, skema, draw = {
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
 
     },
+
 
     clone : function(e) {
 
