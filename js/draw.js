@@ -8,7 +8,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-// Put on process variables in to global type 
+// Put all of the process variables in to global type 
 var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
@@ -260,7 +260,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
     pad : function(i) {
 
         var s = String(i);
-        while (s.length < ((pad+2) || 2)) {s = "0" + s;}
+        while (s.length < ((pad + 2) || 2)) {s = "0" + s;}
         return s;
 
     },
