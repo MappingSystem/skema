@@ -13,15 +13,6 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
-        var diagram;
-        test = false;
-
-        $(".loadingImg").show();
-        select = $(".theme").val();
-
-        $('#type').text(type); 
-        $('#type')[0].href = '/' + type.toLowerCase();
-
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
 
@@ -29,7 +20,6 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if (item['title'] == type) {
 
-                pad = index;
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -44,8 +34,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-                js = '/' + item['js'] + '?t=' + $.now();
-                draw.link(item); draw.getScript();
+                pad = index;
+                draw.getLinks(item);
 
             }
 
@@ -53,10 +43,37 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     },
 
-    getScript : function() {
+    getLinks : function(item) {
 
+        select = $(".theme").val();
+
+        //Extend workflows links on each skema
+        $('#tautan a').each(function(key, value) {
+
+            if (select == 'hand') {
+                $(this).css({'cursor':'pointer'});
+                this.href = link.slice(key,key+1).attr('href');
+            } else {
+                if (item[this.id]) {this.href = item[this.id];}
+                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
+            }
+
+        });
+
+        $('#type').text(type); 
+        $('#type')[0].href = '/' + type.toLowerCase();
+        draw.getScript(item);
+
+    },
+
+
+    getScript : function(item) {
+
+        $(".loadingImg").show();
+        js = '/' + item['js'] + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
+            var diagram;
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
@@ -115,7 +132,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
+        var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
+        n = array.includes($(e).attr("id"));
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
@@ -129,8 +147,9 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
+
             if(pad != size - 1) editor.setValue(skema);
-            else {$(".theme").val("simple"); draw.change();}
+            else {test = false; draw.change();}
 
         });
 
@@ -178,6 +197,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             json = result.items[4].items;
             size = json.length;
+
             draw.diagram();
 
         });
@@ -208,27 +228,10 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         if (!test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#01'));}
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
 
     },
-
-    link : function(item) {
-        //Extend workflows links on each skema
-        $('#tautan a').each(function(key, value) {
-
-            if (select == 'hand') {
-                $(this).css({'cursor':'pointer'});
-                this.href = link.slice(key,key+1).attr('href');
-            } else {
-                if (item[this.id]) {this.href = item[this.id];}
-                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
-            }
-
-        });
-
-    },
-
 
     node : function(i, e) {
 
@@ -250,7 +253,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         button.prependTo($('button.execute-button').parent());
 
         button.attr('title','Back to previous session');
-        button.click(function() {draw.click($('.eQuery#00'));});  
+        button.click(function() {draw.click($('.eQuery').first());});  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
@@ -259,6 +262,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     pad : function(i) {
 
+        //Utilize pad in to the workflows id
         var s = String(i);
         while (s.length < ((pad + 2) || 2)) {s = "0" + s;}
         return s;
