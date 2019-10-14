@@ -13,14 +13,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
-        var diagram;
-
         $(".loadingImg").show();
-        select = $(".theme").val();
-
-        $('#type').text(type); 
-        $('#type')[0].href = '/' + type.toLowerCase();
-
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
 
@@ -55,6 +48,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
+            var diagram;
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
@@ -216,7 +210,11 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     link : function(item) {
 
+        $('#type').text(type); 
+        $('#type')[0].href = '/' + type.toLowerCase();
+
         //Extend workflows links on each skema
+        select = $(".theme").val();
         $('#tautan a').each(function(key, value) {
 
             if (select == 'hand') {
