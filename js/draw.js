@@ -8,14 +8,15 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
-// Put on process variables in to global type 
-var js, json, link, type, test, input, skema, select, draw = {
+// Put all of the process variables in to global type 
+var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
         var diagram;
+        test = false;
 
-        test = false; 
+        $(".loadingImg").show();
         select = $(".theme").val();
 
         $('#type').text(type); 
@@ -24,11 +25,11 @@ var js, json, link, type, test, input, skema, select, draw = {
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
 
-       _.each(json.items, function(item, index) {
+       _.each(json, function(item, index) {
 
             if (item['title'] == type) {
 
-                $(".loadingImg").show();
+                pad = index;
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -115,11 +116,10 @@ var js, json, link, type, test, input, skema, select, draw = {
 
         //Allow diagram to get the occurred index of a given object's 
         var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
-        var index = 0; _.each(json.items, function(value, key) {if(value['title'] == type) nIndex = index; index++;});
 
         //Provide Forward and Backward on Workflows 
-        var itemIndex = (n)? ((nIndex == 0)? index - 1 : nIndex - 1): ((nIndex + 1 == index)? 0: nIndex + 1);
-        type = json.items[itemIndex]['title'];
+        pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
+        type = json[pad]['title'];
 
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
@@ -127,9 +127,9 @@ var js, json, link, type, test, input, skema, select, draw = {
 
         $.getJSON(jsonfile).done(function(result){
 
-            var obj = result.items[4].items[itemIndex];
+            var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
-            if(itemIndex != index - 1) editor.setValue(skema);
+            if(pad != size - 1) editor.setValue(skema);
             else {$(".theme").val("simple"); draw.change();}
 
         });
@@ -171,11 +171,15 @@ var js, json, link, type, test, input, skema, select, draw = {
         //Inject Workflows from getJSON
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
+
             if(!skema) skema = editor.getValue();
             if(!link) link = $('#tautan a');
             if(!type) type = 'Sequence';
-            json = result.items[4];
+
+            json = result.items[4].items;
+            size = json.length;
             draw.diagram();
+
         });
 
     },
@@ -228,10 +232,12 @@ var js, json, link, type, test, input, skema, select, draw = {
 
     node : function(i, e) {
 
-        e.id = draw.pad(i, 2);
+        e.id = draw.pad(i);
         e.parentNode.appendChild(e);
+
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
+
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
 
@@ -251,10 +257,10 @@ var js, json, link, type, test, input, skema, select, draw = {
 
     },
 
-    pad : function(data, size) {
+    pad : function(i) {
 
-        var s = String(data);
-        while (s.length < (size || 2)) {s = "0" + s;}
+        var s = String(i);
+        while (s.length < ((pad + 2) || 2)) {s = "0" + s;}
         return s;
 
     },
