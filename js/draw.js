@@ -43,14 +43,8 @@ var js, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-<<<<<<< HEAD
-                js = '/' + value['js'] + '?t=' + $.now();
-                $('#js')[0].href = js;
-                draw.getScript();
-=======
                 js = '/' + item['js'] + '?t=' + $.now();
                 draw.link(item); draw.getScript();
->>>>>>> Chetabahana
 
             }
 
