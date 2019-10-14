@@ -14,7 +14,6 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
     diagram : function() {
 
         var diagram;
-        test = false;
 
         $(".loadingImg").show();
         select = $(".theme").val();
@@ -29,7 +28,6 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if (item['title'] == type) {
 
-                pad = index;
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -130,8 +128,9 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
+
             if(pad != size - 1) editor.setValue(skema);
-            else {$(".theme").val("simple"); draw.change();}
+            else {test = false; draw.change();}
 
         });
 
@@ -175,10 +174,12 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if(!skema) skema = editor.getValue();
             if(!link) link = $('#tautan a');
-            if(!type) type = 'Sequence';
+            if(!pad) pad = 0;
 
             json = result.items[4].items;
+            type = json[0]['title'];
             size = json.length;
+
             draw.diagram();
 
         });
