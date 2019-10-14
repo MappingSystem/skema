@@ -30,7 +30,7 @@ var js, json, link, type, test, input, skema, select, draw = {
 
                 $(".loadingImg").show();
 
-                $('#tautan a').each(function(value, key){
+                $('#tautan a').each(function(key, value){
 
                     if (select == 'hand' && !input ) {
                         this.href = link.slice(key,key+1).href;
