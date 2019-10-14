@@ -28,7 +28,10 @@ var js, json, link, type, test, input, skema, select, draw = {
 
             if (item['title'] == type) {
 
+                $(".loadingImg").show();
+
                 $('#tautan a').each(function(value, key){
+
                     if (select == 'hand') {
                         this.href = link.slice(key,key+1).href;
                         $(this).css({'cursor':'pointer'});
@@ -36,9 +39,9 @@ var js, json, link, type, test, input, skema, select, draw = {
                         if (item[this.id]) {this.href = item[this.id];}
                         else {this.href = '#'; $(this).css({'cursor':'no-drop'}).click(false);}
                     }
+
                 });
 
-                $(".loadingImg").show();
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
