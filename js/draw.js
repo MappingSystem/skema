@@ -53,7 +53,7 @@ var js, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-                js = '/' + value['js'] + '?t=' + $.now();
+                js = '/' + item['js'] + '?t=' + $.now();
                 draw.getScript();
 
             }
