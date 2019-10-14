@@ -13,16 +13,12 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     diagram : function() {
 
-        $(".loadingImg").show();
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
 
        _.each(json, function(item, index) {
 
             if (item['title'] == type) {
-
-                pad = index;
-                draw.link(item);
 
                 if (type != 'Scenetree') {
 
@@ -38,8 +34,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-                js = '/' + item['js'] + '?t=' + $.now();
-                draw.getScript();
+                pad = index;
+                draw.getLinks(item);
 
             }
 
@@ -47,8 +43,34 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     },
 
-    getScript : function() {
+    getLinks : function(item) {
 
+        select = $(".theme").val();
+
+        //Extend workflows links on each skema
+        $('#tautan a').each(function(key, value) {
+
+            if (select == 'hand') {
+                $(this).css({'cursor':'pointer'});
+                this.href = link.slice(key,key+1).attr('href');
+            } else {
+                if (item[this.id]) {this.href = item[this.id];}
+                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
+            }
+
+        });
+
+        $('#type').text(type); 
+        $('#type')[0].href = '/' + type.toLowerCase();
+        draw.getScript(item);
+
+    },
+
+
+    getScript : function(item) {
+
+        $(".loadingImg").show();
+        js = '/' + item['js'] + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             var diagram;
@@ -210,28 +232,6 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         }
 
     },
-
-    link : function(item) {
-
-        $('#type').text(type); 
-        $('#type')[0].href = '/' + type.toLowerCase();
-
-        //Extend workflows links on each skema
-        select = $(".theme").val();
-        $('#tautan a').each(function(key, value) {
-
-            if (select == 'hand') {
-                $(this).css({'cursor':'pointer'});
-                this.href = link.slice(key,key+1).attr('href');
-            } else {
-                if (item[this.id]) {this.href = item[this.id];}
-                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
-            }
-
-        });
-
-    },
-
 
     node : function(i, e) {
 
