@@ -269,8 +269,8 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     renderer : function(data) {
 
         var textArea = $('#graphiql .queryWrap textarea');
-        var editorWrap = CodeMirror.fromTextArea(textArea);
-        editorWrap.getDoc().setValue(data);
+        let query = new WebGLQuery();
+        query(data);
 
     },
 
