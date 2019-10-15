@@ -6,7 +6,6 @@ var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
 var js, pad, json, init, link, size, test, type, input, skema, select, params, draw = {
@@ -121,6 +120,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
             if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
+            editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
             $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
         }
