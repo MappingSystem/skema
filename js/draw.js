@@ -199,7 +199,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             json = result.items[4].items;
             size = json.length;
 
-            if(!link) link = $('#tautan a');
+            if(!link) link = $('#tautan a').clone();
             if(!type) type = 'Sequence';
 
             if(skema) {editor.setValue(skema);}
