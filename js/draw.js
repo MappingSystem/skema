@@ -270,6 +270,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     renderer : function(data) {
 
         var renderer = new THREE.WebGLRenderer(data);
+        var viewport = d3.select('#viewport');
         renderer.setClearColor( 0xffffff );
         renderer.setSize(200, 200);
         return renderer;
