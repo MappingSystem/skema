@@ -222,6 +222,9 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
+
+        //Strict Workflows default to Sequence but not the index 
+        if ($(".theme").val() == 'hand') type = 'Sequence';
         draw.params = params;
         draw.diagram();
 
