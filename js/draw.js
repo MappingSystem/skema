@@ -88,7 +88,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if(type == 'Scenetree') {diagram = draw.renderer(skema);}
+                else if(type == 'Scenetree') {let currentQuerySource = skema;}
 
             } finally {
 
@@ -270,7 +270,6 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
         if( typeof THREE === 'undefined' || THREE === null ){
             var viewport = d3.select('#viewport');
-            let currentQuerySource = data;
             return viewport;
         } else {
             var renderer = new THREE.WebGLRenderer(data);
