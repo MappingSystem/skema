@@ -91,6 +91,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             } finally {
 
+                test = false;
                 draw.element();
                 $('.loadingImg').hide();
 
@@ -152,8 +153,6 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
-
-            if(test) test = false;
             editor.setValue(skema);
 
         });
