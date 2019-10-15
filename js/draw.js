@@ -264,7 +264,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         //Utilize pad in to the workflows id
         var s = String(i);
-        while (s.length < (pad || 2)) {s = "0" + s;}
+        while (s.length < (pad || size)) {s = "0" + s;}
         return s;
 
     },
