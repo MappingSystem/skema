@@ -55,7 +55,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
                 this.href = link.slice(key,key+1).attr('href');
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
-                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
+                else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
             }
 
         });
@@ -139,6 +139,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
         type = json[pad]['title'];
 
+        //Put json address on the displayed link
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
         $("#json").attr("href", jsonfile);
