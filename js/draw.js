@@ -139,12 +139,14 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
         type = json[pad]['title'];
 
-        //Put json address on the displayed link
+        //Get json address of skema
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
-        $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
+
+            //Display link on success
+            $("#json").attr("href", jsonfile);
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
