@@ -55,7 +55,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
                 this.href = link.slice(key,key+1).attr('href');
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
-                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
+                else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
             }
 
         });
@@ -139,16 +139,19 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
         type = json[pad]['title'];
 
+        //Get json address of skema
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
-        $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
+
+            //Display link on success
+            $("#json").attr("href", jsonfile);
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
 
-            if(pad != size - 1) editor.setValue(skema);
+            if (type != 'Scenetree') editor.setValue(skema);
             else {test = false; draw.change();}
 
         });
@@ -264,7 +267,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         //Utilize pad in to the workflows id
         var s = String(i);
-        while (s.length < ((pad + 2) || 2)) {s = "0" + s;}
+        while (s.length < (pad || size)) {s = "0" + s;}
         return s;
 
     },
