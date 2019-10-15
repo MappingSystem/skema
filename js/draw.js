@@ -23,13 +23,13 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
-                    $('#diagram, #graphiql, #viewport').html('');
+                    $('#diagram, #graphiql, #viewport').empty();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#diagram, #graphiql').html(''); $('#viewport').html('<canvas></canvas>'); 
+                    $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
@@ -77,7 +77,8 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
 
-            if(!skema) {init = editor.getValue(); skema = init;}
+            if (test) test = false;
+            if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
@@ -87,7 +88,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
+                else if(type == 'Scenetree') {diagram = draw.renderer(skema);}
 
             } finally {
 
@@ -152,9 +153,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
-
-            if (type != 'Scenetree') editor.setValue(skema);
-            else {test = false; draw.change();}
+            editor.setValue(skema);
 
         });
 
@@ -264,6 +263,21 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
+
+    },
+
+    renderer : function(data) {
+
+        if( typeof THREE === 'undefined' || THREE === null ){
+            var viewport = d3.select('#viewport');
+            let currentQuerySource = data;
+            return viewport;
+        } else {
+            var renderer = new THREE.WebGLRenderer(data);
+            renderer.setClearColor( 0xffffff );
+            renderer.setSize(200, 200);
+            return renderer;
+        }
 
     },
 
