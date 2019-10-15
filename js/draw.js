@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, json, init, link, size, test, type, input, skema, select, draw = {
+var js, pad, json, init, link, size, test, type, input, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -224,7 +224,6 @@ var js, pad, json, init, link, size, test, type, input, skema, select, draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
