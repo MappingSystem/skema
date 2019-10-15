@@ -53,6 +53,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).attr('href');
+                console.log(link.slice(key,key+1));
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
