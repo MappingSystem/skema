@@ -6,10 +6,10 @@ var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
+editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, size, json, link, type, test, input, skema, select, draw = {
+var js, pad, json, init, link, size, test, type, input, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -52,7 +52,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
-                this.href = link.slice(key,key+1).attr('href');
+                this.href = link.slice(key,key+1).get(0).href;
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
@@ -76,6 +76,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
             var diagram;
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
+
+            if(!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
@@ -194,14 +196,14 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
 
-            if(!skema) skema = editor.getValue();
-            if(!link) link = $('#tautan a');
-            if(!type) type = 'Sequence';
-
             json = result.items[4].items;
             size = json.length;
 
-            draw.diagram();
+            if(!link) link = $('#tautan a').clone();
+            if(!type) type = 'Sequence';
+
+            if(skema) {editor.setValue(skema);}
+            else {draw.diagram();}
 
         });
 
@@ -222,8 +224,10 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
-        draw.diagram();
+
+        //Strict Workflows default to Sequence but not the index 
+        if ($(".theme").val() != 'hand') {draw.diagram();}
+        else {type = 'Sequence'; skema = init; draw.getJSON();}
 
     },
 
