@@ -269,15 +269,15 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
     renderer : function(data) {
 
-        if (THREE) {
+        if (!THREE) {
+            var viewport = d3.select('#viewport');
+            let currentQuerySource = data;
+            return viewport;
+        } else {
             var renderer = new THREE.WebGLRenderer(data);
             renderer.setClearColor( 0xffffff );
             renderer.setSize(200, 200);
             return renderer;
-        } else {
-            var viewport = d3.select('#viewport');
-            let currentQuerySource = data;
-            return viewport;
         }
 
     },
