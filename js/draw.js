@@ -153,8 +153,10 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
 
-            if (type != 'Scenetree') editor.setValue(skema);
-            else {test = false; draw.change();}
+            //if (type != 'Scenetree') editor.setValue(skema);
+            //else {test = false; draw.change();}
+
+            test = false; editor.setValue(skema);
 
         });
 
