@@ -6,21 +6,12 @@ var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', _.debounce(function() {draw.change();}, 100));
+editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, size, json, link, type, test, input, skema, select, draw = {
+var js, pad, json, init, link, size, test, type, input, skema, select, params, draw = {
 
     diagram : function() {
-
-        var diagram;
-        test = false;
-
-        $(".loadingImg").show();
-        select = $(".theme").val();
-
-        $('#type').text(type); 
-        $('#type')[0].href = '/' + type.toLowerCase();
 
         editor.clearSelection(); 
         editor.gotoLine(1, 1);
@@ -29,7 +20,6 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
             if (item['title'] == type) {
 
-                pad = index;
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
@@ -44,8 +34,8 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
                 }
 
-                js = '/' + item['js'] + '?t=' + $.now();
-                draw.link(item); draw.getScript();
+                pad = index;
+                draw.getLinks(item);
 
             }
 
@@ -53,12 +43,41 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     },
 
-    getScript : function() {
+    getLinks : function(item) {
 
+        select = $(".theme").val();
+
+        //Extend workflows links on each skema
+        $('#tautan a').each(function(key, value) {
+
+            if (select == 'hand') {
+                $(this).css({'cursor':'pointer'});
+                this.href = link.slice(key,key+1).get(0).href;
+            } else {
+                if (item[this.id]) {this.href = item[this.id];}
+                else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
+            }
+
+        });
+
+        $('#type').text(type); 
+        $('#type')[0].href = '/' + type.toLowerCase();
+        draw.getScript(item);
+
+    },
+
+
+    getScript : function(item) {
+
+        $(".loadingImg").show();
+        js = '/' + item['js'] + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
+            var diagram;
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
+
+            if(!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
@@ -115,22 +134,27 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        var n = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999'].includes($(e).attr("id"));
+        var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
+        n = array.includes($(e).attr("id"));
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
         type = json[pad]['title'];
 
+        //Get json address of skema
         var jsonfile = '/assets/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
-        $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
 
+            //Display link on success
+            $("#json").attr("href", jsonfile);
+
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
-            if(pad != size - 1) editor.setValue(skema);
-            else {$(".theme").val("simple"); draw.change();}
+
+            if (type != 'Scenetree') editor.setValue(skema);
+            else {test = false; draw.change();}
 
         });
 
@@ -172,13 +196,14 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         var jsonfile = '/feed.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
 
-            if(!skema) skema = editor.getValue();
-            if(!link) link = $('#tautan a');
-            if(!type) type = 'Sequence';
-
             json = result.items[4].items;
             size = json.length;
-            draw.diagram();
+
+            if(!link) link = $('#tautan a').clone();
+            if(!type) type = 'Sequence';
+
+            if(skema) {editor.setValue(skema);}
+            else {draw.diagram();}
 
         });
 
@@ -199,8 +224,10 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
-        draw.params = params;
-        draw.diagram();
+
+        //Strict Workflows default to Sequence but not the index 
+        if ($(".theme").val() != 'hand') {draw.diagram();}
+        else {type = 'Sequence'; skema = init; draw.getJSON();}
 
     },
 
@@ -208,27 +235,10 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
         if (!test) {
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery#01'));}
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
 
     },
-
-    link : function(item) {
-        //Extend workflows links on each skema
-        $('#tautan a').each(function(key, value) {
-
-            if (select == 'hand') {
-                $(this).css({'cursor':'pointer'});
-                this.href = link.slice(key,key+1).attr('href');
-            } else {
-                if (item[this.id]) {this.href = item[this.id];}
-                else {this.href = '#'; $(this).css({'cursor':'no-drop'});}
-            }
-
-        });
-
-    },
-
 
     node : function(i, e) {
 
@@ -250,7 +260,7 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
         button.prependTo($('button.execute-button').parent());
 
         button.attr('title','Back to previous session');
-        button.click(function() {draw.click($('.eQuery#00'));});  
+        button.click(function() {draw.click($('.eQuery').first());});  
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
@@ -259,8 +269,9 @@ var js, pad, size, json, link, type, test, input, skema, select, draw = {
 
     pad : function(i) {
 
+        //Utilize pad in to the workflows id
         var s = String(i);
-        while (s.length < ((pad + 2) || 2)) {s = "0" + s;}
+        while (s.length < (pad || size)) {s = "0" + s;}
         return s;
 
     },
