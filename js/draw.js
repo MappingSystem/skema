@@ -269,7 +269,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
     renderer : function(data) {
 
-        if (!THREE) {
+        if( typeof THREE === 'undefined' || THREE === null ){
             var viewport = d3.select('#viewport');
             let currentQuerySource = data;
             return viewport;
