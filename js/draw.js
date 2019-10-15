@@ -77,7 +77,8 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
 
-            if(!skema) {init = editor.getValue(); skema = init;}
+            if (test) test = false;
+            if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
@@ -91,7 +92,6 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             } finally {
 
-                test = false;
                 draw.element();
                 $('.loadingImg').hide();
 
