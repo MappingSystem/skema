@@ -23,13 +23,13 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
-                    $('#diagram, #graphiql, #viewport').html('');
+                    $('#diagram, #graphiql, #viewport').empty();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#diagram, #graphiql').html(''); $('#viewport').html('<canvas></canvas>'); 
+                    $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
@@ -155,9 +155,6 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             if(test) test = false;
             editor.setValue(skema);
-
-            //if (type != 'Scenetree') editor.setValue(skema);
-            //else {test = false; draw.change();}
 
         });
 
