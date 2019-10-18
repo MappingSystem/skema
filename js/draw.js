@@ -23,13 +23,13 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 if (type != 'Scenetree') {
 
                     $('#diagram').show();
-                    $('#diagram, #graphiql, #viewport').html('');
+                    $('#diagram, #graphiql, #viewport').empty();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#diagram, #graphiql').html(''); $('#viewport').html('<canvas></canvas>'); 
+                    $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
@@ -77,7 +77,8 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
 
-            if(!skema) {init = editor.getValue(); skema = init;}
+            if (test) test = false;
+            if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') input = {theme: select, "font-size": font_size};
 
             try {
@@ -152,9 +153,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             var obj = result.items[4].items[pad];
             input = obj.input; skema = draw.encode(obj.query);
-
-            if (type != 'Scenetree') editor.setValue(skema);
-            else {test = false; draw.change();}
+            editor.setValue(skema);
 
         });
 
@@ -254,7 +253,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     },
 
 
-    clone : function(e) {
+    clone : function() {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
@@ -264,6 +263,9 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
+
+        var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+        queryWrap.setValue(skema);
 
     },
 
