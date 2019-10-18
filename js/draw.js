@@ -88,7 +88,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if(type == 'Scenetree') {draw.renderer(skema);}
+                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
@@ -117,7 +117,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
+            else if (type == 'Scenetree') {draw.clone(skema); elements = $('button svg path').attr('class','eQuery');};
 
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
@@ -253,7 +253,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     },
 
 
-    clone : function(e) {
+    clone : function(data) {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
@@ -263,10 +263,6 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
-
-    },
-
-    renderer : function(data) {
 
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
         queryWrap.setValue(data);
