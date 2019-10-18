@@ -253,7 +253,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     },
 
 
-    clone : function(data) {
+    clone : function() {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
@@ -265,7 +265,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
 
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-        queryWrap.setValue(data);
+        queryWrap.setValue(skema);
 
     },
 
