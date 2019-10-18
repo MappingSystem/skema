@@ -88,7 +88,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
                 else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
                 else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
                 else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if(type == 'Scenetree') {diagram = draw.renderer(skema);}
+                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
@@ -253,7 +253,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     },
 
 
-    clone : function(e) {
+    clone : function() {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
@@ -264,20 +264,8 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
         var svg = button.find('svg path');
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
 
-    },
-
-    renderer : function(data) {
-
-        if( typeof THREE === 'undefined' || THREE === null ){
-            var viewport = d3.select('#viewport');
-            let currentQuerySource = data;
-            return viewport;
-        } else {
-            var renderer = new THREE.WebGLRenderer(data);
-            renderer.setClearColor( 0xffffff );
-            renderer.setSize(200, 200);
-            return renderer;
-        }
+        var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+        queryWrap.setValue(skema);
 
     },
 
