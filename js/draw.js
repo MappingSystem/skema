@@ -192,10 +192,10 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
     getJSON : function() {
 
         //Inject Workflows from getJSON
-        var jsonfile = '/feed.json?t=' + $.now();
+        var jsonfile = '/skema.json?t=' + $.now();
         $.getJSON(jsonfile).done(function(result){
 
-            json = result.items[4].items;
+            json = result.items[0].items;
             size = json.length;
 
             if(!link) link = $('#tautan a').clone();
