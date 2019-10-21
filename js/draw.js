@@ -143,7 +143,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
         type = json[pad]['title'];
 
         //Get json address of skema
-        var jsonfile = '/assets/feed.json?t=' + $.now();
+        var jsonfile = '/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
 
         $.getJSON(jsonfile).done(function(result){
