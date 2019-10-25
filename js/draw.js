@@ -153,7 +153,7 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
             var obj = result.items[4].items[pad];
             style = obj.input.style; skema = obj.input.skema;
-            editor.setValue(JSON.stringify(skema, null, 4));
+            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
 
         });
 
@@ -287,7 +287,8 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
     encode : function(data) {
 
-        return data.replace(/&apos;/g, "'")
+        return data.replace(/\\n/g, "\n");
+                   .replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
                    .replace(/&gt;/g, '>')
                    .replace(/&lt;/g, '<')
