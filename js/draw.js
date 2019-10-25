@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, json, init, link, size, test, type, input, skema, select, params, draw = {
+var js, pad, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -79,14 +79,14 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             if (test) test = false;
             if (!skema) {init = editor.getValue(); skema = init;}
-            if (type == 'Sequence') input = {theme: select, "font-size": font_size};
+            if (type == 'Sequence') style = {theme: select, "font-size": font_size};
 
             try {
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, input);}
-                else if(type == 'Railroad') {diagram = eval(skema).format(input); diagram.addTo(g);}
+                if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
+                else if(type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
                 else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
 
@@ -152,8 +152,8 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             $("#json").attr("href", jsonfile);
 
             var obj = result.items[4].items[pad];
-            input = obj.input; skema = draw.encode(obj.query);
-            editor.setValue(skema);
+            style = obj.input.style; skema = obj.input.skema;
+            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
 
         });
 
@@ -163,7 +163,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "viewport");
-        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
+        myDiagram.model = new go.GraphLinksModel(style, skema);
 
         myDiagram.nodeTemplate = $(go.Node, "Auto",
             $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
@@ -285,17 +285,18 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
     },
 
-    encode : function(data) {
+    encode : function(val) {
 
-        return data.replace(/&apos;/g, "'")
-                   .replace(/&quot;/g, '"')
-                   .replace(/&gt;/g, '>')
-                   .replace(/&lt;/g, '<')
-                   .replace(/&amp;/g, '&')
-                   .replace(/<p>/g, '')
-                   .replace(/<\/p>/g, '')
-                   .replace(/‘/g, "'")
-                   .replace(/’/g, "'")
+        return val.replace(/\\n/g, "\n")
+                  .replace(/&apos;/g, "'")
+                  .replace(/&quot;/g, '"')
+                  .replace(/&gt;/g, '>')
+                  .replace(/&lt;/g, '<')
+                  .replace(/&amp;/g, '&')
+                  .replace(/<p>/g, '')
+                  .replace(/<\/p>/g, '')
+                  .replace(/‘/g, "'")
+                  .replace(/’/g, "'")
         ;
 
     }, 
