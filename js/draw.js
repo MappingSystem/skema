@@ -151,7 +151,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             //Display link on success
             $("#json").attr("href", jsonfile);
 
-            var obj = result.items[4].items[pad];
+            var obj = result.items[4].items[pad].input;
             input = obj.node; skema = obj.link;
             editor.setValue(skema);
 
