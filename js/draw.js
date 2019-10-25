@@ -163,7 +163,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "viewport");
-        myDiagram.model = new go.GraphLinksModel(input[0].node, input[1].link);
+        myDiagram.model = new go.GraphLinksModel(input, skema);
 
         myDiagram.nodeTemplate = $(go.Node, "Auto",
             $(go.Shape, "RoundedRectangle", new go.Binding("fill", "color")),
