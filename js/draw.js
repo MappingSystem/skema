@@ -287,7 +287,7 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
     encode : function(data) {
 
-        return data.replace(/\\n/g, "\n");
+        return data.replace(/\\n/g, "\n")
                    .replace(/&apos;/g, "'")
                    .replace(/&quot;/g, '"')
                    .replace(/&gt;/g, '>')
