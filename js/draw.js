@@ -153,7 +153,7 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
             var obj = result.items[4].items[pad];
             style = obj.input.style; skema = obj.input.skema;
-            editor.setValue(JSON.stringify(skema, draw.encode, 4));
+            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
 
         });
 
@@ -285,19 +285,18 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
     },
 
-    encode : function(name, val) {
+    encode : function(val) {
 
-        return val.toString()
-          .replace(/\\n/g, "\n")
-          .replace(/&apos;/g, "'")
-          .replace(/&quot;/g, '"')
-          .replace(/&gt;/g, '>')
-          .replace(/&lt;/g, '<')
-          .replace(/&amp;/g, '&')
-          .replace(/<p>/g, '')
-          .replace(/<\/p>/g, '')
-          .replace(/‘/g, "'")
-          .replace(/’/g, "'")
+        return val.replace(/\\n/g, "\n")
+                  .replace(/&apos;/g, "'")
+                  .replace(/&quot;/g, '"')
+                  .replace(/&gt;/g, '>')
+                  .replace(/&lt;/g, '<')
+                  .replace(/&amp;/g, '&')
+                  .replace(/<p>/g, '')
+                  .replace(/<\/p>/g, '')
+                  .replace(/‘/g, "'")
+                  .replace(/’/g, "'")
         ;
 
     }, 
