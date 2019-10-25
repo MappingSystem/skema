@@ -153,7 +153,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
 
             var obj = result.items[4].items[pad];
             input = obj.input.node; skema = obj.input.link;
-            editor.setValue(JSON.stringify(skema, null, , 4));
+            editor.setValue(JSON.stringify(skema, null, 4));
 
         });
 
