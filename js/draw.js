@@ -152,7 +152,7 @@ var js, pad, json, init, link, size, test, type, input, skema, select, params, d
             $("#json").attr("href", jsonfile);
 
             var obj = result.items[4].items[pad].input; console.log(obj);
-            input = obj["node"]; skema = obj["link"]; console.log(skema);
+            input = obj[0].node; skema = obj[1].link; console.log(skema);
             editor.setValue(skema);
 
         });
