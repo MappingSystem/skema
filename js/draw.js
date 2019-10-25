@@ -288,15 +288,15 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
     encode : function(key, val) {
 
         return val.replace(/\\n/g, "\n")
-                   .replace(/&apos;/g, "'")
-                   .replace(/&quot;/g, '"')
-                   .replace(/&gt;/g, '>')
-                   .replace(/&lt;/g, '<')
-                   .replace(/&amp;/g, '&')
-                   .replace(/<p>/g, '')
-                   .replace(/<\/p>/g, '')
-                   .replace(/‘/g, "'")
-                   .replace(/’/g, "'")
+                  .replace(/&apos;/g, "'")
+                  .replace(/&quot;/g, '"')
+                  .replace(/&gt;/g, '>')
+                  .replace(/&lt;/g, '<')
+                  .replace(/&amp;/g, '&')
+                  .replace(/<p>/g, '')
+                  .replace(/<\/p>/g, '')
+                  .replace(/‘/g, "'")
+                  .replace(/’/g, "'")
         ;
 
     }, 
