@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, json, init, link, size, test, type, style, skema, select, params, draw = {
+var js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -143,13 +143,12 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
         type = json[pad]['title'];
 
         //Get json address of skema
-        var jsonfile = '/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
+        feed = feed.replace('assets', $(e).attr("id"));
 
-        $.getJSON(jsonfile).done(function(result){
+        $.getJSON(feed).done(function(result){
 
             //Display link on success
-            $("#json").attr("href", jsonfile);
+            $("#json").attr("href", feed);
 
             var obj = result.items[4].items[pad];
             style = obj.input.style; skema = obj.input.skema;
@@ -192,8 +191,8 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
     getJSON : function() {
 
         //Inject Workflows from getJSON
-        var jsonfile = '/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){
+        feed = '/feed.json?t=' + $.now();
+        $.getJSON(feed).done(function(result){
 
             json = result.items[4].items;
             size = json.length;
