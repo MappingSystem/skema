@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, json, init, link, size, test, type, style, skema, select, params, draw = {
+var js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -84,11 +84,11 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
             try {
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
-                else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if(type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
-                else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
+                if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
+                else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
+                else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
@@ -107,7 +107,7 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
             window.requestAnimationFrame(draw.element);
 
-        } else if($(".theme").val() != 'hand') {
+        } else if ($(".theme").val() != 'hand') {
 
             var elements;
             var hash = '#chetabahana-skema';
@@ -140,22 +140,9 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
+        feed = feed.replace('assets', $(e).attr("id"));
         type = json[pad]['title'];
-
-        //Get json address of skema
-        var jsonfile = '/feed.json?t=' + $.now();
-        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
-
-        $.getJSON(jsonfile).done(function(result){
-
-            //Display link on success
-            $("#json").attr("href", jsonfile);
-
-            var obj = result.items[4].items[pad];
-            style = obj.input.style; skema = obj.input.skema;
-            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
-
-        });
+        draw.getJSON();
 
     },
 
@@ -192,17 +179,27 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
     getJSON : function() {
 
         //Inject Workflows from getJSON
-        var jsonfile = '/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){
+        if (!type) type = 'Sequence';
+        if (!link) link = $('#tautan a').clone();
+        if (!feed) feed = '/feed.json?t=' + $.now();
+
+        $.getJSON(feed).done(function(result){
 
             json = result.items[4].items;
             size = json.length;
 
-            if(!link) link = $('#tautan a').clone();
-            if(!type) type = 'Sequence';
+            if (pad == null) {
 
-            if(skema) {editor.setValue(skema);}
-            else {draw.diagram();}
+                draw.diagram();
+
+            } else {
+ 
+                //Display link on success
+                $("#json").attr("href", feed);
+                style = json[pad].input.style; skema = json[pad].input.skema;
+                editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
+
+            }
 
         });
 
@@ -226,7 +223,7 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {type = 'Sequence'; skema = init; draw.getJSON();}
+        else {type = 'Sequence'; skema = init; editor.setValue(skema);}
 
     },
 
