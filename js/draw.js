@@ -192,8 +192,8 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         feed = '/feed.json?t=' + $.now();
         $.getJSON(feed).done(function(result){
 
-            json = result.items[4].items;
-            size = json.length;
+            if (!json) json = result.items[4].items;
+            if (!size) size = json.length;
 
             if (!link) link = $('#tautan a').clone();
             if (!type) type = 'Sequence';
