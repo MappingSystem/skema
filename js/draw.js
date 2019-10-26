@@ -140,11 +140,10 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
+        feed = feed.replace('assets', $(e).attr("id"));
         type = json[pad]['title'];
 
         //Get json address of skema
-        feed = feed.replace('assets', $(e).attr("id"));
-
         $.getJSON(feed).done(function(result){
 
             //Display link on success
