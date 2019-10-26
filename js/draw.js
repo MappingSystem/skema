@@ -145,16 +145,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         //Get json address of skema
         feed = feed.replace('assets', $(e).attr("id"));
         $("#json").attr("href", feed);
-
-        $.getJSON(feed).done(function(result){
-
-            //Display link on success
-
-            json = result.items[4].items;
-            style = json[pad].input.style; skema = json[pad].input.skema;
-            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
-
-        });
+        draw.getJSON();
 
     },
 
@@ -170,8 +161,21 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
             if(!json) json = result.items[4].items;
             if(!size) size = json.length;
 
-            if(skema) {editor.setValue(skema);}
-            else {draw.diagram();}
+            if(!pad) {
+
+                if(skema) {editor.setValue(skema);}
+                else {draw.diagram();}
+
+            } else {
+
+                style = json[pad].input.style; 
+                skema = json[pad].input.skema;
+
+                var string = JSON.stringify(skema, null, 4);
+                var encode = draw.encode(string);
+                editor.setValue(encode);
+
+            }
 
         });
 
