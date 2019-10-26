@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var js, pad, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -140,42 +140,20 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
-        type = json[pad].input.title;
+        type = json[pad]['title'];
 
         //Get json address of skema
-        feed = feed.replace('assets', $(e).attr("id"));
-        $("#json").attr("href", feed);
-        draw.getJSON();
+        var jsonfile = '/feed.json?t=' + $.now();
+        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
 
-    },
+        $.getJSON(jsonfile).done(function(result){
 
-    getJSON : function() {
+            //Display link on success
+            $("#json").attr("href", jsonfile);
 
-        if(!type) type = 'Sequence';
-        if(!link) link = $('#tautan a').clone();
-        if(!feed) feed = '/feed.json?t=' + $.now();
-
-        //Inject Workflows from getJSON
-        $.getJSON(feed).done(function(result){
-
-            if(!json) json = result.items[4].items;
-            if(!size) size = json.length;
-
-            if(!pad) {
-
-                if(skema) {editor.setValue(skema);}
-                else {draw.diagram();}
-
-            } else {
-
-                style = json[pad].input.style; 
-                skema = json[pad].input.skema;
-
-                var string = JSON.stringify(skema, null, 4);
-                var encode = draw.encode(string);
-                editor.setValue(encode);
-
-            }
+            var obj = result.items[4].items[pad];
+            style = obj.input.style; skema = obj.input.skema;
+            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
 
         });
 
@@ -208,6 +186,25 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         a.attr("download", "diagram.svg"); 
         var xml = encodeURIComponent(xmldata);
         a.attr("href", "data:image/svg+xml," + xml);
+
+    },
+
+    getJSON : function() {
+
+        //Inject Workflows from getJSON
+        var jsonfile = '/feed.json?t=' + $.now();
+        $.getJSON(jsonfile).done(function(result){
+
+            json = result.items[4].items;
+            size = json.length;
+
+            if(!link) link = $('#tautan a').clone();
+            if(!type) type = 'Sequence';
+
+            if(skema) {editor.setValue(skema);}
+            else {draw.diagram();}
+
+        });
 
     },
 
