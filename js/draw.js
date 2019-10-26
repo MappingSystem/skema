@@ -150,8 +150,8 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
             //Display link on success
 
-            var obj = result.items[4].items;
-            style = obj[pad].input.style; skema = obj[pad].input.skema;
+            json = result.items[4].items;
+            style = json[pad].input.style; skema = json[pad].input.skema;
             editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
 
         });
@@ -167,8 +167,8 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         //Inject Workflows from getJSON
         $.getJSON(feed).done(function(result){
 
-            json = result.items[4].items;
-            size = json.length;
+            if(!json) json = result.items[4].items;
+            if(!size) size = json.length;
 
             if(skema) {editor.setValue(skema);}
             else {draw.diagram();}
