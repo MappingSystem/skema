@@ -84,11 +84,11 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
             try {
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if(type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
-                else if(type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if(type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
-                else if(type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if(type == 'Scenetree') {diagram = d3.select('#viewport');}
+                if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
+                else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
+                else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
@@ -107,7 +107,7 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
             window.requestAnimationFrame(draw.element);
 
-        } else if($(".theme").val() != 'hand') {
+        } else if ($(".theme").val() != 'hand') {
 
             var elements;
             var hash = '#chetabahana-skema';
@@ -198,10 +198,10 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
             json = result.items[4].items;
             size = json.length;
 
-            if(!link) link = $('#tautan a').clone();
-            if(!type) type = 'Sequence';
+            if (!link) link = $('#tautan a').clone();
+            if (!type) type = 'Sequence';
 
-            if(skema) {editor.setValue(skema);}
+            if (skema) {editor.setValue(skema);}
             else {draw.diagram();}
 
         });
