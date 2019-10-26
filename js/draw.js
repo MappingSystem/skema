@@ -145,15 +145,34 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
         //Get json address of skema
         var jsonfile = '/feed.json?t=' + $.now();
         jsonfile = jsonfile.replace('assets', $(e).attr("id"));
+        $("#json").attr("href", jsonfile);
 
         $.getJSON(jsonfile).done(function(result){
 
             //Display link on success
-            $("#json").attr("href", jsonfile);
 
-            var obj = result.items[4].items[pad];
-            style = obj.input.style; skema = obj.input.skema;
+            var obj = result.items[4].items;
+            style = obj[pad].input.style; skema = obj[pad].input.skema;
             editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
+
+        });
+
+    },
+
+    getJSON : function() {
+
+        if(!type) type = 'Sequence';
+        if(!link) link = $('#tautan a').clone();
+
+        //Inject Workflows from getJSON
+        var jsonfile = '/feed.json?t=' + $.now();
+        $.getJSON(jsonfile).done(function(result){
+
+            json = result.items[4].items;
+            size = json.length;
+
+            if(skema) {editor.setValue(skema);}
+            else {draw.diagram();}
 
         });
 
@@ -186,25 +205,6 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
         a.attr("download", "diagram.svg"); 
         var xml = encodeURIComponent(xmldata);
         a.attr("href", "data:image/svg+xml," + xml);
-
-    },
-
-    getJSON : function() {
-
-        //Inject Workflows from getJSON
-        var jsonfile = '/feed.json?t=' + $.now();
-        $.getJSON(jsonfile).done(function(result){
-
-            json = result.items[4].items;
-            size = json.length;
-
-            if(!link) link = $('#tautan a').clone();
-            if(!type) type = 'Sequence';
-
-            if(skema) {editor.setValue(skema);}
-            else {draw.diagram();}
-
-        });
 
     },
 
