@@ -140,6 +140,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
+        type = json[pad].input.style;
 
         //Get json address of skema
         feed = feed.replace('assets', $(e).attr("id"));
@@ -150,24 +151,23 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     getJSON : function() {
 
-        if (!type) type = 'Sequence';
-        if (!link) link = $('#tautan a').clone();
-        if (!feed) feed = '/feed.json?t=' + $.now();
+        if(!type) type = 'Sequence';
+        if(!link) link = $('#tautan a').clone();
+        if(!feed) feed = '/feed.json?t=' + $.now();
 
         //Inject Workflows from getJSON
         $.getJSON(feed).done(function(result){
 
-            if (!json) json = result.items[4].items;
-            if (!size) size = json.length;
+            if(!json) json = result.items[4].items;
+            if(!size) size = json.length;
 
-            if (!pad) {
+            if(!pad) {
 
-                if (skema) {editor.setValue(skema);}
+                if(skema) {editor.setValue(skema);}
                 else {draw.diagram();}
 
             } else {
 
-                type = json[pad].input.title;
                 style = json[pad].input.style; 
                 skema = json[pad].input.skema;
 
