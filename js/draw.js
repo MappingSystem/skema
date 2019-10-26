@@ -148,7 +148,6 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
             //Display link on success
             $("#json").attr("href", feed);
-
             var obj = result.items[4].items[pad];
             style = obj.input.style; skema = obj.input.skema;
             editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
@@ -224,7 +223,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {type = 'Sequence'; skema = init; draw.getJSON();}
+        else {type = 'Sequence'; skema = init; editor.setValue(skema);}
 
     },
 
