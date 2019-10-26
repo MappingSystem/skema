@@ -188,7 +188,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
             json = result.items[4].items;
             size = json.length;
 
-            if (!pad) {
+            if (!skema) {
 
                 draw.diagram();
 
