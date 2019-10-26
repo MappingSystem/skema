@@ -181,14 +181,14 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
     getJSON : function() {
 
         //Inject Workflows from getJSON
+        if (!type) type = 'Sequence';
+        if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
+
         $.getJSON(feed).done(function(result){
 
-            if (!json) json = result.items[4].items;
-            if (!size) size = json.length;
-
-            if (!link) link = $('#tautan a').clone();
-            if (!type) type = 'Sequence';
+            json = result.items[4].items;
+            size = json.length;
 
             if (!pad) {
 
