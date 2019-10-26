@@ -140,7 +140,22 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
-        type = json[pad]['title']; draw.getJSON(pad);
+        type = json[pad]['title'];
+
+        //Get json address of skema
+        var jsonfile = '/feed.json?t=' + $.now();
+        jsonfile = jsonfile.replace('assets', $(e).attr("id"));
+
+        $.getJSON(jsonfile).done(function(result){
+
+            //Display link on success
+            $("#json").attr("href", jsonfile);
+
+            var obj = result.items[4].items[pad];
+            style = obj.input.style; skema = obj.input.skema;
+            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
+
+        });
 
     },
 
@@ -174,20 +189,20 @@ var js, pad, json, init, link, size, test, type, style, skema, select, params, d
 
     },
 
-    getJSON : function(pad=2) {
+    getJSON : function() {
 
         //Inject Workflows from getJSON
         var jsonfile = '/feed.json?t=' + $.now();
-        $("#json").attr("href", jsonfile);
-
         $.getJSON(jsonfile).done(function(result){
 
-            if(!type) type = 'Sequence';
-            if(!link) link = $('#tautan a').clone();
+            json = result.items[4].items;
+            size = json.length;
 
-            var obj = result.items[4].items; size = obj.length;
-            style = obj[pad].input.style; skema = obj[pad].input.skema;
-            editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
+            if(!link) link = $('#tautan a').clone();
+            if(!type) type = 'Sequence';
+
+            if(skema) {editor.setValue(skema);}
+            else {draw.diagram();}
 
         });
 
