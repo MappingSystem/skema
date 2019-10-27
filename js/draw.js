@@ -269,7 +269,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
     replacer : function(key, value) {
 
         //Remove double quotes from a String 
-        //https://stackoverflow.com/a/19156525/4058484
+        //https://stackoverflow.com/q/19156148/4058484
         if (typeof value != 'string') {return value;}
         else {return value.replace("\"(.+)\"", "$1");}
 
