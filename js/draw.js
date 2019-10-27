@@ -197,7 +197,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
                 //Display link on success
                 $("#json").attr("href", feed);
                 style = json[pad].input.style; skema = json[pad].input.skema;
-                editor.setValue(JSON.stringify(skema, draw.replacer, '\t'));
+                editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
 
@@ -268,7 +268,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     replacer : function(key, value) {
 
-        if (typeof value == 'string' || value instanceof String) {console.log(value); return draw.encode(value);}
+        if (typeof value == 'string' || value instanceof String) {return value;}
         else {return value;}
 
     },
@@ -291,7 +291,8 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     encode : function(val) {
 
-        return val.replace(/&apos;/g, "'")
+        return val.replace(/\\n/g, "\n")
+                  .replace(/&apos;/g, "'")
                   .replace(/&quot;/g, '"')
                   .replace(/&gt;/g, '>')
                   .replace(/&lt;/g, '<')
@@ -300,7 +301,6 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
                   .replace(/<\/p>/g, '')
                   .replace(/‘/g, "'")
                   .replace(/’/g, "'")
-//                  .replace(/\\n/g, "\n")
         ;
 
     }, 
