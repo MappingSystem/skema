@@ -197,7 +197,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
                 //Display link on success
                 $("#json").attr("href", feed);
                 style = json[pad].input.style; skema = json[pad].input.skema;
-                editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
+                editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
 
@@ -266,6 +266,15 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     },
 
+    replacer : function(key, value) {
+
+        //Remove double quotes from a String 
+        //https://stackoverflow.com/q/19156148/4058484
+        if (typeof value != 'string') {return value;}
+        else {return value.replace("\"(.+)\"", "$1");}
+
+    },
+
     pad : function(i) {
 
         //Utilize pad in to the workflows id
@@ -284,7 +293,8 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     encode : function(val) {
 
-        return val.replace(/\\n/g, "\n")
+        return val.replace(/^"(.*)"$/, "$1")
+                  .replace(/\\n/g, "\n")
                   .replace(/&apos;/g, "'")
                   .replace(/&quot;/g, '"')
                   .replace(/&gt;/g, '>')
