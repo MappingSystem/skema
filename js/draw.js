@@ -291,7 +291,8 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     encode : function(val) {
 
-        return val.replace(/\\n/g, "\n")
+        return val.replaceAll("\"(.+)\"", "$1")
+                  .replace(/\\n/g, "\n")
                   .replace(/&apos;/g, "'")
                   .replace(/&quot;/g, '"')
                   .replace(/&gt;/g, '>')
