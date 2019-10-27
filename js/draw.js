@@ -197,7 +197,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
                 //Display link on success
                 $("#json").attr("href", feed);
                 style = json[pad].input.style; skema = json[pad].input.skema;
-                editor.setValue(draw.encode(JSON.stringify(skema, null, 4)));
+                editor.setValue(JSON.stringify(skema, draw.replacer, '\t'));
 
             }
 
@@ -275,13 +275,6 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     },
 
-    reload : function(hash) {
-
-        scrollTo(hash); window.stop();
-        location.hash = hash; location.reload(true);
-
-    },
-
     encode : function(val) {
 
         return val.replace(/\\n/g, "\n")
@@ -297,6 +290,21 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         ;
 
     }, 
+
+    reload : function(hash) {
+
+        scrollTo(hash); window.stop();
+        location.hash = hash; location.reload(true);
+
+    },
+
+    replacer : (key, value) {
+
+        if(typeof value === 'string') {
+            return draw.encode(value);
+        }
+        return value;
+    },
 
     svg : {}
 
