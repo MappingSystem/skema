@@ -268,8 +268,10 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     replacer : function(key, value) {
 
-        if (typeof value == 'string' || value instanceof String) {return value;}
-        else {return value;}
+        //Remove double quotes from a String 
+        //https://stackoverflow.com/a/19156525/4058484
+        if (typeof value != 'string') {return value;}
+        else {return value.replace("\"(.+)\"", "$1");}
 
     },
 
@@ -291,7 +293,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     encode : function(val) {
 
-        return val.replaceAll("\"(.+)\"", "$1")
+        return val.replace(/^"(.*)"$/, "$1")
                   .replace(/\\n/g, "\n")
                   .replace(/&apos;/g, "'")
                   .replace(/&quot;/g, '"')
