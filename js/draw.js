@@ -266,12 +266,26 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     },
 
+    replacer : function(key, value) {
+
+        if(typeof value === 'string') {return draw.encode(value);}
+        else {return value;}
+
+    },
+
     pad : function(i) {
 
         //Utilize pad in to the workflows id
         var s = String(i);
         while (s.length < (pad || size)) {s = "0" + s;}
         return s;
+
+    },
+
+    reload : function(hash) {
+
+        scrollTo(hash); window.stop();
+        location.hash = hash; location.reload(true);
 
     },
 
@@ -290,20 +304,6 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         ;
 
     }, 
-
-    reload : function(hash) {
-
-        scrollTo(hash); window.stop();
-        location.hash = hash; location.reload(true);
-
-    },
-
-    replacer : function(key, value) {
-
-        if(typeof value === 'string') {return draw.encode(value);}
-        else {return value;}
-
-    },
 
     svg : {}
 
