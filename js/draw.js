@@ -291,8 +291,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     encode : function(val) {
 
-        return val.replace(/\\n/g, "\n")
-                  .replace(/&apos;/g, "'")
+        return val.replace(/&apos;/g, "'")
                   .replace(/&quot;/g, '"')
                   .replace(/&gt;/g, '>')
                   .replace(/&lt;/g, '<')
@@ -301,6 +300,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
                   .replace(/<\/p>/g, '')
                   .replace(/‘/g, "'")
                   .replace(/’/g, "'")
+//                  .replace(/\\n/g, "\n")
         ;
 
     }, 
