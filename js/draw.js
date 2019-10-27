@@ -298,7 +298,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     },
 
-    replacer : (key, value) {
+    replacer : function(key, value) {
 
         if(typeof value === 'string') {
             return draw.encode(value);
