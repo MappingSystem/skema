@@ -205,6 +205,15 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
     },
 
+    replacer : function(key, value) {
+
+        //Remove double quotes from a String 
+        //https://stackoverflow.com/q/19156148/4058484 && https://stackoverflow.com/a/21605936/4058484
+        if (typeof value === 'string' || value instanceof String) {return value.replace("\"(.+)\"", "$1");}
+        else {return value;}
+
+    },
+
     isJSON : function(str) {
 
         if (str == "{" ) return false;
@@ -263,15 +272,6 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
         queryWrap.setValue(skema);
-
-    },
-
-    replacer : function(key, value) {
-
-        //Remove double quotes from a String 
-        //https://stackoverflow.com/q/19156148/4058484 && https://stackoverflow.com/a/21605936/4058484
-        if (typeof value === 'string' || value instanceof String) {return value.replace("\"(.+)\"", "$1");}
-        else {return value;}
 
     },
 
