@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var id, js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -133,14 +133,14 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
         draw.svg[type] = $('svg').get(0);
+        id = $(e).attr("id");
 
         //Allow diagram to get the occurred index of a given object's 
         var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
-        n = array.includes($(e).attr("id"));
+        pad = (array.includes(id))? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
 
         //Provide Forward and Backward on Workflows 
-        pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
-        feed = feed.replace('assets', $(e).attr("id"));
+        feed = feed.replace('assets', id);
         type = json[pad]['title'];
         draw.getJSON();
 
@@ -195,13 +195,22 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
             } else {
  
                 //Display link on success
-                $("#json").attr("href", feed);
-                style = json[pad].input.style; skema = json[pad].input.skema;
+                $("#json").attr("href", '/' + id + '/skema.json?t=' + $.now());
+                style = json[pad].data.style; skema = json[pad].data.skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
 
         });
+
+    },
+
+    replacer : function(key, value) {
+
+        //Remove double quotes from a String 
+        //https://stackoverflow.com/q/19156148/4058484 && https://stackoverflow.com/a/21605936/4058484
+        if (typeof value === 'string' || value instanceof String) {return value.replace("\"(.+)\"", "$1");}
+        else {return value;}
 
     },
 
@@ -263,15 +272,6 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
 
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
         queryWrap.setValue(skema);
-
-    },
-
-    replacer : function(key, value) {
-
-        //Remove double quotes from a String 
-        //https://stackoverflow.com/q/19156148/4058484
-        if (typeof value != 'string') {return value;}
-        else {return value.replace("\"(.+)\"", "$1");}
 
     },
 
