@@ -195,7 +195,7 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
             } else {
  
                 //Display link on success
-                $("#json").attr("href", '/' + id + 'skema.json?t=' + $.now());
+                $("#json").attr("href", '/' + id + '/skema.json?t=' + $.now());
                 style = json[pad].data.style; skema = json[pad].data.skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
