@@ -141,7 +141,7 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
-        feed = feed.replace('assets', id));
+        feed = feed.replace('assets', id);
         type = json[pad]['title'];
         draw.getJSON();
 
