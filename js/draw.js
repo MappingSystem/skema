@@ -140,7 +140,7 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
         pad = (array.includes(id))? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
 
         //Provide Forward and Backward on Workflows 
-        feed = feed.replace('assets', id);
+        feed = '/' + id + '/skema.json?t=' + $.now();
         type = json[pad]['title'];
         draw.getJSON();
 
@@ -185,8 +185,8 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
         $.getJSON(feed).done(function(result){
 
-            json = result.items[4].items;
-            size = json.length;
+            if (!json) json = result.items[4].items;
+            if (!size) size = json.length;
 
             if (pad == null) {
 
@@ -195,8 +195,8 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
             } else {
  
                 //Display link on success
-                $("#json").attr("href", '/' + id + '/skema.json?t=' + $.now());
-                style = json[pad].data.style; skema = json[pad].data.skema;
+                $("#json").attr("href", feed);
+                style = result.style; skema = result.skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
