@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var id, js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -133,14 +133,15 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
         draw.svg[type] = $('svg').get(0);
+        id = $(e).attr("id");
 
         //Allow diagram to get the occurred index of a given object's 
         var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
-        n = array.includes($(e).attr("id"));
+        n = array.includes(id);
 
         //Provide Forward and Backward on Workflows 
         pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
-        feed = feed.replace('assets', $(e).attr("id"));
+        feed = feed.replace('assets', id));
         type = json[pad]['title'];
         draw.getJSON();
 
@@ -195,7 +196,7 @@ var js, pad, feed, json, init, link, size, test, type, style, skema, select, par
             } else {
  
                 //Display link on success
-                $("#json").attr("href", feed);
+                $("#json").attr("href", '/' + id + 'skema.json?t=' + $.now());
                 style = json[pad].data.style; skema = json[pad].data.skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
