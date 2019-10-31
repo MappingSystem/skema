@@ -137,10 +137,9 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
         //Allow diagram to get the occurred index of a given object's 
         var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
-        n = array.includes(id);
+        pad = (array.includes(id))? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
 
         //Provide Forward and Backward on Workflows 
-        pad = (n)? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
         feed = feed.replace('assets', id);
         type = json[pad]['title'];
         draw.getJSON();
