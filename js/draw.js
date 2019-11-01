@@ -247,8 +247,8 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
     node : function(i, e) {
 
-        e.id = draw.pad(i);
         e.parentNode.appendChild(e);
+        (i == 0)? e.id = id: e.id = draw.pad(i);
 
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
