@@ -133,12 +133,11 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
         draw.svg[type] = $('svg').get(0);
-        id = $(e).attr("id");
 
         //Allow diagram to get the occurred index of a given object's 
-        var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
-        pad = (array.includes(id))? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
-
+        id = $(e).attr("id");
+        pad = (id.length == size)? 0: id.length;
+ 
         //Provide Forward and Backward on Workflows 
         feed = '/' + id + '/skema.json?t=' + $.now();
         type = json[pad]['title'];
