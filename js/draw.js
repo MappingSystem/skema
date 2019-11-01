@@ -138,9 +138,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         id = $(e).attr("id"); var ln = id.length; 
         (ln == pad || ln == size)? ids.push(id): back = true;
 
-        //Forward (1»2 2»3 3»4 4»0 5»1) and Backward (1»0 2»1 3»2 4»3 5»1)
-        if (!back) {pad = (ln + 1 >= size)? ln - size + 1: ln + 1;}
-        else {pad = (ln == size)? 1: ln - 1;}
+        //Backward (1»1 2»2 3»3 4»4 5»0) and Forward (1»2 2»3 3»4 4»0 5»1)
+        if (back) {pad = (ln == size)? 0: ln;}
+        else {pad = (ln + 1 >= size)? ln - size + 1: ln + 1;}
 
         //Assign type and get JSON data 
         feed = '/' + id + '/skema.json?t=' + $.now();console.log(ids);
