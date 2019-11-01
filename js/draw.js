@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -135,7 +135,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): test = true;
+        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): back = true;
         pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1; console.log(ids);
 
         //Provide Forward and Backward on Workflows 
@@ -250,7 +250,8 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1]; if (test) ids.pop();}
+        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];}
+        if (back) {ids.pop(); back = false;}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
