@@ -136,11 +136,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; 
-        (ln == pad || ln == size)? ids.push(id): back = true;
+        (ln == pad || ln == size)? ids.push(id): ids.pop();
 
-        //Backward (1»1 2»2 3»3 4»4 5»0) and Forward (1»2 2»3 3»4 4»0 5»1)
-        if (back) {pad = (ln == size)? 0: ln;}
-        else {pad = (ln + 1 >= size)? ln - size + 1: ln + 1;}
+        //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
+        pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
 
         //Assign type and get JSON data 
         feed = '/' + id + '/skema.json?t=' + $.now();
@@ -255,7 +254,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         if (i != 0) {e.id = draw.pad(i);}
         else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];}
-        if (back) {ids.pop(); back = false;}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
