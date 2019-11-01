@@ -132,16 +132,19 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');console.log("-------------");console.log($(e).attr("id"));
-        draw.svg[type] = $('svg').get(0);console.log(pad);
+        draw.svg[type] = $('svg').get(0);console.log(pad);console.log(type);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): back = true;console.log(type);
-        pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1; console.log(ids);
+        id = $(e).attr("id"); var ln = id.length; 
+        (ln == pad || ln == size)? ids.push(id): back = true;
 
-        //Provide Forward and Backward on Workflows 
-        feed = '/' + id + '/skema.json?t=' + $.now();console.log(pad);
-        type = json[pad]['title'];console.log(type);
-        draw.getJSON();
+        //Forward (1»2 2»3 3»4 4»0 5»1) and Backward (1»0 2»1 3»2 4»3 5»1)
+        if (!back) {pad = (ln + 1 >= size)? ln - size + 1: ln + 1;}
+        else {pad = (ln == size)? 1: ln - 1;}
+
+        feed = '/' + id + '/skema.json?t=' + $.now();console.log(ids);
+        type = json[pad]['title'];console.log(pad);
+        draw.getJSON();console.log(type);
 
     },
 
