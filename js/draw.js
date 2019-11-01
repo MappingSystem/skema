@@ -131,16 +131,16 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     click : function(e) {
 
         //disable click events to avoid interruption
-        $('.mypointer').css('pointer-events', 'none');
-        draw.svg[type] = $('svg').get(0);
+        $('.mypointer').css('pointer-events', 'none');console.log("-------------");console.log($(e).attr("id"));
+        draw.svg[type] = $('svg').get(0);console.log(pad);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): back = true;
+        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): back = true;console.log(type);
         pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1; console.log(ids);
 
         //Provide Forward and Backward on Workflows 
-        feed = '/' + id + '/skema.json?t=' + $.now();
-        type = json[pad]['title'];
+        feed = '/' + id + '/skema.json?t=' + $.now();console.log(pad);
+        type = json[pad]['title'];console.log(type);
         draw.getJSON();
 
     },
@@ -250,8 +250,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];}
-        if (back) {ids.pop(); back = false;}
+        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];console.log(e.id);}
+        if (back) {ids.pop(); back = false;console.log(ids);console.log("-------------");}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
