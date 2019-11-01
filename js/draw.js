@@ -136,8 +136,8 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id");
-        pad = (id.length + 1 == size)? 0: id.length + 1;
- 
+        pad = (id.length + 1 == size)? 0: ((id.length == size)? 1: id.length + 1);
+
         //Provide Forward and Backward on Workflows 
         feed = '/' + id + '/skema.json?t=' + $.now();
         type = json[pad]['title'];
