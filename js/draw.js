@@ -135,7 +135,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); (id.length != pad)? ids.pop(): ids.push(id); console.log(ids);
+        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): ids.pop(); console.log(ids);
         pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1;
 
         //Provide Forward and Backward on Workflows 
