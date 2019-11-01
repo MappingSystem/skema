@@ -9,7 +9,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
-var id, js, pad, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -133,14 +133,16 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
         draw.svg[type] = $('svg').get(0);
-        id = $(e).attr("id");
 
         //Allow diagram to get the occurred index of a given object's 
-        var array = ['0', '00', '99', '000', '999', '0000', '9999', '00000', '99999', '000000'];
-        pad = (array.includes(id))? ((pad == 0)? size - 1 : pad - 1): ((pad + 1 == size)? 0: pad + 1);
+        id = $(e).attr("id"); var ln = id.length; 
+        (ln == pad || ln == size)? ids.push(id): ids.pop();
 
-        //Provide Forward and Backward on Workflows 
-        feed = feed.replace('assets', id);
+        //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
+        pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
+
+        //Assign type and get JSON data 
+        feed = '/' + id + '/skema.json?t=' + $.now();
         type = json[pad]['title'];
         draw.getJSON();
 
@@ -185,8 +187,11 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
         $.getJSON(feed).done(function(result){
 
-            json = result.items[4].items;
-            size = json.length;
+            if (!json) json = result.items[4].items;
+            if (!size) size = json.length;
+
+            if (ids == null) ids = new Array();
+            if (ids.length == 0) {ids.push('00001'); ids.push('0');}
 
             if (pad == null) {
 
@@ -195,8 +200,8 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
             } else {
  
                 //Display link on success
-                $("#json").attr("href", '/' + id + '/skema.json?t=' + $.now());
-                style = json[pad].data.style; skema = json[pad].data.skema;
+                $("#json").attr("href", feed);
+                style = result.style; skema = result.skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
@@ -232,7 +237,7 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {ids = new Array(); type = 'Sequence'; skema = init; editor.setValue(skema);}
 
     },
 
@@ -247,9 +252,10 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
     node : function(i, e) {
 
-        e.id = draw.pad(i);
-        e.parentNode.appendChild(e);
+        if (i != 0) {e.id = draw.pad(i);}
+        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-2];}
 
+        e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
 
