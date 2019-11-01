@@ -135,7 +135,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); ids.push(id); console.log(ids);
+        id = $(e).attr("id"); (id.length != pad)? ids.pop(): ids.push(id); console.log(ids);
         pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1;
 
         //Provide Forward and Backward on Workflows 
@@ -188,7 +188,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
             if (!size) size = json.length;
 
             if (ids == null) ids = new Array();
-            if (id == null) id = '0'; ids.push(id);
+            if (id == null) id = '0'; 
 
             if (pad == null) {
 
@@ -250,7 +250,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {if (ids.length == 0) {e.id = '0';} else {e.id = ids[ids.length-1]; ids.pop();}}
+        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
