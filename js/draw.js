@@ -191,7 +191,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!size) size = json.length;
 
             if (ids == null) ids = new Array();
-            if (id == null) id = '0'; 
+            if (ids.length == 0) {ids.push('00001'); ids.push('0');}
 
             if (pad == null) {
 
