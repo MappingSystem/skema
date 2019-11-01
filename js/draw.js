@@ -77,7 +77,6 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
 
-            if (test) test = false;
             if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') style = {theme: select, "font-size": font_size};
 
@@ -93,6 +92,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
             } finally {
 
                 draw.element();
+                if (test) test = false;
                 $('.loadingImg').hide();
 
             }
@@ -135,8 +135,8 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): ids.pop(); console.log(ids);
-        pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1;
+        id = $(e).attr("id"); (id.length == pad || id.length == size)? ids.push(id): test = true;
+        pad = (id.length + 1 >= size)? id.length - size + 1: id.length + 1; console.log(ids);
 
         //Provide Forward and Backward on Workflows 
         feed = '/' + id + '/skema.json?t=' + $.now();
@@ -250,7 +250,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];}
+        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1]; if (test) ids.pop();}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
