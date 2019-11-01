@@ -131,8 +131,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     click : function(e) {
 
         //disable click events to avoid interruption
-        $('.mypointer').css('pointer-events', 'none');console.log("-------------");console.log($(e).attr("id"));
-        draw.svg[type] = $('svg').get(0);console.log(pad);console.log(type);
+        $('.mypointer').css('pointer-events', 'none');
+        draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; 
@@ -143,9 +143,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         else {pad = (ln + 1 >= size)? ln - size + 1: ln + 1;}
 
         //Assign type and get JSON data 
-        feed = '/' + id + '/skema.json?t=' + $.now();console.log(ids);
-        type = json[pad]['title'];console.log(pad);
-        draw.getJSON();console.log(type);
+        feed = '/' + id + '/skema.json?t=' + $.now();
+        type = json[pad]['title'];
+        draw.getJSON();
 
     },
 
@@ -254,8 +254,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];console.log(e.id);}
-        if (back) {ids.pop(); back = false;console.log(ids);console.log("-------------");}
+        else {(ids.length == 0)? e.id = '0': e.id = ids[ids.length-1];}
+        if (back) {ids.pop(); back = false;}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
