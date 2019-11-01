@@ -136,7 +136,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; 
-        (ln == pad || ln - size == pad)? ids.push(id): ids.pop();console.log(ids);
+        (ln == 1 || ln == pad || ln - size == pad)? ids.push(id): ids.pop();console.log(ids);
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
