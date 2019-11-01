@@ -234,7 +234,7 @@ var id, js, ids, pad, feed, json, init, link, size, test, type, style, skema, se
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {ids = new Array(); type = 'Sequence'; skema = init; editor.setValue(skema);}
 
     },
 
