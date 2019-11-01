@@ -77,6 +77,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
 
+            if (test) test = false;
             if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') style = {theme: select, "font-size": font_size};
 
@@ -92,7 +93,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } finally {
 
                 draw.element();
-                if (test) test = false;
                 $('.loadingImg').hide();
 
             }
