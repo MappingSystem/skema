@@ -187,7 +187,7 @@ var id, js, pad, feed, json, init, link, size, test, type, style, skema, select,
 
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
-            if (!id) id = 0;
+            if (id == null) id = 0;
 
             if (pad == null) {
 
