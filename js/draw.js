@@ -56,6 +56,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
+                $('#json').attr('href', '/1/skema.json?t=' + $.now());
             }
 
         });
@@ -253,7 +254,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {e.id = ids[ids.length - 2]; $('#json').attr('href', '/' + e.id + '/skema.json?t=' + $.now());}
+        else {e.id = ids[ids.length - 2];}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
