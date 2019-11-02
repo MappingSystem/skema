@@ -90,6 +90,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 else if (type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
+                else if (type == 'Sitewheel') {diagram = d3.select('#viewport');}
 
             } finally {
 
