@@ -85,8 +85,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             try {
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
@@ -118,6 +119,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
+            else if (type == 'Sitewheel') {elements = $('line.link').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
 
             //set handle with idle time of user inactivity
