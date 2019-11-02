@@ -85,7 +85,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             try {
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Sitewheel') {initialize().then (function (control) {doTheTreeViz(control);});}
+                if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
