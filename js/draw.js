@@ -6,7 +6,7 @@ var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
-editor.getSession().on('change', draw.bounce());
+editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global type 
 var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
@@ -182,9 +182,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     getJSON : function() {
 
         //Inject Workflows from getJSON
-        //if (!test) test = true;
         if (!type) type = 'Sequence';
-
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
@@ -241,12 +239,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
         else {ids = new Array(); ids.push('0'); type = 'Sequence'; skema = init; editor.setValue(skema);}
-
-    },
-
-    bounce : function() {
-
-        _.debounce(function() {draw.diagram();}, 100);
 
     },
 
