@@ -5,8 +5,8 @@ $('.download').click(function(ev) {draw.xmlData();});
 var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
-editor.getSession().on('change', draw.debounce(test));
 editor.getSession().setMode("ace/mode/asciidoc");
+editor.getSession().on('change', draw.debounce(test));
 
 // Put all of the process variables in to global type 
 var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
