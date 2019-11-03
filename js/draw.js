@@ -134,8 +134,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     click : function(e) {
 
         //disable click events to avoid interruption
+        $(".loadingImg").show();
         $('.mypointer').css('pointer-events', 'none');
-        draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
