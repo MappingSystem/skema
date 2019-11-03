@@ -56,7 +56,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
-                if (ids.length <= 2) $('#json').attr('href', '/1/skema.json?t=' + $.now());
+                if (ids == null) $('#json').attr('href', '/1/skema.json?t=' + $.now());
             }
 
         });
