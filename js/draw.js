@@ -120,13 +120,12 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             //get mandatory elements 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
-            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Sitewheel') {elements = $('svg line.link, svg g.node');}
-            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
+            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            elements.each(function(index) {draw.node(index, this);})
+            if (type != 'Sitewheel') {elements.each(function(index) {draw.node(index, this);});}
             if (type != 'Sitewheel' && type != 'Scenetree') {elements.click(function() {draw.click(this);});}
 
         }
@@ -137,7 +136,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
-        $('#diagram').hide(); $(".loadingImg").show();
+        if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
@@ -249,6 +248,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     query : function() {
 
         if (!test) {
+            if($('#diagram').is(':visible')){$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
