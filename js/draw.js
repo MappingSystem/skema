@@ -115,7 +115,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var hash = '#chetabahana-skema';
 
             if (ids == null) ids = new Array();
-            if (ids.length == 0) ids.push('00001', '0001');
+            if (ids.length == 0) ids.push('0');
 
             //get svg elements type and theme of Skema to 'Progress' for processing 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
@@ -141,14 +141,16 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         draw.svg[type] = $('svg').get(0);
 
         //Allow diagram to get the occurred index of a given object's 
-        id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
-        (ls <= 2 || ln == pad || ln - size == pad)? ids.push(id): ids.pop();
+        id = $(e).attr("id"); var ln = (id)? id.length: 2;
+        (ln == pad || ln - size == pad)? ids.push(id): ids.pop();
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
 
         //Assign type and get JSON data 
-        feed = '/' + id + '/skema.json?t=' + $.now();
+        feed = '/skema.json?t=' + $.now();
+        if (id) feed.replace('/',  '/' + id + '/');
+
         type = json[pad]['title'];
         draw.getJSON();
 
@@ -256,7 +258,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {e.id = ids[ids.length - 2];}
+        else if (ids.length > 1) {e.id = ids[ids.length - 2];}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
