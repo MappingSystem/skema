@@ -78,8 +78,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var font_size = (select == 'hand')? 13: 15;
 
             if (test) test = false;
-            if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') style = {theme: select, "font-size": font_size};
+            if (!skema) {skema = editor.getValue(); $('#json').attr('href', '/1/skema.json?t=' + $.now());}
 
             try {
 
@@ -95,6 +95,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
                 draw.element();
                 $('.loadingImg').hide();
+                if (!init) {init = skema;}
 
                 //set idle time of inactivity
                 var hash = '#chetabahana-skema';
@@ -241,7 +242,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {ids = new Array(); type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {skema = null; ids = new Array(); type = 'Sequence'; editor.setValue(init);}
 
     },
 
