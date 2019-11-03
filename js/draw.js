@@ -145,7 +145,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
 
         //Assign type and get JSON data 
-        feed = '/' + id + '/skema.json?t=' + $.now();
+        feed = '/skema.json?t=' + $.now();
+        if (ln < size) feed = '/' + id + feed;
+
         type = json[pad]['title'];
         draw.getJSON();
 
