@@ -135,7 +135,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
-        $(".loadingImg").show();
+        $('#diagram').hide(); $(".loadingImg").show();
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
