@@ -125,8 +125,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            elements.each(function(index) {draw.node(index, this);})
-            if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Sitewheel') {elements.each(function(index) {draw.node(index, this);});}
+            if (type != 'Sitewheel' && type != 'Scenetree') {elements.click(function() {draw.click(this);});}
 
         }
 
