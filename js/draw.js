@@ -79,7 +79,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var font_size = (select == 'hand')? 13: 15;
 
             if (test) test = false;
-            if (!skema) {init = editor.getValue(); skema = init;}
+            if (!skema) {skema = editor.getValue(); init = skema;}
             if (type == 'Sequence') style = {theme: select, "font-size": font_size};
 
             try {
@@ -113,6 +113,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             var elements;
             var hash = '#chetabahana-skema';
+
+            if (ids == null) ids = new Array();
+            if (ids.length == 0) ids.push('00001', '0001');
 
             //get svg elements type and theme of Skema to 'Progress' for processing 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
@@ -193,9 +196,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
 
-            if (ids == null) ids = new Array();
-            if (ids.length == 0) ids.push('00001', '0001');
-
             if (pad == null) {
 
                 draw.diagram();
@@ -240,7 +240,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {ids = new Array(); ids.push('00001', '0001'); type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {ids == null; skema = null; type = 'Sequence'; editor.setValue(init);}
 
     },
 
