@@ -56,7 +56,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
-                if (ids.length <= 2) $('#json').attr('href', '/1/skema.json?t=' + $.now());
             }
 
         });
@@ -149,6 +148,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         //Assign type and get JSON data 
         feed = '/skema.json?t=' + $.now();
         if (ln < size) feed = '/' + id + feed;
+        $("#json").attr("href", feed);
 
         type = json[pad]['title'];
         draw.getJSON();
@@ -205,7 +205,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } else {
  
                 //Display link on success
-                $("#json").attr("href", feed);
                 style = result.items[0].style; skema = result.items[0].skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
