@@ -249,6 +249,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     query : function() {
 
         if (!test) {
+            $('#diagram').hide(); $(".loadingImg").show();
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
