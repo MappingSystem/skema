@@ -196,8 +196,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!size) size = json.length;
 
             if (ids == null) ids = new Array();
-            if (ids.length == 0) ids.push('000001', '00001');
-
             if (pad == null) {
 
                 draw.diagram();
@@ -242,7 +240,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {ids = new Array(); ids.push('000001', '00001'); type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {ids = new Array(); type = 'Sequence'; skema = init; editor.setValue(skema);}
 
     },
 
@@ -258,7 +256,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {e.id = ids[ids.length - 2];}
+        else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat(size - pad + 1) + 1;}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
