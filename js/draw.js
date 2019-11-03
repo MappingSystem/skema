@@ -97,6 +97,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 draw.element();
                 $('.loadingImg').hide();
 
+                //set idle time of inactivity
+                var hash = '#chetabahana-skema';
+                $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
+
             }
 
         });
@@ -112,9 +116,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         } else if ($(".theme").val() != 'hand') {
 
             var elements;
-            var hash = '#chetabahana-skema';
 
-            //get svg elements type and theme of Skema to 'Progress' for processing 
+            //get mandatory elements 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
@@ -122,10 +125,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             else if (type == 'Sitewheel') {elements = $('svg line.link, svg g.node, svg title');}
             else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
 
-            //set handle with idle time of user inactivity
+            //set each id and its handle 
             elements.each(function(index) {draw.node(index, this);})
-            if (type != 'Sitewheel') {elements.click(function() {draw.click(this);});}
-            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
+            if (type != 'Sitewheel' && type != 'Scenetree') {elements.click(function() {draw.click(this);});}
 
         }
 
