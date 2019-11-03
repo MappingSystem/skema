@@ -124,7 +124,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
-            if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Sitewheel') {elements.click(function() {draw.click(this);});}
             $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
         }
@@ -194,7 +194,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!size) size = json.length;
 
             if (ids == null) ids = new Array();
-            if (ids.length == 0) ids.push('00001', '0001');
+            if (ids.length == 0) ids.push('000001', '00001');
 
             if (pad == null) {
 
@@ -240,7 +240,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {ids = new Array(); ids.push('0'); type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {ids = new Array(); ids.push('000001', '00001'); type = 'Sequence'; skema = init; editor.setValue(skema);}
 
     },
 
