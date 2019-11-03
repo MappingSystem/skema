@@ -124,7 +124,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             //set handle with idle time of user inactivity
             elements.each(function(index) {draw.node(index, this);})
-            if (type != 'Sitewheel') {elements.click(function() {draw.click(this);});}
+            if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
             $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
         }
