@@ -49,7 +49,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
-            } else {
+            } else {console.log(key);console.log(item);console.log(this.id);console.log(item[this.id]);
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
             }
