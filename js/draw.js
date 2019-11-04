@@ -74,12 +74,13 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var diagram;
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
-
-            if (!skema) {
-                skema = editor.getValue();
-                if (!style) style = {theme: select, "font-size": font_size};
-                if (type == 'Sequence' && select != 'hand') $('#json').attr('href', '/1/skema.json?t=' + $.now());
+            
+            if (type == 'Sequence') {
+                if (!skema) {skema = editor.getValue();}
+                style = {theme: select, "font-size": font_size};
+                if (select != 'hand') $('#json').attr('href', '/1/skema.json?t=' + $.now());
             }
+
 
             try {
 
