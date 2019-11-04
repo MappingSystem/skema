@@ -1,7 +1,3 @@
-$(window).load(function() {draw.getJSON();});
-$('.theme').change(function() {draw.change();});
-$('.download').click(function(ev) {draw.xmlData();});
-
 var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
