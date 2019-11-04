@@ -1,4 +1,3 @@
-$(window).load(function() {draw.getJSON();});
 $('.theme').change(function() {draw.change();});
 $('.download').click(function(ev) {draw.xmlData();});
 
