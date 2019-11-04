@@ -58,6 +58,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type.toLowerCase();
+
+        if (test) test = false;
         draw.getScript(item);
 
     },
@@ -72,8 +74,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var diagram;
             var g = $('#diagram').get(0);
             var font_size = (select == 'hand')? 13: 15;
-
-            if (test) test = false;
 
             if (!skema) {
                 skema = editor.getValue();
