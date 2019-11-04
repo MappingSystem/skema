@@ -1,7 +1,3 @@
-$(window).load(function() {draw.getJSON();});
-$('.theme').change(function() {draw.change();});
-$('.download').click(function(ev) {draw.xmlData();});
-
 var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
@@ -56,7 +52,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } else {
                 if (item[this.id]) {this.href = item[this.id];}
                 else if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
-                if (ids.length <= 2) $('#json').attr('href', '/1/skema.json?t=' + $.now());
             }
 
         });
@@ -79,8 +74,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             var font_size = (select == 'hand')? 13: 15;
 
             if (test) test = false;
-            if (!skema) {init = editor.getValue(); skema = init;}
             if (type == 'Sequence') style = {theme: select, "font-size": font_size};
+            if (!skema) {skema = editor.getValue(); $('#json').attr('href', '/1/skema.json?t=' + $.now());}
 
             try {
 
@@ -96,6 +91,11 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
                 draw.element();
                 $('.loadingImg').hide();
+                if (!init) {init = skema;}
+
+                //set idle time of inactivity
+                var hash = '#chetabahana-skema';
+                $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
             }
 
@@ -112,20 +112,17 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         } else if ($(".theme").val() != 'hand') {
 
             var elements;
-            var hash = '#chetabahana-skema';
 
-            //get svg elements type and theme of Skema to 'Progress' for processing 
+            //get mandatory elements 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
-            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Sitewheel') {elements = $('line.link').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');};
+            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
-            //set handle with idle time of user inactivity
-            elements.each(function(index) {draw.node(index, this);})
-            if (type != 'Scenetree') {elements.click(function() {draw.click(this);});}
-            $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
+            //set each id and its handle 
+            if (type != 'Sitewheel') {elements.each(function(index) {draw.node(index, this);});}
+            if (type != 'Sitewheel' && type != 'Scenetree') {elements.click(function() {draw.click(this);});}
 
         }
 
@@ -135,17 +132,20 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
-        draw.svg[type] = $('svg').get(0);
+        if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
         //Allow diagram to get the occurred index of a given object's 
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
-        (ls <= 2 || ln == pad || ln - size == pad)? ids.push(id): ids.pop();
+        (ln == pad || ln - size == pad)? ids.push(id): ids.pop();
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
 
         //Assign type and get JSON data 
-        feed = '/' + id + '/skema.json?t=' + $.now();
+        feed = '/skema.json?t=' + $.now();
+        if (ln < size) feed = '/' + id + feed;
+        $("#json").attr("href", feed);
+
         type = json[pad]['title'];
         draw.getJSON();
 
@@ -194,8 +194,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!size) size = json.length;
 
             if (ids == null) ids = new Array();
-            if (ids.length == 0) ids.push('00001', '0001');
-
             if (pad == null) {
 
                 draw.diagram();
@@ -203,7 +201,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             } else {
  
                 //Display link on success
-                $("#json").attr("href", feed);
                 style = result.items[0].style; skema = result.items[0].skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
@@ -240,13 +237,14 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {ids = new Array(); ids.push('0'); type = 'Sequence'; skema = init; editor.setValue(skema);}
+        else {skema = null; ids = new Array(); type = 'Sequence'; editor.setValue(init);}
 
     },
 
     query : function() {
 
         if (!test) {
+            if($('#diagram').is(':visible')){$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
@@ -256,7 +254,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
-        else {e.id = ids[ids.length - 2];}
+        else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
 
         e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
