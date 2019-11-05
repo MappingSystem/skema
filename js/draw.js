@@ -1,3 +1,4 @@
+// Set editor
 var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
