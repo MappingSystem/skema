@@ -4,7 +4,7 @@ editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
-// Put all of the process variables in to global type 
+// Put all of the process variables in to global
 var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
@@ -88,8 +88,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
                 if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
 
