@@ -207,7 +207,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             } else if (id == null) {
 
-                $("<div>", {id: "1"}).appendTo.$("#diagram");
+                $("<div>", {id: "1"}).appendTo($("#diagram"));
                 draw.click($("#1"));
 
             } else {
