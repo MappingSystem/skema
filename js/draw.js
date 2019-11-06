@@ -208,6 +208,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             else if (id == null) {
 
                 var $e = $("<div>", {id: "1"});
+                $("#diagram").append($e);
                 draw.click($e);
 
             } else {
