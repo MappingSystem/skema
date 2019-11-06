@@ -205,6 +205,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
                 draw.diagram();
 
+            else if (id == null) {
+
+                draw.click($('#1'));
+
             } else {
  
                 //Display link on success
@@ -244,7 +248,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {skema = null; ids = new Array(); type = 'Sequence'; editor.setValue(init);}
+        else {id = ids = feed = json = size = type = skema = null; draw.getJSON();}
 
     },
 
