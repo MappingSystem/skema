@@ -146,12 +146,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
-
-        //Assign type and get JSON data 
-        feed = '/skema.json?t=' + $.now();
-        if (ln < size) feed = '/' + id + feed;
-
         type = json[pad]['title'];
+
+        //Assign feed and get JSON data 
+        feed = draw.feed(ln);
         draw.getJSON();
 
     },
@@ -300,10 +298,11 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     },
 
-    feed : function(id) {
+    feed : function(ln) {
 
-        scrollTo(hash); window.stop();
-        location.hash = hash; location.reload(true);
+        var part = '/skema.json?t=' + $.now();
+        if (ln < size) part = '/' + id + part;
+        return part;
 
     },
 
