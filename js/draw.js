@@ -192,6 +192,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Inject Workflows from getJSON
         if (!type) type = 'Sequence';
+        if (ids == null) ids = new Array();
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
@@ -200,7 +201,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
 
-            if (ids == null) ids = new Array();
             if (pad == null) {
 
                 draw.diagram();
@@ -212,7 +212,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             } else {
  
-                //Display link on success
                 style = result.items[0].style; skema = result.items[0].skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
