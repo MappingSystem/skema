@@ -303,7 +303,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     feed : function(id) {
 
-        if (typeof part !== "undefined") {console.log(part.feed(id);}
+        if (typeof part !== "undefined") {console.log(part.feed(id));}
         else {$.getScript('skema/js/part.js', function() {draw.feed(id);});}
 
     },
