@@ -303,7 +303,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         if (typeof part.feed === "function") { 
             return part.feed(id);
         } else {
-            $.getScript('part.js', function() {
+            $.getScript('skema/js/part.js', function() {
                 draw.feed(id);
             });
         }
