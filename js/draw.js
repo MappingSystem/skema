@@ -300,9 +300,13 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     feed : function(ln) {
 
-        var part = '/skema.json?t=' + $.now();
-        if (ln < size) part = '/' + id + part;
-        return part;
+        if (typeof part.feed === "function") { 
+            return part.feed(ln);
+        } else {
+            $.getScript('part.js', function() {
+                draw.feed(ln);
+            });
+        }
 
     },
 
