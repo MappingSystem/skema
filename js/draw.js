@@ -1,10 +1,11 @@
+// Set editor
 var editor = ace.edit("editor");
 editor.setOptions({fontSize: "10pt"});
 editor.setTheme("ace/theme/crimson_editor");
 editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
-// Put all of the process variables in to global type 
+// Put all of the process variables in to global
 var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
 
     diagram : function() {
@@ -50,7 +51,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
-                if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
+                if (this.id == 'json') {this.href = feed;} else {$(this).css({'cursor':'no-drop'});}
                 if (item[this.id]) {this.href = item[this.id]; $(this).css({'cursor':'pointer'});}
             }
 
@@ -79,7 +80,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 style = {theme: select, "font-size": font_size};
  
                 if (!skema) {skema = editor.getValue();}
-                else if (ids.length < 1) {$('#json').attr('href', '/1/skema.json?t=' + $.now());}
             }
 
 
@@ -89,15 +89,15 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Railroad') {diagram = eval(skema).format(style); diagram.addTo(g);}
+                else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
 
+                //set element
                 draw.element();
                 $('.loadingImg').hide();
-                if (!init) {init = skema;}
 
                 //set idle time of inactivity
                 var hash = '#chetabahana-skema';
@@ -146,14 +146,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
-
-        //Assign type and get JSON data 
-        feed = '/skema.json?t=' + $.now();
-        if (ln < size) feed = '/' + id + feed;
-        $("#json").attr("href", feed);
-
         type = json[pad]['title'];
-        draw.getJSON();
+        draw.feed();
 
     },
 
@@ -191,6 +185,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Inject Workflows from getJSON
         if (!type) type = 'Sequence';
+        if (ids == null) ids = new Array();
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
@@ -199,14 +194,17 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
 
-            if (ids == null) ids = new Array();
             if (pad == null) {
 
                 draw.diagram();
 
+            } else if (id == null) {
+
+                $("<div>", {id: "1"}).appendTo($("#diagram"));
+                draw.click($("#1"));
+
             } else {
  
-                //Display link on success
                 style = result.items[0].style; skema = result.items[0].skema;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
@@ -243,7 +241,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
         //Strict Workflows default to Sequence but not the index 
         if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {skema = null; ids = new Array(); type = 'Sequence'; editor.setValue(init);}
+        else {id = ids = feed = json = size = type = skema = null; draw.getJSON();}
 
     },
 
@@ -297,10 +295,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     },
 
-    reload : function(hash) {
+    feed : function() {
 
-        scrollTo(hash); window.stop();
-        location.hash = hash; location.reload(true);
+        if (typeof part !== "undefined") {feed = part.feed(id, size); draw.getJSON();}
+        else {$.getScript('skema/js/part.js', function() {draw.feed();});}
 
     },
 
