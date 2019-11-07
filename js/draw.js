@@ -147,7 +147,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
         type = json[pad]['title'];
-        draw.feed(id);
+        draw.feed();
 
     },
 
@@ -295,10 +295,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     },
 
-    feed : function(id) {
+    feed : function() {
 
-        if (typeof part !== "undefined") {feed = part.feed(id); draw.getJSON();}
-        else {$.getScript('skema/js/part.js', function() {draw.feed(id);});}
+        if (typeof part !== "undefined") {feed = part.feed(id, size); draw.getJSON();}
+        else {$.getScript('skema/js/part.js', function() {draw.feed();});}
 
     },
 
