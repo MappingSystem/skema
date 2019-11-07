@@ -153,7 +153,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         if (ln < size) feed = '/' + id + feed;
         $("#json").attr("href", feed); console.log($("#json").href);
 
-
         type = json[pad]['title'];
         draw.getJSON();
 
