@@ -96,9 +96,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             } finally {
 
+                //set element
                 draw.element();
                 $('.loadingImg').hide();
-                //if (!init) {init = skema;}
 
                 //set idle time of inactivity
                 var hash = '#chetabahana-skema';
