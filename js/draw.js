@@ -52,7 +52,6 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
                 if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
-                else {console.log(this.href);}
                 if (item[this.id]) {this.href = item[this.id]; $(this).css({'cursor':'pointer'});}
             }
 
@@ -152,7 +151,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         //Assign type and get JSON data 
         feed = '/skema.json?t=' + $.now();
         if (ln < size) feed = '/' + id + feed;
-        $("#json").attr("href", feed);
+        $("#json").attr("href", feed); console.log($("#json").href);
+
 
         type = json[pad]['title'];
         draw.getJSON();
