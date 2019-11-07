@@ -80,7 +80,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 style = {theme: select, "font-size": font_size};
  
                 if (!skema) {skema = editor.getValue();}
-                else if (ids.length < 1) {$('#json').attr('href', '/1/skema.json?t=' + $.now());}
+                //else if (ids.length < 1) {$('#json').attr('href', '/1/skema.json?t=' + $.now());}
             }
 
 
