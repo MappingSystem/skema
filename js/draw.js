@@ -303,9 +303,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     feed : function(id) {
 
-        if (typeof part.feed === "function") {console.log(id);}
-        else {$.getScript('skema/js/part.js', function() {draw.feed(id);});}
-            ////$.getScript('skema/js/part.js', function() {console.log(id);});
+        $.getScript('skema/js/part.js', function() {console.log(id);});
+
     },
 
     encode : function(val) {
