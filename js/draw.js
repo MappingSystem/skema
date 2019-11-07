@@ -52,7 +52,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
                 if (this.id != 'json') {$(this).css({'cursor':'no-drop'});}
-                if (item[this.id]) {console.log(this.href); this.href = item[this.id]; $(this).css({'cursor':'pointer'});}
+                else {console.log(this.href);}
+                if (item[this.id]) {this.href = item[this.id]; $(this).css({'cursor':'pointer'});}
             }
 
         });
