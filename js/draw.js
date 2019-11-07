@@ -300,7 +300,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     },
 
-    reload : function(hash) {
+    feed : function(id) {
 
         scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
