@@ -151,7 +151,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         //Assign type and get JSON data 
         feed = '/skema.json?t=' + $.now();
         if (ln < size) feed = '/' + id + feed;
-        $("#json").attr("href", feed); console.log($("#json").href);
+        $("#json").attr("href", feed); console.log($("#json").attr("href"));
 
         type = json[pad]['title'];
         draw.getJSON();
