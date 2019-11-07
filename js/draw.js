@@ -149,7 +149,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         type = json[pad]['title'];
 
         //Assign feed and get JSON data 
-        feed = draw.feed(ln);
+        feed = draw.feed(id);
         draw.getJSON();
 
     },
@@ -298,13 +298,13 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     },
 
-    feed : function(ln) {
+    feed : function(id) {
 
         if (typeof part.feed === "function") { 
-            return part.feed(ln);
+            return part.feed(id);
         } else {
             $.getScript('part.js', function() {
-                draw.feed(ln);
+                draw.feed(id);
             });
         }
 
