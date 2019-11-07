@@ -149,7 +149,10 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         type = json[pad]['title'];
 
         //Assign feed and get JSON data 
-        feed = draw.feed(id);
+        feed = '/skema.json?t=' + $.now();
+        if (ln < size) feed = '/' + id + feed;
+
+        var part = draw.feed(id);
         draw.getJSON();
 
     },
@@ -303,7 +306,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         //if (typeof part.feed === "function") {return part.feed(id);}
         //else {$.getScript('skema/js/part.js', function() {draw.feed(id);});}
             $.getScript('skema/js/part.js', function() {
-                part.feed(id);
+                console.log(id);
             });
     },
 
