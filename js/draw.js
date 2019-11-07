@@ -148,11 +148,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
         type = json[pad]['title'];
 
-        //Assign feed and get JSON data 
-        feed = '/skema.json?t=' + $.now();
-        if (ln < size) feed = '/' + id + feed;
-
-        var part = draw.feed(id);
+        //get JSON data 
+        feed = draw.feed(id);
         draw.getJSON();
 
     },
@@ -292,19 +289,19 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     },
 
+    feed : function(id) {
+
+        if (typeof part !== "undefined") {return part.feed(id);}
+        else {$.getScript('skema/js/part.js', function() {draw.feed(id);});}
+
+    },
+
     pad : function(i) {
 
         //Utilize pad in to the workflows id
         var s = String(i);
         while (s.length < (pad || size)) {s = "0" + s;}
         return s;
-
-    },
-
-    feed : function(id) {
-
-        if (typeof part !== "undefined") {console.log(part.feed(id));}
-        else {$.getScript('skema/js/part.js', function() {draw.feed(id);});}
 
     },
 
