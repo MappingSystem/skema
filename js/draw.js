@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -50,9 +50,9 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
             if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
-            } else {
-                if (this.id == 'json') {this.href = feed;} else {$(this).css({'cursor':'no-drop'});}
-                if (item[this.id]) {this.href = item[this.id]; $(this).css({'cursor':'pointer'});}
+            } else {console.log(feed);
+                if (this.id == 'json') {this.href = feed;}
+                else if (guide) {this.href = guide[this.id];}
             }
 
         });
@@ -61,7 +61,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         $('#type')[0].href = '/' + type.toLowerCase();
 
         if (test) test = false;
-        draw.getScript(item);
+        draw.getScript();
 
     },
 
@@ -69,19 +69,21 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     getScript : function(item) {
 
         $(".loadingImg").show();
-        js = '/' + item['js'] + '?t=' + $.now();
-        $.getScript(js, function( data, textStatus, jqxhr ) {
+        if (guide) {js = '/' + guide['js'];}
+        else {js = '/sequence/js/sequence-diagram-snap-min.js';}
+
+        $.getScript(js + '?t=' + $.now(), function( data, textStatus, jqxhr ) {
 
             var diagram;
             var g = $('#diagram').get(0);
 
             if (type == 'Sequence') {
+
                 var font_size = (select == 'hand')? 13: 15;
                 style = {theme: select, "font-size": font_size};
- 
                 if (!skema) {skema = editor.getValue();}
-            }
 
+            }
 
             try {
 
@@ -205,7 +207,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             } else {
  
-                style = result.items[0].style; skema = result.items[0].skema;
+                data = result.items[0];
+                style = data.style; skema = data.skema; guide = data.guide;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
@@ -240,8 +243,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
 
         //Strict Workflows default to Sequence but not the index 
-        if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {id = ids = feed = json = size = type = skema = null; draw.getJSON();}
+        id = ids = feed = json = size = type = skema = null;
+        draw.getJSON();
 
     },
 
@@ -297,6 +300,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     feed : function(scope) {
 
+        //Support Unlimited Scripts on Workflows Algorithm (#36)
         if (window[scope]) {feed = window[scope].feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
 
