@@ -297,7 +297,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     feed : function() {
 
-        if (typeof window['part'] !== "undefined") {feed = part.feed(id, size); draw.getJSON();}
+        if (typeof window['part'] !== "undefined") {feed = window['part'].feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/part.js', function() {draw.feed();});}
 
     },
