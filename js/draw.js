@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, skema, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -52,7 +52,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
                 if (this.id == 'json') {this.href = feed;} else {$(this).css({'cursor':'no-drop'});}
-                if (item[this.id]) {this.href = item[this.id]; $(this).css({'cursor':'pointer'});}
+                if (guide[this.id]) {this.href = guide[this.id]; $(this).css({'cursor':'pointer'});}
             }
 
         });
@@ -61,15 +61,15 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
         $('#type')[0].href = '/' + type.toLowerCase();
 
         if (test) test = false;
-        draw.getScript(item);
+        draw.getScript();
 
     },
 
 
-    getScript : function(item) {
+    getScript : function() {
 
         $(".loadingImg").show();
-        js = '/' + item['js'] + '?t=' + $.now();
+        js = '/' + guide['js'] + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             var diagram;
@@ -205,7 +205,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
             } else {
  
-                style = result.items[0].style; skema = result.items[0].skema;
+                data = result.items[0];
+                style = data.style; skema = data.skema; guide = data.guide;
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
