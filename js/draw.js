@@ -206,7 +206,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
             } else {
  
                 data = result.items[0];
-                style = data.style; skema = data.skema; guide = data.guide;
+                style = data.style; skema = data.skema; guide = data.guide;console.log(guide);
                 editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
