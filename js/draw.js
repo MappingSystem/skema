@@ -149,7 +149,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
         type = json[pad]['title'];
-        draw.feed('part');
+        draw.feed('part');console.log(feed);
 
     },
 
