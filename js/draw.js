@@ -52,7 +52,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
                 this.href = link.slice(key,key+1).get(0).href;
             } else {console.log(feed);
                 if (this.id == 'json') {this.href = feed;}
-                else if (guide) {this.href = guide[this.id]; $(this).css({'cursor':'pointer'});}
+                else if (guide) {this.href = guide[this.id];}
             }
 
         });
