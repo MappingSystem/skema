@@ -66,22 +66,24 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
     },
 
 
-    getScript : function() {
+    getScript : function(item) {
 
         $(".loadingImg").show();
-        js = '/sequence/js/sequence-diagram-snap-min.js' + '?t=' + $.now();
-        $.getScript(js, function( data, textStatus, jqxhr ) {
+        if (guide['js']) {js = '/' + guide['js'];}
+        else {js = '/sequence/js/sequence-diagram-snap-min.js';}
+{
+        $.getScript(js + '?t=' + $.now(), function( data, textStatus, jqxhr ) {
 
             var diagram;
             var g = $('#diagram').get(0);
 
             if (type == 'Sequence') {
+
                 var font_size = (select == 'hand')? 13: 15;
                 style = {theme: select, "font-size": font_size};
- 
                 if (!skema) {skema = editor.getValue();}
-            }
 
+            }
 
             try {
 
