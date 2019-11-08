@@ -243,8 +243,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
 
         //Strict Workflows default to Sequence but not the index 
-        if ($(".theme").val() != 'hand') {draw.diagram();}
-        else {id = ids = feed = json = size = type = skema = null; draw.getJSON();}
+        //if ($(".theme").val() != 'hand') {draw.diagram();}
+        id = ids = feed = json = size = type = skema = null; draw.getJSON();
 
     },
 
