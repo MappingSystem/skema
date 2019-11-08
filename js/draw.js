@@ -71,7 +71,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         $(".loadingImg").show();
         if (guide['js']) {js = '/' + guide['js'];}
         else {js = '/sequence/js/sequence-diagram-snap-min.js';}
-{
+
         $.getScript(js + '?t=' + $.now(), function( data, textStatus, jqxhr ) {
 
             var diagram;
