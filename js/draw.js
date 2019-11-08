@@ -306,6 +306,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
 
     },
 
+    reload : function(hash) {
+
+        scrollTo(hash); window.stop();
+        location.hash = hash; location.reload(true);
+
+    },
+
     encode : function(val) {
 
         return val.replace(/^"(.*)"$/, "$1")
