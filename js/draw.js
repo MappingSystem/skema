@@ -297,6 +297,7 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
 
     feed : function(scope) {
 
+        //Support Unlimited Scripts on Workflows Algorithm (#36)
         if (window[scope]) {feed = window[scope].feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
 
