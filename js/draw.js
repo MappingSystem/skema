@@ -296,8 +296,8 @@ var id, js, ids, pad, back, feed, json, init, link, size, test, type, style, ske
     },
 
     feed : function() {
-var scope = eval("part");
-        if (typeof scope !== "undefined") {feed = scope.feed(id, size); draw.getJSON();}
+
+        if (typeof eval("part") !== "undefined") {feed = eval("part").feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/part.js', function() {draw.feed();});}
 
     },
