@@ -69,7 +69,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
     getScript : function() {
 
         $(".loadingImg").show();
-        js = '/' + guide['js'] + '?t=' + $.now();
+        js = '/sequence/js/sequence-diagram-snap-min.js' + '?t=' + $.now();
         $.getScript(js, function( data, textStatus, jqxhr ) {
 
             var diagram;
