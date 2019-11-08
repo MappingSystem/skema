@@ -51,8 +51,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
             } else {console.log(feed);
-                if (this.id == 'json') {this.href = feed;} else {$(this).css({'cursor':'no-drop'});}
-                if (guide) {this.href = guide[this.id]; $(this).css({'cursor':'pointer'});}
+                if (this.id == 'json') {this.href = feed;}
+                else if (guide) {this.href = guide[this.id]; $(this).css({'cursor':'pointer'});}
             }
 
         });
