@@ -82,7 +82,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 var skema = data.skema;
                 var style = data.style;
 
-            } else {
+            }
+            if (type == 'Sequence') {
  
                 var skema = editor.getValue();
                 var font_size = (select == 'hand')? 13: 15;
