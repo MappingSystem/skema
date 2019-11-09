@@ -286,7 +286,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
 
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-        queryWrap.setValue(skema);
+        queryWrap.setValue(data.skema);
 
     },
 
