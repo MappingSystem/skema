@@ -72,8 +72,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         if (guide) {js = '/' + guide['js'];}
         else {js = '/sequence/js/sequence-diagram-snap-min.js';}
 
-        $.getScript(js + '?t=' + $.now(), function( data, textStatus, jqxhr ) {
-
             var diagram;
             var g = $('#diagram').get(0);
 
@@ -84,6 +82,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
                 if (!skema) {skema = editor.getValue();}
 
             }
+
+        $.getScript(js + '?t=' + $.now(), function(data, textStatus, jqxhr) {
 
             try {
 
