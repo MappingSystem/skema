@@ -72,20 +72,20 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         if (guide) {js = '/' + guide['js'];}
         else {js = '/sequence/js/sequence-diagram-snap-min.js';}
 
-            var diagram;
-            var g = $('#diagram').get(0);
+        if (type == 'Sequence') {
 
-            if (type == 'Sequence') {
+            var font_size = (select == 'hand')? 13: 15;
+            style = {theme: select, "font-size": font_size};
+            if (!skema) {skema = editor.getValue();}
 
-                var font_size = (select == 'hand')? 13: 15;
-                style = {theme: select, "font-size": font_size};
-                if (!skema) {skema = editor.getValue();}
-
-            }
+        }
 
         $.getScript(js + '?t=' + $.now(), function() {
 
             try {
+
+                var diagram;
+                var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
                 if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
