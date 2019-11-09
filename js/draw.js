@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, style, skema, select, params, draw = {
 
     diagram : function() {
 
@@ -52,7 +52,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
                 if (this.id == 'json') {this.href = feed;}
-                else if (data) {this.href = data.guide[this.id];}
+                else if (guide) {this.href = guide[this.id];}
             }
 
         });
@@ -69,7 +69,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     getScript : function(item) {
 
         $(".loadingImg").show();
-        if (data) {js = '/' + data.guide['js'];}
+        if (guide) {js = '/' + guide['js'];}
         else {js = '/sequence/js/sequence-diagram-snap-min.js';}
 
         $.getScript(js + '?t=' + $.now(), function( data, textStatus, jqxhr ) {
@@ -77,16 +77,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             var diagram;
             var g = $('#diagram').get(0);
 
-            if (data) {
+            if (type == 'Sequence') {
 
-                var style = data.style;
-                var skema = data.skema;
-
-            } else if (type == 'Sequence') {
-
-                var skema = editor.getValue();
                 var font_size = (select == 'hand')? 13: 15;
-                var style = {theme: select, "font-size": font_size};
+                style = {theme: select, "font-size": font_size};
+                if (!skema) {skema = editor.getValue();}
 
             }
 
@@ -97,7 +92,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
-                else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
+                else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
                 else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
@@ -158,7 +153,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-    makeSvg : function(style, skema) {
+    makeSvg : function() {
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "viewport");
@@ -213,7 +208,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             } else {
  
                 data = result.items[0];
-                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
+                style = data.style; skema = data.skema; guide = data.guide;
+                editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
 
             }
 
@@ -247,7 +243,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
 
         //Strict Workflows default to Sequence but not the index 
-        id = ids = data = feed = json = size = type = null;
+        id = ids = feed = json = size = type = skema = null;
         draw.getJSON();
 
     },
