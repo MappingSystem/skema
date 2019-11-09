@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, style, skema, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, params, draw = {
 
     diagram : function() {
 
@@ -50,9 +50,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
             if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
-            } else {console.log(feed);
+            } else {
                 if (this.id == 'json') {this.href = feed;}
-                else if (guide) {this.href = guide[this.id];}
+                else if (data) {this.href = data.guide[this.id];}
             }
 
         });
@@ -61,39 +61,41 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         $('#type')[0].href = '/' + type.toLowerCase();
 
         if (test) test = false;
+        $(".loadingImg").show();
         draw.getScript();
 
     },
 
-
     getScript : function(item) {
 
-        $(".loadingImg").show();
-        if (guide) {js = '/' + guide['js'];}
-        else {js = '/sequence/js/sequence-diagram-snap-min.js';}
+        if (select != 'hand') {
 
-        $.getScript(js + '?t=' + $.now(), function( data, textStatus, jqxhr ) {
+            var style = data.style;
+            var skema = data.skema;
+            var js = '/' + data.guide['js'];
 
-            var diagram;
-            var g = $('#diagram').get(0);
+        } else if (type == 'Sequence') {
 
-            if (type == 'Sequence') {
+            var style = {theme: 'hand', "font-size": 13};
+            var skema = (data)? data.skema: editor.getValue();
+            var js = '/sequence/js/sequence-diagram-snap-min.js';
 
-                var font_size = (select == 'hand')? 13: 15;
-                style = {theme: select, "font-size": font_size};
-                if (!skema) {skema = editor.getValue();}
+        }
 
-            }
+        $.getScript(js + '?t=' + $.now(), function() {
 
             try {
 
+                var diagram;
+                var g = $('#diagram').get(0);
+
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
-                else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                if (type == 'Scenetree') {diagram = d3.select('#viewport');}
                 else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
-                else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
-                else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
+                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
+                else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
 
             } finally {
 
@@ -153,7 +155,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
 
     },
 
-    makeSvg : function() {
+    makeSvg : function(style, skema) {
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "viewport");
@@ -208,8 +210,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
             } else {
  
                 data = result.items[0];
-                style = data.style; skema = data.skema; guide = data.guide;
-                editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
+                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
             }
 
@@ -243,7 +244,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
 
         //Strict Workflows default to Sequence but not the index 
-        id = ids = feed = json = size = type = skema = null;
+        id = ids = data = feed = json = size = type = null;
         draw.getJSON();
 
     },
@@ -303,6 +304,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         //Support Unlimited Scripts on Workflows Algorithm (#36)
         if (window[scope]) {feed = window[scope].feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
+
+    },
+
+    reload : function(hash) {
+
+        scrollTo(hash); window.stop();
+        location.hash = hash; location.reload(true);
 
     },
 
