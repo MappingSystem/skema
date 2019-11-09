@@ -90,12 +90,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
-                else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
+                if (type == 'Scenetree') {diagram = d3.select('#viewport');}
                 else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
-                else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
+                else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
+                else if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
 
             } finally {
 
