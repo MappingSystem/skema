@@ -273,7 +273,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-
     clone : function(path) {
 
         var button = $('button.execute-button').clone();
