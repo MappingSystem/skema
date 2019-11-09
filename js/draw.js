@@ -68,7 +68,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     getScript : function(item) {
 
-        if (type == 'Sequence') {
+        if (data) {
 
             var skema = data.skema;
             var style = data.style;
