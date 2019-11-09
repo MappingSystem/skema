@@ -124,7 +124,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             var elements;
 
             //get mandatory elements 
-            if (type == 'Scenetree') {elements = draw.clone('svg path');}
+            if (type == 'Scenetree') {elements = draw.clone('.execute-button-wrap svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
@@ -282,13 +282,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         button.attr('title','Back to previous session');
         button.click(function() {draw.click($('.eQuery').first());});  
 
-        var svg = button.find(path);
-        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
-
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
         queryWrap.setValue(data.skema);
 
-        return $(path).attr('class','eQuery');
+        var svg = $(path); svg.attr('class','eQuery');
+        return svg;
 
     },
 
