@@ -68,16 +68,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     getScript : function(item) {
 
-        if (data) {
+        if (select != 'hand') {
 
-            var skema = data.skema;
             var style = data.style;
+            var skema = data.skema;
             var js = '/' + data.guide['js'];
 
         } else if (type == 'Sequence') {
 
-            var skema = editor.getValue();
             var style = {theme: 'hand', "font-size": 13};
+            var skema = (data)? data.skema: editor.getValue();
             var js = '/sequence/js/sequence-diagram-snap-min.js';
 
         }
