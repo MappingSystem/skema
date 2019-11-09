@@ -83,7 +83,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
 
             }
 
-        $.getScript(js + '?t=' + $.now(), function(data, textStatus, jqxhr) {
+        $.getScript(js + '?t=' + $.now(), function() {
 
             try {
 
