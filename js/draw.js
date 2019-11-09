@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, style, skema, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, params, draw = {
 
     diagram : function() {
 
@@ -52,7 +52,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
                 if (this.id == 'json') {this.href = feed;}
-                else if (guide) {this.href = guide[this.id];}
+                else if (data) {this.href = data.guide[this.id];}
             }
 
         });
@@ -61,22 +61,24 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
         $('#type')[0].href = '/' + type.toLowerCase();
 
         if (test) test = false;
+        $(".loadingImg").show();
         draw.getScript();
 
     },
 
-
     getScript : function(item) {
-
-        $(".loadingImg").show();
-        if (guide) {js = '/' + guide['js'];}
-        else {js = '/sequence/js/sequence-diagram-snap-min.js';}
 
         if (type == 'Sequence') {
 
-            var font_size = (select == 'hand')? 13: 15;
-            style = {theme: select, "font-size": font_size};
-            if (!skema) {skema = editor.getValue();}
+            var skema = data.skema;
+            var style = data.style;
+            var js = '/' + data.guide['js'];
+
+        } else if (type == 'Sequence') {
+
+            var skema = editor.getValue();
+            var style = {theme: 'hand', "font-size": 13};
+            var js = '/sequence/js/sequence-diagram-snap-min.js';
 
         }
 
@@ -92,7 +94,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
-                else if (type == 'Nodelinks') {diagram = draw.makeSvg(); g.prepend(diagram);}
+                else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Scenetree') {diagram = d3.select('#viewport');}
 
             } finally {
@@ -153,7 +155,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
 
     },
 
-    makeSvg : function() {
+    makeSvg : function(style, skema) {
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "viewport");
@@ -208,8 +210,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
             } else {
  
                 data = result.items[0];
-                style = data.style; skema = data.skema; guide = data.guide;
-                editor.setValue(draw.encode(JSON.stringify(skema, draw.replacer, '\t')));
+                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
             }
 
