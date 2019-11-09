@@ -126,7 +126,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             //get mandatory elements 
             if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
-            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');}
+            else if (type == 'Scenetree') {elements = draw.clone('button svg path');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
@@ -274,7 +274,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     },
 
 
-    clone : function() {
+    clone : function(path) {
 
         var button = $('button.execute-button').clone();
         button.prependTo($('button.execute-button').parent());
@@ -287,6 +287,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
         queryWrap.setValue(data.skema);
+
+        return $(path).attr('class','eQuery');
 
     },
 
