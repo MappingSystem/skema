@@ -50,7 +50,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, guide, sty
             if (select == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
-            } else {console.log(feed);
+            } else {
                 if (this.id == 'json') {this.href = feed;}
                 else if (guide) {this.href = guide[this.id];}
             }
