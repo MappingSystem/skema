@@ -244,7 +244,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         while(match = regex.exec(url)) {params[match[1]] = match[2];}
 
         //Strict Workflows default to Sequence but not the index 
-        id = ids = pad = data = feed = json = size = type = null;
+        id = ids = data = feed = json = size = type = null;
         draw.getJSON();
 
     },
