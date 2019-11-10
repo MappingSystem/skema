@@ -66,6 +66,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type.toLowerCase();
+        $('#doc')[0].href = 'https://github.com/chetabahana/chetabahana.github.io/wiki/' + type;
 
         if (test) test = false;
         $(".loadingImg").show();
