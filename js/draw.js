@@ -210,10 +210,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 $("<div>", {id: "1"}).appendTo($("#diagram"));
                 draw.click($("#1"));
 
-            } else {
+            } else if (tree == null) {
  
                 data = result.items[0];
-                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
+                var skema = JSON.stringify(data.skema, draw.replacer, '\t');
+                editor.setValue(draw.encode(skema));
+
+            } else {
+ 
+                var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+                queryWrap.setValue(data.skema)
 
             }
 
