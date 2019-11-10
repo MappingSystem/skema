@@ -152,8 +152,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         (ln == pad || ln - size == pad)? ids.push(id): ids.pop();
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
-        pad = (ln + 1 >= size)? ln - size + 1: ln + 1; type = json[pad]['title'];
-        draw.feed('part', getJSON);
+        pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
+        type = json[pad]['title'];
+        draw.feed('part');
 
     },
 
@@ -296,11 +297,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-    feed : function(scope, callBack = null) {
+    feed : function(scope) {
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[scope]) {window[scope].feed(id, size, data); draw.callBack();}
-        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope, callBack = null);});}
+        if (window[scope]) {window[scope].feed(id, size, data); draw.getJSON();}
+        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
 
     },
 
