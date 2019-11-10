@@ -108,7 +108,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //set element
                 draw.element();
                 $('.loadingImg').hide();
-                if (type == 'Scenetree') {draw.feed('tree');}
 
             }
 
@@ -153,7 +152,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
-        type = json[pad]['title']; data = null;
+        type = json[pad]['title'];
         draw.feed('part');
 
     },
@@ -290,7 +289,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         button.attr('title','Back to previous session');
         button.click(function() {draw.click($('.eQuery').first());});  
 
-        return $(path).attr('class','eQuery');
+        $(path).attr('class','eQuery');
+        draw.feed('tree');
+        return $(path);
 
     },
 
@@ -306,7 +307,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     feed : function(scope) {
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[scope]) {window[scope].feed(id, size, data); draw.getJSON();}
+        if (window[scope]) {window[scope].feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
 
     },

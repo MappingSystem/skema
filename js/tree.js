@@ -1,6 +1,6 @@
 var tree = {
 
-    feed : function(id, size, data) {
+    feed : function(id, size) {
 
 
     }
