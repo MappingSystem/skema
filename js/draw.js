@@ -127,7 +127,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             var elements;
 
             //get mandatory elements 
-            if (type == 'Scenetree') {elements = draw.clone('.execute-button-wrap svg path');}
+            if (type == 'Scenetree') {elements = draw.clone('button.execute-button', 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
@@ -276,16 +276,15 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-    clone : function(path) {
+    clone : function(element, path) {
 
-        var button = $('button.execute-button').clone();
-        button.prependTo($('button.execute-button').parent());
+        var button = $(element).clone();
+        button.prependTo($(element).parent());
 
         button.attr('title','Back to previous session');
         button.click(function() {draw.click($('.eQuery').first());});  
 
-        var svg = $(path); svg.attr('class','eQuery');
-        return svg;
+        return $(path).attr('class','eQuery');
 
     },
 
