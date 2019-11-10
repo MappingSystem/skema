@@ -216,6 +216,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             } else if (window['tree']) {
  
+                //Support Unlimited Json Data Driven on Workflows(#39)
                 var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
                 data = result.items[0]; query.setValue(draw.encode(data.skema));
 
