@@ -108,7 +108,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //set element
                 draw.element();
                 $('.loadingImg').hide();
-                if (type == 'Scenetree') {$('#graphiql .queryWrap .CodeMirror')[0].CodeMirror.setValue(skema)}
+                if (type == 'Scenetree') {draw.feed('tree');}
 
             }
 
@@ -152,9 +152,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         (ln == pad || ln - size == pad)? ids.push(id): ids.pop();
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
-        pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
-        type = json[pad]['title'];
-        draw.feed('part');
+        pad = (ln + 1 >= size)? ln - size + 1: ln + 1; type = json[pad]['title'];
+        draw.feed('part', draw.getJSON);
 
     },
 
@@ -297,11 +296,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-    feed : function(scope) {
+    feed : function(scope, callBack = null) {
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[scope]) {feed = window[scope].feed(id, size); draw.getJSON();}
-        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
+        if (window[scope]) {window[scope].feed(id, size, data); callBack();}
+        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope, callBack = null);});}
 
     },
 

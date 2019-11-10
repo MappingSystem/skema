@@ -1,10 +1,9 @@
 var part = {
 
-    feed : function(id, size) {
+    feed : function(id, size, data) {
 
-        var link = '/skema.json?t=' + $.now();
-        if (id.length < size) link = '/' + id + link;
-        return link;
+        feed = '/skema.json?t=' + $.now();
+        if (id.length < size) feed = '/' + id + feed;
 
     }
 
