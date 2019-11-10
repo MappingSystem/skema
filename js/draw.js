@@ -27,7 +27,14 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
                     $('#diagram').hide();
                     $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
-                    $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
+
+                    //set handle and idle time
+                    var dom = 'DOMSubtreeModified';
+                    var hash = '#chetabahana-skema';
+                    var event = 'click mousemove keyup';
+
+                    $('body').on(dom, '.resultWrap', function() {draw.query();});
+                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 60000));
 
                 }
 
@@ -90,8 +97,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Scenetree') {diagram = d3.select('#viewport');}
-                else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
@@ -102,10 +108,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //set element
                 draw.element();
                 $('.loadingImg').hide();
-
-                //set idle time of inactivity
-                var hash = '#chetabahana-skema';
-                $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
             }
 
@@ -124,9 +126,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             var elements;
 
             //get mandatory elements 
-            if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
+            if (type == 'Scenetree') {elements = draw.clone('button.execute-button', 'svg path');}
+            else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
-            else if (type == 'Scenetree') {draw.clone(); elements = $('button svg path').attr('class','eQuery');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
@@ -207,10 +209,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 $("<div>", {id: "1"}).appendTo($("#diagram"));
                 draw.click($("#1"));
 
-            } else {
+            } else if (data == null) {
  
                 data = result.items[0];
                 editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
+
+            } else if (window['tree']) {
+ 
+                //Support Unlimited Json Data Driven on Workflows(#39)
+                var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+                data = result.items[0]; query.setValue(draw.encode(data.skema));
 
             }
 
@@ -273,20 +281,17 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
+    clone : function(element, path) {
 
-    clone : function() {
-
-        var button = $('button.execute-button').clone();
-        button.prependTo($('button.execute-button').parent());
+        var button = $(element).clone();
+        button.prependTo($(element).parent());
 
         button.attr('title','Back to previous session');
         button.click(function() {draw.click($('.eQuery').first());});  
 
-        var svg = button.find('svg path');
-        svg.css({'transform':'rotate(180deg)','transform-origin':'48% 47%'});
-
-        var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-        queryWrap.setValue(skema);
+        $(path).attr('class','eQuery');
+        draw.feed('tree');
+        return $(path);
 
     },
 
@@ -302,7 +307,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     feed : function(scope) {
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[scope]) {feed = window[scope].feed(id, size); draw.getJSON();}
+        if (window[scope]) {window[scope].feed(id, size); draw.getJSON();}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
 
     },
