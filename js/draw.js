@@ -27,6 +27,10 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
                     $('#diagram').hide();
                     $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
+
+                    //set handle and idle time of inactivity
+                    var event = 'click mousemove keyup'; var hash = '#chetabahana-skema';
+                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 60000));
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
 
                 }
@@ -90,8 +94,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Scenetree') {diagram = d3.select('#viewport');}
-                else if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
@@ -102,10 +105,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //set element
                 draw.element();
                 $('.loadingImg').hide();
-
-                //set idle time of inactivity
-                var hash = '#chetabahana-skema';
-                $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
+                if (type == 'Scenetree') {$('#graphiql .queryWrap .CodeMirror')[0].CodeMirror.setValue(skema)}
 
             }
 
@@ -280,9 +280,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         button.attr('title','Back to previous session');
         button.click(function() {draw.click($('.eQuery').first());});  
-
-        var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-        queryWrap.setValue(data.skema);
 
         var svg = $(path); svg.attr('class','eQuery');
         return svg;
