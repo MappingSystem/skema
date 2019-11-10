@@ -211,14 +211,14 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             } else if (data == null) {
  
-                data = result.items[0];
-                var skema = JSON.stringify(data.skema, draw.replacer, '\t');
+                data = result.items[0]; var skema = JSON.stringify(data.skema, draw.replacer, '\t');
                 editor.setValue(draw.encode(skema));
 
             } else if (window['tree']) {
  
-                var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-                queryWrap.setValue(data.skema)
+                var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+                data = result.items[0]; var skema = draw.encode(data.skema);
+                query.setValue(skema);
 
             }
 
