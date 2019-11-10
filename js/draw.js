@@ -211,13 +211,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             } else if (data == null) {
  
-                data = result.items[0]; var skema = JSON.stringify(data.skema, draw.replacer, '\t');
-                editor.setValue(draw.encode(skema));
+                data = result.items[0];
+                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
             } else if (window['tree']) {
  
-                data = result.items[0]; var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-                query.setValue(draw.encode(data.skema));
+                var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+                data = result.items[0]; query.setValue(draw.encode(data.skema));
 
             }
 
