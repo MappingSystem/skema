@@ -153,7 +153,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
-        type = json[pad]['title'];
+        type = json[pad]['title']; data = null;
         draw.feed('part');
 
     },
@@ -210,13 +210,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 $("<div>", {id: "1"}).appendTo($("#diagram"));
                 draw.click($("#1"));
 
-            } else if (tree == null) {
+            } else if (data == null) {
  
                 data = result.items[0];
                 var skema = JSON.stringify(data.skema, draw.replacer, '\t');
                 editor.setValue(draw.encode(skema));
 
-            } else {
+            } else if (window['tree']) {
  
                 var queryWrap = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
                 queryWrap.setValue(data.skema)
