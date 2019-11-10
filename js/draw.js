@@ -216,9 +216,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             } else if (window['tree']) {
  
-                var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-                data = result.items[0]; var skema = JSON.stringify(data.skema, draw.replacer, '\t');
-                query.setValue(draw.encode(skema));
+                data = result.items[0]; var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
+                query.setValue(draw.encode(data.skema));
 
             }
 
