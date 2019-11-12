@@ -17,7 +17,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             if (item['title'] == type) {
 
-                if (type != 'Scenetree') {
+                if (type != 'Node') {
 
                     $('#diagram').show();
                     $('#diagram, #graphiql, #viewport').empty();
@@ -127,7 +127,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             var elements;
 
             //get mandatory elements 
-            if (type == 'Scenetree') {elements = draw.clone('button.execute-button', 'svg path');}
+            if (type == 'Node') {elements = draw.clone('button.execute-button', 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
@@ -135,7 +135,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             //set each id and its handle 
             if (type != 'Sitewheel') {elements.each(function(index) {draw.node(index, this);});}
-            if (type != 'Sitewheel' && type != 'Scenetree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
 
         }
 
