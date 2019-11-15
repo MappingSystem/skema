@@ -275,7 +275,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     getReactDom : function(dom) {
 
-        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));;
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
         let i = dom[key]; if (i) console.log(i);
 
     },
