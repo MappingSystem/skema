@@ -19,7 +19,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
                 if (type != 'Node') {
 
-                    $('#diagram').empty.show();
+                    $('#diagram').empty().show();
                     $('#graphiql, #viewport').hide();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
