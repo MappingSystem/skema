@@ -19,15 +19,15 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
                 if (type != 'Node') {
 
-                    $('#diagram').empty().show();
-                    $('#graphiql, #viewport').hide();
+                    $('#diagram').empty().show().css("z-index", "20");
+                    $('#graphiql, #viewport').css("z-index", "10").hide();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
-                    $('#diagram').hide();
-                    $('#graphiql, #viewport').show();
+                    $('#diagram').css("z-index", "10").hide();
                     $('#viewport').empty().html('<canvas></canvas>'); 
+                    $('#graphiql, #viewport').show().css("z-index", "20");
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
