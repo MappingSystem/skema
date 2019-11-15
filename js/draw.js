@@ -295,7 +295,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     },
 
     clone : function(element, path) {
-
+console.log(element);
         var button = $(element).clone();
         button.prependTo($(element).parent());
 
