@@ -275,9 +275,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     getReactDom : function(e) {
 
-        var internalInstance = e[Object.keys(e).find(key => key.startsWith('__reactInternalInstance$'))];
-        if (!internalInstance) return null;
-        console.log(internalInstance._currentElement);
+        var i = e[Object.keys(e).find(key => key.startsWith('__reactInternalInstance$'))];
+        if (!i) return null;
+        console.log(i._currentElement);
 
     },
 
