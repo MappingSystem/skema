@@ -17,17 +17,19 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             if (item['title'] == type) {
 
+                $('#diagram, #viewport').empty();
+
                 if (type != 'Node') {
 
-                    $('#diagram').empty().show().css("z-index", "20");
-                    $('#graphiql, #viewport').css("z-index", "10").hide();
+                    $('#diagram').show();
+                    $('#graphiql, #viewport').hide();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
-                    $('#diagram').css("z-index", "10").hide();
-                    $('#viewport').empty().html('<canvas></canvas>'); 
-                    $('#graphiql, #viewport').show().css("z-index", "20");
+                    $('#diagram').hide();
+                    $('#graphiql, #viewport').show();
+                    $('#viewport').html('<canvas></canvas>'); 
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
