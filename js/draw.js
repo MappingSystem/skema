@@ -137,7 +137,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Sitewheel') {elements.each(function(index) {draw.node(index, this);});}
+            if (elements.length) {elements.each(function(index) {draw.node(index, this);});}
             if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
 
         }
