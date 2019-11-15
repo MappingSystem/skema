@@ -308,6 +308,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         $(path).attr('class','eQuery');
         draw.feed('tree');
+
         return $(path);
 
     },
