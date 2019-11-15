@@ -26,7 +26,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 } else {
 
                     $('#diagram').hide();
-                    $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
+                    $('#diagram, #graphiql').empty();
+                    $('#viewport').empty().html('<canvas></canvas>'); 
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
