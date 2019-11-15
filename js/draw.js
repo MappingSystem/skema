@@ -265,7 +265,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {
-                var query = $('#graphiql')[0].ReactDOM;
+                var query = getReactDom($('#graphiql'));
                 query.unmountComponentAtNode($('#graphiql'));
                 test = !test; draw.click($('.eQuery').last());
             }
@@ -273,7 +273,15 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-    node : function(i, e) {
+    getReactDom : function(e) {
+
+        var internalInstance = e[Object.keys(e).find(key => key.startsWith('__reactInternalInstance$'))];
+        if (!internalInstance) return null;
+        console.log(internalInstance._currentElement);
+
+    },
+
+   node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
         else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
