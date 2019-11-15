@@ -265,7 +265,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {
-                $('#diagram, #graphiql, #viewport').empty();
+                unmountComponentAtNode($('#diagram, #graphiql, #viewport'));
                 test = !test; draw.click($('.eQuery').last());
             }
         }
