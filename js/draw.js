@@ -19,14 +19,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
                 if (type != 'Node') {
 
-                    $('#diagram').show();
-                    $('#diagram, #graphiql, #viewport').empty();
+                    $('#diagram').empty().show();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#diagram, #graphiql').empty();
                     $('#viewport').empty().html('<canvas></canvas>'); 
 
                     //set handle and idle time
