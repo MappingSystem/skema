@@ -120,7 +120,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     },
 
     element : function() {
-, 
+ 
         if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
            (!$('#graphiql').find('svg')[0] && $('#graphiql').is(':visible'))) {
 
