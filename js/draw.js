@@ -298,18 +298,21 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     clone : function(e, path) {
 
-        if ($('.eQuery')) return null;
+        var title = 'Back to previous session';
+        if (e.first().attr('title') != title) 
+        {
+            var button = e.clone();
+            button.prependTo(e.parent());
 
-        var button = e.clone();
-        button.prependTo(e.parent());
+            button.attr('title',title);
+            button.click(function() {draw.click($('.eQuery').first());});  
 
-        button.attr('title','Back to previous session');
-        button.click(function() {draw.click($('.eQuery').first());});  
-
-        $(path).attr('class','eQuery');
+            $(path).attr('class','eQuery');
+            draw.feed('tree');
+            return $(path);
+        }
         draw.feed('tree');
-
-        return $(path);
+        return null;
 
     },
 
