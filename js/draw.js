@@ -17,7 +17,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             if (item['title'] == type) {
 
-                $('#diagram, #viewport').empty();
+                $('#diagram').empty();
 
                 if (type != 'Node') {
 
@@ -29,7 +29,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
                     $('#diagram').hide();
                     $('#graphiql, #viewport').show();
-                    $('#viewport').html('<canvas></canvas>'); 
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
