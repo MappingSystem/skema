@@ -17,16 +17,19 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
             if (item['title'] == type) {
 
-                if (type != 'Scenetree') {
+                $('#diagram').empty();
+
+                if (type != 'Node') {
 
                     $('#diagram').show();
-                    $('#diagram, #graphiql, #viewport').empty();
+                    $('#graphiql, #viewport').hide();
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#diagram, #graphiql').empty(); $('#viewport').html('<canvas></canvas>'); 
+                    $('#graphiql, #viewport').show();
+                    if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>'); 
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
@@ -66,10 +69,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type.toLowerCase();
+        $('#doc')[0].href = 'https://github.com/chetabahana/chetabahana.github.io/wiki/' + type;
 
         if (test) test = false;
         $(".loadingImg").show();
-        draw.getScript();
+
+        if (type == 'Node' && $('#graphiql').find('svg')[0]) draw.feed('tree');
+        else draw.getScript();
 
     },
 
@@ -101,7 +107,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
+                else if (type == 'Sitewheel') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
             } finally {
 
@@ -116,8 +122,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     },
 
     element : function() {
-
-        if (!$('#diagram, #graphiql').find('svg')[0]) {
+ 
+        if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
+           (!$('#graphiql').find('svg')[0] && $('#graphiql').is(':visible'))) {
 
             window.requestAnimationFrame(draw.element);
 
@@ -126,15 +133,15 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             var elements;
 
             //get mandatory elements 
-            if (type == 'Scenetree') {elements = draw.clone('button.execute-button', 'svg path');}
+            if (type == 'Node') {elements = draw.clone($('button.execute-button'), 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Sitewheel') {elements.each(function(index) {draw.node(index, this);});}
-            if (type != 'Sitewheel' && type != 'Scenetree') {elements.click(function() {draw.click(this);});}
+            if (elements) {elements.each(function(index) {draw.node(index, this);});}
+            if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
 
         }
 
@@ -160,7 +167,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     makeSvg : function(style, skema) {
 
         var $ = go.GraphObject.make;
-        var myDiagram = $(go.Diagram, "viewport");
+        var myDiagram = $(go.Diagram, "diagram");
         myDiagram.model = new go.GraphLinksModel(style, skema);
 
         myDiagram.nodeTemplate = $(go.Node, "Auto",
@@ -219,6 +226,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
                 data = result.items[0]; query.setValue(draw.encode(data.skema));
+                $('.loadingImg').hide();
 
             }
 
@@ -260,14 +268,25 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     query : function() {
 
         if (!test) {
-            if($('#diagram').is(':visible')){$('#diagram').hide(); $(".loadingImg").show();}
+            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
+            if (draw.isJSON(result)) {
+                draw.getReactDom($('#graphiql'));
+                //query.unmountComponentAtNode($('#graphiql'));
+                test = !test; draw.click($('.eQuery').last());
+            }
         }
 
     },
 
-    node : function(i, e) {
+    getReactDom : function(dom) {
+
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
+        let i = dom[key]; if (i) console.log(i);
+
+    },
+
+   node : function(i, e) {
 
         if (i != 0) {e.id = draw.pad(i);}
         else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
@@ -281,16 +300,18 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     },
 
-    clone : function(element, path) {
+    clone : function(e, path) {
 
-        var button = $(element).clone();
-        button.prependTo($(element).parent());
+        var title = 'Back to previous session';
+        if (e.first().attr('title') == title) return null;
 
-        button.attr('title','Back to previous session');
+        var button = e.clone();
+        button.prependTo(e.parent());
+
+        button.attr('title',title);
         button.click(function() {draw.click($('.eQuery').first());});  
 
         $(path).attr('class','eQuery');
-        draw.feed('tree');
         return $(path);
 
     },
