@@ -105,7 +105,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Sitewheel') {initialize(skema).then (function (control) {doTheTreeViz(control);});}
+                else if (type == 'Sitewheel') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
             } finally {
 
