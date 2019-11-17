@@ -165,7 +165,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     makeSvg : function(style, skema) {
 
         var $ = go.GraphObject.make;
-        var myDiagram = $(go.Diagram, "viewport");
+        var myDiagram = $(go.Diagram, "diagram");
         myDiagram.model = new go.GraphLinksModel(style, skema);
 
         myDiagram.nodeTemplate = $(go.Node, "Auto",
