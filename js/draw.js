@@ -301,18 +301,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     clone : function(e, path) {
 
         var title = 'Back to previous session';
-        if (e.first().attr('title') != title)
-        {
-            var button = e.clone();
-            button.prependTo(e.parent());
+        if (e.first().attr('title') == title) return null;
 
-            button.attr('title',title);
-            button.click(function() {draw.click($('.eQuery').first());});  
+        var button = e.clone();
+        button.prependTo(e.parent());
 
-            $(path).attr('class','eQuery');
-            return $(path);
-        }
-        else {return null;}
+        button.attr('title',title);
+        button.click(function() {draw.click($('.eQuery').first());});  
+
+        $(path).attr('class','eQuery');
+        return $(path);
 
     },
 
