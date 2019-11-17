@@ -73,7 +73,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
         if (test) test = false;
         $(".loadingImg").show();
-        draw.getScript();
+
+        if (type == 'Node' && $('#graphiql').find('svg')[0]) draw.feed('tree');
+        else draw.getScript();
 
     },
 
@@ -112,7 +114,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //set element
                 draw.element();
                 $('.loadingImg').hide();
-                if (type == 'Node') draw.feed('tree');
 
             }
 
@@ -225,6 +226,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
                 data = result.items[0]; query.setValue(draw.encode(data.skema));
+                $('.loadingImg').hide();
 
             }
 
