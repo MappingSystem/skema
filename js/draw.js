@@ -112,6 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 //set element
                 draw.element();
                 $('.loadingImg').hide();
+                if (type == 'Node') draw.feed('tree');
 
             }
 
@@ -300,7 +301,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     clone : function(e, path) {
 
         var title = 'Back to previous session';
-        if (e.first().attr('title') != title) 
+        if (e.first().attr('title') != title)
         {
             var button = e.clone();
             button.prependTo(e.parent());
@@ -309,11 +310,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             button.click(function() {draw.click($('.eQuery').first());});  
 
             $(path).attr('class','eQuery');
-            draw.feed('tree');
             return $(path);
         }
-        draw.feed('tree');
-        return null;
+        else {return null;}
 
     },
 
