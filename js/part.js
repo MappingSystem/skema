@@ -5,6 +5,7 @@ var part = {
         data = null;
         feed = '/skema.json?t=' + $.now();
         if (id.length < size) feed = '/' + id + feed;
+        draw.getJSON();
 
     }
 
