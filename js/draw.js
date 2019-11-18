@@ -126,7 +126,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
  
         var x = ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])? true: false;
         var y = ($('#graphiql').css('visibility') === 'visible' && !$('.CodeMirror')[0])? true: false;
-        var z = ($('.CodeMirror')[0] && !$('.CodeMirror')[0].CodeMirror instanceof Object)? true: false;
+        var z = false; if ($('.CodeMirror')[0]) {if(!$('.CodeMirror')[0].CodeMirror instanceof Object) var z = true;}
 
         if (x || y || z) {
 
