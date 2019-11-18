@@ -74,8 +74,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         if (test) test = false;
         $(".loadingImg").show();
 
-        if (type == 'Node' && $('#graphiql').find('svg')[0]) {draw.element(); draw.feed('tree');}
-        else  if (type == 'Node') {draw.getScript(); draw.feed('tree');}
+        if ($('#graphiql').find('svg')[0]) {draw.element();}
         else {draw.getScript();}
 
     },
@@ -147,9 +146,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (elements) {elements.each(function(index) {draw.node(index, this);});}
             if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
-
+            if (elements) {elements.each(function(index) {draw.node(index, this);});}
+            if (type == 'Node') draw.feed('tree');
         }
 
     },
