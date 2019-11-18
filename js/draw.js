@@ -229,8 +229,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
             } else if (window['tree']) {
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
-                data = result.items[0]; query.setValue(draw.encode(data.skema));
-                $('.loadingImg').hide();
+                data = result.items[0];
+                query.setValue(draw.encode(data.skema));
 
             }
 
