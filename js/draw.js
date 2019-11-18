@@ -125,7 +125,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     element : function() {
  
         if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
-           (!$('#graphiql').find('.CodeMirror')[0] && $('#graphiql').css('visibility') === 'visible')) {
+           (!$('#graphiql .queryWrap .CodeMirror')[0].CodeMirror && $('#graphiql').css('visibility') === 'visible')) {
 
             window.requestAnimationFrame(draw.element);
 
