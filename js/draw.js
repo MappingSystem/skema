@@ -125,8 +125,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     element : function() {
  
         var x = ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])? true: false;
-        var y = ($('#graphiql').css('visibility') === 'visible' && !$('#graphiql .queryWrap .CodeMirror')[0])? true: false;
-//        var z = ((!$('.CodeMirror')[0].CodeMirror instanceof Object)? true: false): false;
+        var y = ($('#graphiql').css('visibility') === 'visible' && !$('.CodeMirror')[0])? true: false;
+        var z = ($('.CodeMirror')[0] && !$('.CodeMirror')[0].CodeMirror instanceof Object)? true: false;
 
         if (x || y) {
 
