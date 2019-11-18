@@ -74,7 +74,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         if (test) test = false;
         $(".loadingImg").show();
 
-        if ($('#graphiql').find('svg')[0]) {draw.element();}
+        if (type == 'Node' && $('#graphiql').find('svg')[0]) {draw.element();}
         else {draw.getScript();}
 
     },
