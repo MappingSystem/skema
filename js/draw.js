@@ -22,13 +22,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 if (type != 'Node') {
 
                     $('#diagram').show();
-                    $('#graphiql, #viewport').hide();
+                    $('#graphiql, #viewport').css("visibility", "hidden");
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#graphiql, #viewport').show();
+                    $('#graphiql, #viewport').css("visibility", "visible");
                     if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>'); 
 
                     //set handle and idle time
