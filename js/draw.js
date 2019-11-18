@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, select, params, draw = {
 
     diagram : function() {
 
@@ -37,7 +37,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                     var event = 'click mousemove keyup';
 
                     $('body').on(dom, '.resultWrap', function() {draw.query();});
-                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 60000));
+                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 600000));
 
                 }
 
@@ -123,12 +123,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     element : function() {
  
-        var CM = $('#graphiql .queryWrap .CodeMirror');
-        var visibility = $('#graphiql').css('visibility');
+        var cm = $('#graphiql .queryWrap .CodeMirror')[0];
 
         var x = ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])? true: false;
-        var y = ( visibility === 'visible' && !$('#graphiql .queryWrap .CodeMirror').length)? true: false;
-        var z = false; if (CM.length) {if(CM[0].CodeMirror instanceof Object) var z = false; else var z = true;}
+        var y = ($('#graphiql').css('visibility') === 'visible' && !cm)? true: false;
+        var z = (cm && !(cm.CodeMirror instanceof Object))? true: false;
 
         if (x || y || z) {
 
@@ -148,7 +147,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             //set each id and its handle 
             if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            if (type == 'Node') draw.feed('tree');
+            if (type == 'Node') {query = cm.CodeMirror; draw.feed('tree');}
         }
 
     },
@@ -230,9 +229,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             } else if (window['tree']) {
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
-                var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
-                data = result.items[0]; query.setValue(draw.encode(data.skema));
-                $('.loadingImg').hide();
+                data = result.items[0];
+                query.setValue(draw.encode(data.skema));
 
             }
 
