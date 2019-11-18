@@ -128,7 +128,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         var y = ($('#graphiql').css('visibility') === 'visible' && !$('.CodeMirror')[0])? true: false;
         var z = ($('.CodeMirror')[0] && !$('.CodeMirror')[0].CodeMirror instanceof Object)? true: false;
 
-        if (x || y) {
+        if (x || y || z) {
 
             window.requestAnimationFrame(draw.element);
 
