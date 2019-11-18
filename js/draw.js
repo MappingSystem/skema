@@ -222,8 +222,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 data = result.items[0];
                 editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
-            } else if (window['tree']) {
- 
+            } else if (window['tree']) {console.log($('#graphiql .queryWrap .CodeMirror'));
+
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
                 data = result.items[0]; query.setValue(draw.encode(data.skema));
