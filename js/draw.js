@@ -37,7 +37,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                     var event = 'click mousemove keyup';
 
                     $('body').on(dom, '.resultWrap', function() {draw.query();});
-                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 60000));
+                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 600000));
 
                 }
 
