@@ -124,10 +124,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     element : function() {
  
+        var CM = $('#graphiql .queryWrap .CodeMirror');
+        var visibility = $('#graphiql').css('visibility');
+
         var x = ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])? true: false;
-        var y = ($('#graphiql').css('visibility') === 'visible' && !$('#graphiql').find('.CodeMirror')[0])? true: false;
-        var z = false; if ($('#graphiql').find('.queryWrap .CodeMirror')[0]) {
-            if(!$('#graphiql .queryWrap .CodeMirror')[0].CodeMirror instanceof Object) var z = true;}
+        var y = ( visibility === 'visible' && !$('#graphiql .queryWrap .CodeMirror').length)? true: false;
+        var z = false; if (CM.length) {if(CM[0].CodeMirror instanceof Object) var z = false; else var z = true;}
 
         if (x || y || z) {
 
