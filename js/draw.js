@@ -125,7 +125,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     element : function() {
  
         if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
-           (!$('#graphiql').find('svg')[0] && $('#graphiql').css('visibility') === 'visible')) {
+           (!$('#graphiql').find('.CodeMirror')[0] && $('#graphiql').css('visibility') === 'visible')) {
 
             window.requestAnimationFrame(draw.element);
 
@@ -222,7 +222,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 data = result.items[0];
                 editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
-            } else if (window['tree']) {console.log($('#graphiql .queryWrap .CodeMirror')[0]);
+            } else if (window['tree']) {
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
