@@ -74,8 +74,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         if (test) test = false;
         $(".loadingImg").show();
 
-        if (type == 'Node' && $('#graphiql').find('svg')[0]) draw.feed('tree');
-        else draw.getScript();
+        if (type == 'Node' && $('#graphiql').find('svg')[0]) {draw.element(); draw.feed('tree');}
+        else  if (type == 'Node') {draw.getScript(); draw.feed('tree');}
+        else {draw.getScript();}
 
     },
 
@@ -303,7 +304,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     clone : function(e, path) {
 
         var title = 'Back to previous session';
-        if (e.first().attr('title') == title) return null;
+        if (e.first().attr('title') == title) return $(path);
 
         var button = e.clone();
         button.prependTo(e.parent());
