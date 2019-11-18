@@ -124,8 +124,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     element : function() {
  
+        var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
         if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
-           (!$('#graphiql .queryWrap .CodeMirror')[0].CodeMirror && $('#graphiql').css('visibility') === 'visible')) {
+           (query === undefined && $('#graphiql').css('visibility') === 'visible')) {
 
             window.requestAnimationFrame(draw.element);
 
