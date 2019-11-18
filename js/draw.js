@@ -123,9 +123,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     },
 
     element : function() {
- 
-        if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
-           (!$('#graphiql .queryWrap .CodeMirror').length && $('#graphiql').css('visibility') === 'visible')) {
+
+        if ((type != 'Node' && !$('#diagram').find('svg')[0]) || 
+           (type == 'Node' && (!$('.CodeMirror')[0] || !$('.CodeMirror')[0].CodeMirror instanceof Object)) {
 
             window.requestAnimationFrame(draw.element);
 
