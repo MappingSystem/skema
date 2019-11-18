@@ -124,10 +124,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     element : function() {
  
-        if (
-           ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0]) || 
-           ($('#graphiql').css('visibility') && !$('#graphiql .queryWrap .CodeMirror')[0]) || 
-           //($('#graphiql').css('visibility') && $('.CodeMirror')[0] && !$('.CodeMirror')[0].CodeMirror instanceof Object)
+        if (($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])
+         || ($('#graphiql').css('visibility') && !$('#graphiql .queryWrap .CodeMirror')[0])
+      // || ($('#graphiql').css('visibility') && $('.CodeMirror')[0] && !$('.CodeMirror')[0].CodeMirror instanceof Object)
         ){
 
             window.requestAnimationFrame(draw.element);
