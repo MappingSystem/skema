@@ -124,10 +124,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     element : function() {
  
-        if (($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])
-      // || ($('#graphiql').css('visibility') === 'visible' && !$('#graphiql .queryWrap').find('.CodeMirror')[0])
-      // || ($('#graphiql').css('visibility') && $('.CodeMirror')[0] && !$('.CodeMirror')[0].CodeMirror instanceof Object)
-        ){
+        var x = ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])? true: false;
+        var y = ($('#graphiql').css('visibility') === 'visible' && !$('#graphiql .queryWrap .CodeMirror')[0])? true:
+                ((!$('.CodeMirror')[0].CodeMirror instanceof Object)? true: false);
+
+        if (x || y) {
 
             window.requestAnimationFrame(draw.element);
 
