@@ -22,13 +22,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 if (type != 'Node') {
 
                     $('#diagram').show();
-                    $('#graphiql, #viewport').hide();
+                    $('#graphiql, #viewport').css("visibility", "hidden");
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
                 } else {
 
                     $('#diagram').hide();
-                    $('#graphiql, #viewport').show();
+                    $('#graphiql, #viewport').css("visibility", "visible");
                     if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>'); 
 
                     //set handle and idle time
@@ -74,8 +74,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
         if (test) test = false;
         $(".loadingImg").show();
 
-        if (type == 'Node' && $('#graphiql').find('svg')[0]) draw.feed('tree');
-        else draw.getScript();
+        if (type == 'Node' && $('#graphiql').find('svg')[0]) {draw.element();}
+        else {draw.getScript();}
 
     },
 
@@ -123,8 +123,14 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
 
     element : function() {
  
-        if ((!$('#diagram').find('svg')[0] && $('#diagram').is(':visible')) || 
-           (!$('#graphiql').find('svg')[0] && $('#graphiql').is(':visible'))) {
+        var CM = $('#graphiql .queryWrap .CodeMirror');
+        var visibility = $('#graphiql').css('visibility');
+
+        var x = ($('#diagram').is(':visible') && !$('#diagram').find('svg')[0])? true: false;
+        var y = ( visibility === 'visible' && !$('#graphiql .queryWrap .CodeMirror').length)? true: false;
+        var z = false; if (CM.length) {if(CM[0].CodeMirror instanceof Object) var z = false; else var z = true;}
+
+        if (x || y || z) {
 
             window.requestAnimationFrame(draw.element);
 
@@ -140,9 +146,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (elements) {elements.each(function(index) {draw.node(index, this);});}
             if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
-
+            if (elements) {elements.each(function(index) {draw.node(index, this);});}
+            if (type == 'Node') draw.feed('tree');
         }
 
     },
@@ -222,7 +228,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
                 editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
             } else if (window['tree']) {
- 
+
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 var query = $('#graphiql .queryWrap .CodeMirror')[0].CodeMirror;
                 data = result.items[0]; query.setValue(draw.encode(data.skema));
@@ -303,7 +309,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, select, pa
     clone : function(e, path) {
 
         var title = 'Back to previous session';
-        if (e.first().attr('title') == title) return null;
+        if (e.first().attr('title') == title) return $(path);
 
         var button = e.clone();
         button.prependTo(e.parent());
