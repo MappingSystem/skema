@@ -30,7 +30,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                     $('#diagram').hide();
                     $('#graphiql, #viewport').css("visibility", "visible");
                     if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>');
-                    $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": 0});
+                    $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": -4px});
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
