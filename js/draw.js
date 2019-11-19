@@ -271,14 +271,20 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     query : function() {
 
-        if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
-        
         if (!test) {
+            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
 
     },
+
+    name : function(value) {
+
+        if (!value || typeof value !== 'string' || !(value instanceof String)) return 'mypointer';
+        else return (value).replace(' mypointer', '') + ' mypointer';
+
+   },
 
    node : function(i, e) {
 
@@ -290,7 +296,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames)});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
 
     },
 
@@ -326,13 +332,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
 
     },
-
-    name : function(value) {
-
-        if (!value || typeof value !== 'string' || !(value instanceof String)) return 'mypointer';
-        else return (value).replace(' mypointer', '') + ' mypointer';
-
-   },
 
     reload : function(hash) {
 
