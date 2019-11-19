@@ -327,11 +327,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    name : function(val) {
+    name : function(value) {
 
-        return val.replace(' mypointer', '') + ' mypointer';
+        if (typeof value !== 'string' || !(value instanceof String)) return 'mypointer';
+        else return (value).replace(' mypointer', '') + ' mypointer';
 
-    },
+   },
 
     reload : function(hash) {
 
