@@ -300,7 +300,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames)});
 
     },
 
@@ -334,6 +334,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         //Support Unlimited Scripts on Workflows Algorithm (#36)
         if (window[scope]) {window[scope].feed(id, size);}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
+
+    },
+
+    name : function(val) {
+
+        return val.replace(' mypointer', '') + ' mypointer';
 
     },
 
