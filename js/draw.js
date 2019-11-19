@@ -281,8 +281,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     name : function(value) {
 
-        if (!value || typeof value !== 'string' || !(value instanceof String)) return 'mypointer';
-        else return value.replace(' mypointer', '') + ' mypointer';
+        return value.replace(' mypointer', '') + ' mypointer';
 
         //if (!value || typeof value !== 'string' || !(value instanceof String)) return 'mypointer';
         //else return (value).replace(' mypointer', '') + ' mypointer';
