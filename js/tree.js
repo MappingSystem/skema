@@ -11,7 +11,7 @@ var tree = {
         var root = graphiql._reactRootContainer._internalRoot;
         console.dir(root.current);
 
-        //console.log(this.getReactElement(graphiql));
+        //console.log(tree.getReactElement(graphiql));
 
         draw.getJSON();
 
