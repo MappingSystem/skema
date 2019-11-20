@@ -275,19 +275,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (!test) {
             if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {
-                draw.getReactDom($('#graphiql'));
-                //query.unmountComponentAtNode($('#graphiql'));
-                test = !test; draw.click($('.eQuery').last());
-            }
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
-
-    },
-
-    getReactDom : function(dom) {
-
-        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
-        let i = dom[key]; if (i) console.log(i);
 
     },
 
