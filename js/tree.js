@@ -22,7 +22,7 @@ var tree = {
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
         let key = Object.keys(dom).find(key=>key.startsWith("__react"));
-        return dom[key];
+        return dom[key]._currentElement;
 
     }
 
