@@ -4,6 +4,7 @@ var tree = {
 
         //https://szhshp.org/tech/2019/08/10/reactindepthrender.html
         console.dir(document.getElementById('graphiql')._reactRootContainer._internalRoot);
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
         draw.getJSON();
 
     }
