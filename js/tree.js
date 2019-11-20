@@ -2,7 +2,7 @@ var tree = {
 
     feed : function(id, size) {
 
-        // Accessing _internalRoot
+        // Accessing _internalRoot && __reactInternalInstance$
         // https://szhshp.org/tech/2019/08/10/reactindepthrender.html
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
@@ -16,7 +16,7 @@ var tree = {
 
     getReact : function(dom) {
 
-        // Accessing __reactInternalInstance$
+        // Obejct keys Iteration
         // https://stackoverflow.com/a/55310101/4058484
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
