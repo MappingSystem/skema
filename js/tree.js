@@ -6,10 +6,9 @@ var tree = {
         // https://szhshp.org/tech/2019/08/10/reactindepthrender.html
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
+        var graphiql = document.getElementById('graphiql');
         var root = graphiql._reactRootContainer._internalRoot;
         console.dir(root.current);
-
-        var graphiql = document.getElementById('graphiql');
         console.log(tree.getReact(graphiql));
 
         draw.getJSON();
@@ -36,7 +35,7 @@ var tree = {
 
         let key = Object.keys(dom).find(key=>key.startsWith("__react"));
         //return getObjectKeys({a: 1, b: 2, c: { d: 3, e: { f: 4 }}});
-        return dom[key]["stateNode"]["current"];
+        return dom[key];
 
     }
 
