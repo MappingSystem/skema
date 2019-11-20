@@ -21,9 +21,24 @@ var tree = {
         // Accessing global element state
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
+
+const getObjectKeys = (obj, prefix = '') => {
+  return Object.entries(obj).reduce((collector, [key, val]) => {
+    const newKeys = [ ...collector, prefix ? `${prefix}.${key}` : key ]
+    if (Object.prototype.toString.call(val) === '[object Object]') {
+      const newPrefix = prefix ? `${prefix}.${key}` : key
+      const otherKeys = getObjectKeys(val, newPrefix)
+      return [ ...newKeys, ...otherKeys ]
+    }
+    return newKeys
+  }, [])
+}
+
         let key = Object.keys(dom).find(key=>key.startsWith("__react"));
-        return dom[key]._currentElement;
+        return getObjectKeys(dom[key]);
 
     }
 
 }
+
+
