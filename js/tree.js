@@ -22,6 +22,11 @@ var tree = {
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
         // let key = Object.keys(graphiql).find(key=>key.startsWith("__reactInternalInstance$"));
 
+        for (var key in dom) {
+
+            return dom[key];
+
+        }
 
         return null;
 
