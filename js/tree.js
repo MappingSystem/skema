@@ -19,7 +19,7 @@ var tree = {
     getReact : function(dom) {
 
         // Accessing global element state
-        // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
+        // https://stackoverflow.com/a/55310101/4058484
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
         const getObjectKeys = (obj, prefix = '') => {
