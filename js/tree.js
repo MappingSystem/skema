@@ -24,7 +24,7 @@ var tree = {
 
         //var reactDevToolsHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots;
         //var instArray = [...reactDevToolsHook[Object.keys(reactDevToolsHook)[0]]];
-        return null;
+        return dom[key];
 
     }
 
