@@ -22,9 +22,9 @@ var tree = {
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
         //let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
 
-        var reactDevToolsHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots;
-        var instArray = [...reactDevToolsHook[Object.keys(reactDevToolsHook)[0]]];
-        return instArray;
+        //var reactDevToolsHook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__._fiberRoots;
+        //var instArray = [...reactDevToolsHook[Object.keys(reactDevToolsHook)[0]]];
+        return null;
 
     }
 
