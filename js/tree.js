@@ -1,4 +1,4 @@
-var tree = {
+var root, tree = {
 
     feed : function(id, size) {
 
@@ -7,7 +7,7 @@ var tree = {
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
         var graphiql = document.getElementById('graphiql');
-        var root = graphiql._reactRootContainer._internalRoot;
+        root = $('#graphiql')._reactRootContainer._internalRoot;
         console.dir(root.current);
 
         var container = graphiql.getElementsByClassName('graphiql-container');
@@ -35,7 +35,7 @@ var tree = {
             }, [])
         }
 
-        let key = Object.keys(dom).find(key=>key.startsWith("__react"));
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
         //return getObjectKeys({a: 1, b: 2, c: { d: 3, e: { f: 4 }}});
         return dom[key];
 
