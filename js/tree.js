@@ -8,7 +8,7 @@ var tree = {
 
     },
 
-    getReactElement : function(dom)) {
+    getReactElement : function(dom) {
 
         // Accessing global element state
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
