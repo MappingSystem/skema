@@ -2,9 +2,19 @@ var tree = {
 
     feed : function(id, size) {
 
-        //https://szhshp.org/tech/2019/08/10/reactindepthrender.html
-        console.dir(document.getElementById('graphiql')._reactRootContainer._internalRoot);
+        // Accessing React Internal Instance
+        // https://szhshp.org/tech/2019/08/10/reactindepthrender.html
+        // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
+
+        var graphiql = document.getElementById('graphiql');
+
+        var root = graphiql._reactRootContainer._internalRoot;
+        console.dir(root.current);
+
+        console.log(tree.getReactElement(graphiql));
+
         draw.getJSON();
+
 
     },
 
