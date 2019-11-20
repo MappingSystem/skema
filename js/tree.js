@@ -1,4 +1,4 @@
-var root, tree = {
+var root, node, tree = {
 
     feed : function(id, size) {
 
@@ -11,7 +11,8 @@ var root, tree = {
         console.dir(root.current);
 
         var container = graphiql.getElementsByClassName('graphiql-container')[0];
-        console.log(tree.getReact(container));
+        node = tree.getReact(container);
+        console.log(node);
 
         draw.getJSON();
 
