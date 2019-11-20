@@ -7,11 +7,10 @@ var tree = {
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
         var graphiql = document.getElementById('graphiql');
+        console.log(tree.getReact(graphiql));
 
         var root = graphiql._reactRootContainer._internalRoot;
         console.dir(root.current);
-
-        //console.log(tree.getReactElement(graphiql));
 
         draw.getJSON();
 
