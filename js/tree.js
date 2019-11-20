@@ -6,9 +6,12 @@ var tree = {
         // https://szhshp.org/tech/2019/08/10/reactindepthrender.html
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
-        var container = document.getElementsByClassName('graphiql-container');
-        var root = container._reactRootContainer._internalRoot;
-        console.dir(root.current); console.log(tree.getReact(container));
+        var graphiql = document.getElementById('graphiql');
+        var root = graphiql._reactRootContainer._internalRoot;
+        console.dir(root.current);
+
+        var container = graphiql.getElementsByClassName('graphiql-container');
+        console.log(tree.getReact(container));
 
         draw.getJSON();
 
