@@ -8,8 +8,7 @@ var tree = {
 
         var graphiql = document.getElementById('graphiql');
         var root = graphiql._reactRootContainer._internalRoot;
-        console.dir(root.current);
-        console.log(tree.getReact(graphiql));
+        console.dir(root.current); console.log(tree.getReact(graphiql));
 
         draw.getJSON();
 
