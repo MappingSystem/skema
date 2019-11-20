@@ -35,7 +35,7 @@ var tree = {
         }
 
         let key = Object.keys(dom).find(key=>key.startsWith("__react"));
-        return getObjectKeys({a: 1});
+        return getObjectKeys({key : 1});
 
     }
 
