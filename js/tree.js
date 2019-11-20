@@ -24,7 +24,7 @@ var tree = {
 
         for (var key in dom) {
 
-            if (key.startsWith(“__reactInternalInstance$”)) return dom[key];
+            if (key.startsWith("__reactInternalInstance$")) return dom[key];
 
         }
 
