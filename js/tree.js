@@ -20,21 +20,9 @@ var tree = {
 
         // Accessing global element state
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
-        // let key = Object.keys(graphiql).find(key=>key.startsWith("__reactInternalInstance$"));
 
-        for (var key in dom) {
-
-            if (key.startsWith("__reactInternalInstance$")) {
-
-                return dom[key];
-
-            }
-
-            tree.getReact(dom[key]);
-
-        }
-
-        return null;
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
+        return key;
 
     }
 
