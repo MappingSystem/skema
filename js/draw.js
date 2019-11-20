@@ -29,8 +29,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
                     $('#diagram').hide();
                     $('#graphiql, #viewport').css("visibility", "visible");
-                    if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>');
-                    $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": -4px});
+                    if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>'); 
+                    $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": "-4px"});
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
@@ -272,9 +272,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     query : function() {
 
-        if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
-
         if (!test) {
+            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
