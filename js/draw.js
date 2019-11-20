@@ -30,6 +30,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                     $('#diagram').hide();
                     $('#graphiql, #viewport').css("visibility", "visible");
                     if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>'); 
+                    $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": "-4px"});
 
                     //set handle and idle time
                     var dom = 'DOMSubtreeModified';
@@ -274,19 +275,15 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (!test) {
             if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
-            if (draw.isJSON(result)) {
-                draw.getReactDom($('#graphiql'));
-                //query.unmountComponentAtNode($('#graphiql'));
-                test = !test; draw.click($('.eQuery').last());
-            }
+            if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
 
     },
 
-    getReactDom : function(dom) {
+    name : function(value) {
 
-        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
-        let i = dom[key]; if (i) console.log(i);
+        if (typeof value !== 'string') {return 'mypointer';}
+        else {return value.replace(' mypointer', '') + ' mypointer';}
 
     },
 
@@ -300,7 +297,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return classNames + ' mypointer';});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
     },
 
