@@ -6,6 +6,17 @@ var tree = {
         console.dir(document.getElementById('graphiql')._reactRootContainer._internalRoot);
         draw.getJSON();
 
+    },
+
+    getReact : function(dom) {
+
+        // Accessing global element state
+        // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
+        // let key = Object.keys(graphiql).find(key=>key.startsWith("__reactInternalInstance$"));
+
+
+        return null;
+
     }
 
 }
