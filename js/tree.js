@@ -35,7 +35,7 @@ const getObjectKeys = (obj, prefix = '') => {
 }
 
         let key = Object.keys(dom).find(key=>key.startsWith("__react"));
-        return getObjectKeys(dom[key]);
+        return getObjectKeys({a: 1, b: 2, c: { d: 3, e: { f: 4 }}});
 
     }
 
