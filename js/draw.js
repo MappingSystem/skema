@@ -300,6 +300,23 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
+    loading : function(e) {
+
+        if ($('#diagram').is(':visible') || $('#graphiql').css('visibility') === 'visible') {
+            $('#diagram').hide(); $('#graphiql, #viewport').css("visibility", "hidden");
+            $(".loadingImg").show();
+        }
+
+    },
+
+    feed : function(scope) {
+
+        //Support Unlimited Scripts on Workflows Algorithm (#36)
+        if (window[scope]) {window[scope].feed(id, size);}
+        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
+
+    },
+
     clone : function(e, path) {
 
         var title = 'Back to previous session';
@@ -326,27 +343,10 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    feed : function(scope) {
-
-        //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[scope]) {window[scope].feed(id, size);}
-        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
-
-    },
-
     reload : function(hash) {
 
         scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
-
-    },
-
-    loading : function(e) {
-
-        if ($('#diagram').is(':visible') || $('#graphiql').css('visibility') === 'visible') {
-            $('#diagram').hide(); $('#graphiql, #viewport').css("visibility", "hidden");
-            $(".loadingImg").show();
-        }
 
     },
 
