@@ -8,9 +8,8 @@ var dom, keys, node, root, element, tree = {
         element = document.getElementById('graphiql');
         root = element._reactRootContainer._internalRoot;
 
-        var test1 = function() {return null;}; var test2 = function() {return null;};
         dom = element.getElementsByClassName('execute-button')[1];
-        node = this.getReact(); node._onClick.setState({test1: test2}); console.log(node._onClick);
+        node = this.getReact(); console.log(node._onClick);
 
         draw.getJSON();
 
