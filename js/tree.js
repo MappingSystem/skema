@@ -11,7 +11,7 @@ var keys, node, root, tree = {
 
         var container = graphiql.getElementsByClassName('graphiql-container')[0];
         let key = Object.keys(container).find(key=>key.startsWith("__reactInternalInstance$"));
-        node = container[key]._debugOwner; console.log(node);
+        node = container[key]._debugOwner; console.log(node.stateNode._storage.storage);
 
         draw.getJSON();
 
