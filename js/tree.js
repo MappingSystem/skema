@@ -3,7 +3,6 @@ var keys, node, root, tree = {
     feed : function(id, size) {
 
         // Accessing _internalRoot
-        // https://src-bin.com/en/q/1bf6a0e
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
         var graphiql = document.getElementById('graphiql');
@@ -14,6 +13,24 @@ var keys, node, root, tree = {
         node = container[key]._debugOwner; console.log(node.stateNode._storage.storage);
 
         draw.getJSON();
+
+    },
+
+    getReact = function() {
+
+        // Accessing __reactInternalInstance$
+        // https://src-bin.com/en/q/1bf6a0e
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
+        let internalInstance = dom[key];
+        if (internalInstance == null) return null;
+
+        if (internalInstance.return) { // react 16+
+            return internalInstance._debugOwner
+                ? internalInstance._debugOwner.stateNode
+                : internalInstance.return.stateNode;
+        } else { // react <16
+            return internalInstance._currentElement._owner._instance;
+        }
 
     },
 
