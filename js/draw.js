@@ -42,7 +42,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
                 }
 
-                pad = index;
+                pad = index + 1;
                 draw.getLinks(item);
 
             }
