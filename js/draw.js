@@ -342,7 +342,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     loading : function() {
 
-            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
+        if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
     },
 
