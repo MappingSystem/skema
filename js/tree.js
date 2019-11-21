@@ -8,8 +8,8 @@ var dom, keys, node, root, element, tree = {
         element = document.getElementById('graphiql');
         root = element._reactRootContainer._internalRoot; //console.dir(root.current);
 
-        dom = element.getElementsByClassName('graphiql-container')[0];
-        node = this.getReact(); console.log(node._storage.storage);
+        dom = element.getElementById(id)[0];
+        node = this.getReact(); console.log(node);
 
         draw.getJSON();
 
