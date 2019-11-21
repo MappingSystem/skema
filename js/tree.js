@@ -7,7 +7,7 @@ var keys, node, root, tree = {
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
         var graphiql = document.getElementById('graphiql');
-        root = graphiql._reactRootContainer._internalRoot; console.dir(root.current);
+        root = graphiql._reactRootContainer._internalRoot; //console.dir(root.current);
 
         var container = graphiql.getElementsByClassName('graphiql-container')[0];
         let key = Object.keys(container).find(key=>key.startsWith("__reactInternalInstance$"));
