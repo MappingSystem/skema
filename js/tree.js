@@ -1,4 +1,4 @@
-var root, node, tree = {
+var node, root, tree = {
 
     feed : function(id, size) {
 
@@ -12,7 +12,7 @@ var root, node, tree = {
 
         var container = graphiql.getElementsByClassName('graphiql-container')[0];
         node = tree.getReact(container);
-        console.log(node);
+        console.log(node.return);
 
         draw.getJSON();
 
