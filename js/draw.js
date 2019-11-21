@@ -17,6 +17,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
             if (item['title'] == type) {
 
+                pad = item['weight'];
                 $('#diagram').empty();
 
                 if (type != 'Node') {
@@ -42,7 +43,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
                 }
 
-                pad = item['weight'];
                 draw.getLinks();
 
             }
@@ -159,9 +159,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         $('.mypointer').css('pointer-events', 'none');
         if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
-        //Allow diagram to get the occurred index of a given object's 
+        //Allow diagram to get the occurred index of a given objects 
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
-        (ln == pad || ln - size == pad)? ids.push(id): ids.pop();
+        (ln == pad)? ids.push(id): ids.pop();
 
         //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
         pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
