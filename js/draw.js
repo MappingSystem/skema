@@ -343,9 +343,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     loading : function(e) {
 
-        e.preventDefault();
-        if ($('#diagram').is(':visible')) {
-            $('#diagram').hide(); 
+        if ($('#diagram').is(':visible') || $('#graphiql').css('visibility') === 'visible') {
+            $('#diagram').hide(); $('#graphiql, #viewport').css("visibility", "hidden");
             $(".loadingImg").show();
         }
 
