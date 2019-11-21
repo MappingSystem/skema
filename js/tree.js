@@ -18,7 +18,7 @@ var dom, keys, node, root, element, tree = {
     getReact : function() {
 
         // Accessing react-dom
-        // https://src-bin.com/en/q/1bf6a0e
+        // https://stackoverflow.com/a/58968770/4058484
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
         let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
