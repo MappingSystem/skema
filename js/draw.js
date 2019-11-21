@@ -311,6 +311,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         button.attr('title',title);
         button.click(function() {draw.click($('.eQuery').first());});  
 
+        e.mouseup(function(e){draw.loading(e);});
         $(path).attr('class','eQuery');
         return $(path);
 
@@ -340,9 +341,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    loading : function() {
+    loading : function(e) {
 
-        if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
+        e.preventDefault();
+        if ($('#diagram').is(':visible')) {
+            $('#diagram').hide(); 
+            $(".loadingImg").show();
+        }
 
     },
 
