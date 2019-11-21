@@ -5,14 +5,14 @@ var dom, keys, node, root, tree = {
         // Accessing root
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
-        dom = document.getElementById(id); node = tree.getReact(); console.log(node);
+        dom = document.getElementById(id); node = tree.node(); console.log(node);
         root = document.getElementById('graphiql')._reactRootContainer._internalRoot;
 
         draw.getJSON();
 
     },
 
-    getReact : function() {
+    node : function() {
 
         // Accessing react-dom
         // https://src-bin.com/en/q/1bf6a0e
