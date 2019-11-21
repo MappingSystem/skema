@@ -327,8 +327,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         button.attr('title',title);
         button.click(function() {draw.click($('.eQuery').first());});  
-
-        e.mouseup(function(){draw.loading();});
+ 
+        e.mouseup(_.debounce(function(){draw.loading();}, 100));
         $(path).attr('class','eQuery');
         return $(path);
 
