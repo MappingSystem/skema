@@ -42,8 +42,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
                 }
 
-                pad = index + 1;
-                draw.getLinks(item);
+                pad = item['weight'];
+                draw.getLinks();
 
             }
 
@@ -51,7 +51,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    getLinks : function(item) {
+    getLinks : function() {
 
         select = $(".theme").val();
 
