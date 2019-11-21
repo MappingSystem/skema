@@ -300,7 +300,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    loading : function(e) {
+    loading : function() {
 
         if ($('#diagram').is(':visible') || $('#graphiql').css('visibility') === 'visible') {
             $('#diagram').hide(); $('#graphiql, #viewport').css("visibility", "hidden");
@@ -328,7 +328,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         button.attr('title',title);
         button.click(function() {draw.click($('.eQuery').first());});  
 
-        e.mouseup(function(e){draw.loading(e);});
+        e.mouseup(function(){draw.loading();});
         $(path).attr('class','eQuery');
         return $(path);
 
