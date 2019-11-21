@@ -1,15 +1,12 @@
-var dom, keys, node, root, element, tree = {
+var dom, keys, node, root, tree = {
 
     feed : function(id, size) {
 
         // Accessing root
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
-        element = document.getElementById('graphiql');
-        root = element._reactRootContainer._internalRoot;
-
-        dom = document.getElementById(id);
-        node = this.getReact(); console.log(node);
+        dom = document.getElementById(id); node = this.getReact(); console.log(node);
+        root = document.getElementById('graphiql')._reactRootContainer._internalRoot;
 
         draw.getJSON();
 
