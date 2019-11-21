@@ -9,7 +9,7 @@ var dom, keys, node, root, element, tree = {
         root = element._reactRootContainer._internalRoot;
 
         dom = element.getElementsByClassName('execute-button')[1];
-        node = this.getReact(); console.log(node._onClick);
+        node = this.getReact(); console.log(node.props.onRun);
 
         draw.getJSON();
 
