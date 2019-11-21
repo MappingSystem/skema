@@ -37,7 +37,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                     var hash = '#chetabahana-skema';
                     var event = 'click mousemove keyup';
 
-                    $('.execute-button').on('click', draw.loading(););
+                    //$('.execute-button').on('click', draw.loading(););
                     $('body').on(dom, '.resultWrap', function() {draw.query();});
                     $('body').on(event, _.debounce(function(){draw.reload(hash);}, 600000));
 
