@@ -108,7 +108,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Sitewheel') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
+                else if (type == 'Route') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
             } finally {
 
@@ -146,7 +146,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
             else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
+            if (type != 'Route' && type != 'Node') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
             if (type == 'Node') {query = cm.CodeMirror; draw.feed('tree');}
         }
