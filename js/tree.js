@@ -1,4 +1,4 @@
-var node, root, tree = {
+var keys, node, root, tree = {
 
     feed : function(id, size) {
 
@@ -11,14 +11,14 @@ var node, root, tree = {
         console.dir(root.current);
 
         var container = graphiql.getElementsByClassName('graphiql-container')[0];
-        node = tree.getReact(container);
-        console.log(node.return);
+        let key = Object.keys(container).find(key=>key.startsWith("__reactInternalInstance$"));
+        console.log(node[key].return);
 
         draw.getJSON();
 
     },
 
-    getReact : function(dom) {
+    getKeys : function(data) {
 
         // Accessing __reactInternalInstance$
         // https://stackoverflow.com/a/55310101/4058484
@@ -36,9 +36,8 @@ var node, root, tree = {
             }, [])
         }
 
-        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
         //return getObjectKeys({a: 1, b: 2, c: { d: 3, e: { f: 4 }}});
-        return dom[key];
+        return getObjectKeys(data);
 
     }
 
