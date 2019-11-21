@@ -10,7 +10,7 @@ var dom, keys, node, root, element, tree = {
         root = element._reactRootContainer._internalRoot; //console.dir(root.current);
 
         dom = element.getElementsByClassName('graphiql-container')[0];
-        node = this.getReact(); console.log(node._storage.storage);
+        node = this.getReact(); console.log(node);
 
         draw.getJSON();
 
