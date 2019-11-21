@@ -6,9 +6,9 @@ var dom, keys, node, root, element, tree = {
         // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
         element = document.getElementById('graphiql');
-        root = element._reactRootContainer._internalRoot; //console.dir(root.current);
+        root = element._reactRootContainer._internalRoot; console.log(id);
 
-        dom = element.getElementById(id)[0];
+        dom = element.getElementsByClassName('graphiql-container')[0];
         node = this.getReact(); console.log(node);
 
         draw.getJSON();
