@@ -16,7 +16,7 @@ var keys, node, root, tree = {
 
     },
 
-    getReact = function() {
+    getReact : function() {
 
         // Accessing __reactInternalInstance$
         // https://src-bin.com/en/q/1bf6a0e
