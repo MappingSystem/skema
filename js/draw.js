@@ -37,6 +37,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                     var hash = '#chetabahana-skema';
                     var event = 'click mousemove keyup';
 
+                    $('.execute-button').on('click', draw.loading(););
                     $('body').on(dom, '.resultWrap', function() {draw.query();});
                     $('body').on(event, _.debounce(function(){draw.reload(hash);}, 600000));
 
@@ -273,7 +274,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
     query : function() {
 
         if (!test) {
-            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
@@ -338,6 +338,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
+
+    },
+
+    loading : function() {
+
+            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
     },
 
