@@ -8,7 +8,7 @@ var dom, keys, node, root, element, tree = {
         element = document.getElementById('graphiql');
         root = element._reactRootContainer._internalRoot;
 
-        dom = document.getElementById(id)[0];
+        dom = document.getElementById(id);
         node = this.getReact(); console.log(node);
 
         draw.getJSON();
