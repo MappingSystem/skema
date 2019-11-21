@@ -163,10 +163,24 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
         (ln == pad)? ids.push(id): ids.pop();
 
-        //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
-        pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
+        //id.length vs type index (1»2 2»3 3»4 4»5 5»6 6»1)
+        pad = (ln + 1 > size)? 1: ln + 1;
         type = json[pad]['title'];
         draw.feed('part');
+
+    },
+
+    node : function(i, e) {
+
+        if (i != 0) {e.id = draw.pad(i);}//ids.length vs type index (1»4 2»5 3»0 4»1 5»2 6»3)
+        else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
+
+        e.parentNode.appendChild(e);
+        $(e).filter('.eQuery').css({'pointer-events':'auto'});
+        $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
+
+        $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
     },
 
@@ -283,20 +297,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         if (typeof value !== 'string') {return 'mypointer';}
         else {return value.replace(' mypointer', '') + ' mypointer';}
-
-    },
-
-    node : function(i, e) {
-
-        if (i != 0) {e.id = draw.pad(i);}
-        else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
-
-        e.parentNode.appendChild(e);
-        $(e).filter('.eQuery').css({'pointer-events':'auto'});
-        $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
-
-        $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
     },
 
