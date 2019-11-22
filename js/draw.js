@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, draw = {
 
     diagram : function() {
 
@@ -87,10 +87,10 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, dra
             var skema = data.skema;
             var js = '/' + data.guide['js'];
 
-        } else if (type == 'Sequence') {
+        } else {
 
             var style = {theme: 'hand', "font-size": 13};
-            var skema = (data)? data.skema: editor.getValue();
+            var skema = (init)? init: editor.getValue();
             var js = '/sequence/js/sequence-diagram-snap-min.js';
 
         }
@@ -234,13 +234,13 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, dra
 
                 //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
                 var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;
-                $("<div>", {id: Id}).appendTo($("#diagram"));
-                draw.click($("#" + Id));
+                $("<div>", {id: Id}).appendTo($("#diagram")); draw.click($("#" + Id));
 
             } else if (data == null) {console.log(240+' '+type+' '+feed)
  
                 data = result.items[0];
-                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
+                var skema = draw.encode(JSON.stringify(data.skema, draw.replacer, '\t'));
+                if (type == 'Sequence') init = skema; editor.setValue(skema);
 
             } else if (window['tree']) {console.log(245+' '+type+' '+feed)
 
