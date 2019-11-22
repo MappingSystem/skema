@@ -237,8 +237,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             } else if (id == null) {
 
                 //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
-                var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;console.log(Id);
-                $("<div>", {id: Id}).appendTo($("#diagram")); draw.click($("#" + Id));
+                var Id = draw.pad(1,4);console.log(Id);
+                draw.click($("<div>", {id: Id}));
 
             } else if (data == null) {
  
@@ -332,11 +332,12 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     },
 
-    pad : function(i) {
+    pad : function(i, n=0) {
 
         //Utilize pad in to the workflows id
         var s = String(i);
-        while (s.length < pad) {s = "0" + s;}
+        var padn = (pad + n < size)? pad + n: pad + n - size;
+        while (s.length < padn) {s = "0" + s;}
         return s;
 
     },
