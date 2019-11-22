@@ -15,7 +15,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
        _.each(json, function(item, index) {
 
-            if (item['title'] == type) {
+            if (item['title'] == type) {console.log(18+type);
 
                 pad = item['weight'];
                 $('#diagram').empty();
@@ -80,7 +80,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    getScript : function(item) {
+    getScript : function() {
 
         if (select != 'hand') {
 
@@ -153,7 +153,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    click : function(e) {
+    click : function(e) {console.log(156+type);
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
@@ -165,7 +165,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         //id.length vs type index (1»2 2»3 3»4 4»5 5»6 6»1)
         pad = (ln + 1 > size)? 1: ln + 1;
-        type = json[pad]['title'];
+        type = json[pad]['title'];console.log(168+type);
         draw.feed('part');
 
     },
@@ -222,7 +222,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
-        $.getJSON(feed).done(function(result){
+        $.getJSON(feed).done(function(result){console.log(225+type);
 
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
