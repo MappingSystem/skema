@@ -277,7 +277,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     change : function() {
 
         //Strict Workflows default to Sequence but not the index 
-        id = ids = data = feed = json = size = type = null;
+        id = ids = pad = data = feed = json = size = type = null;
         draw.getJSON();
 
     },
