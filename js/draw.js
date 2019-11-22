@@ -221,7 +221,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if (!feed) feed = '/feed.json?t=' + $.now();
 
         if ($(".theme").val() == 'hand' && pad) pad = null;
-        else if (!pad) pad = (params.pad)? params.pad: null;
+        else if (!pad) pad = (params.pad)? params.pad.parseInt(): null;
 
         $.getJSON(feed).done(function(result){
 
