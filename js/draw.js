@@ -217,6 +217,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
     getJSON : function() {
 
         //Inject Workflows from getJSON
+console.log(parameter_on_hash);
         if (!type) type = 'Sequence';
         if (ids == null) ids = new Array();
         if (!link) link = $('#tautan a').clone();
