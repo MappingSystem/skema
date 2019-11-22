@@ -17,6 +17,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             if (item['title'] == type) {
 
+                pad = item['weight'];
                 $('#diagram').empty();
 
                 if (type != 'Tree') {
@@ -42,7 +43,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 }
 
-                pad = item['weight'];
                 draw.getLinks();
 
             }
@@ -220,13 +220,14 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
-        if (!pad) pad = (params.pad)? params.pad: null;
+
+        if ($(".theme").val() == 'hand') pad = null;
+        if (!type) type = (params.type)? params.type: 'Sequence';
 
         $.getJSON(feed).done(function(result){
 
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
-            if (!type) type = (pad)? json[pad - 1]['title']: 'Sequence';
 
             if (pad == null) {console.log(229+' '+type+' '+feed);
 
