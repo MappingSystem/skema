@@ -54,6 +54,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     getLinks : function() {
 
         //Extend workflows links on each skema
+        if (params.type) $(".theme").val('simple')
         $('#tautan a').each(function(key, value) {
 
             if ($(".theme").val() == 'hand') {
@@ -220,8 +221,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
-        if (!type) type = 'Sequence';
-        //if (!pad) pad = (params.pad)? params.pad: null;
+        if ($(".theme").val() == 'hand') pad = null;
+        if (!type) type = (params.type)? params.type: 'Sequence';
 
         $.getJSON(feed).done(function(result){
 
@@ -257,14 +258,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     },
 
-    change : function() {
-
-        //Strict Workflows default to Sequence but not the index 
-        id = ids = data = feed = json = size = type = null;
-        draw.getJSON();
-
-    },
-
     replacer : function(key, value) {
 
         //Remove double quotes from a String 
@@ -282,6 +275,14 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
         str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
         return (/^[\],:{}\s]*$/).test(str);
+
+    },
+
+    change : function() {
+
+        //Strict Workflows default to Sequence but not the index 
+        id = ids = data = feed = json = size = type = null;
+        draw.getJSON();
 
     },
 
