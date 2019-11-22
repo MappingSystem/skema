@@ -235,7 +235,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, dra
                 //set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
                 var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;
                 $("<div>", {id: Id}).appendTo($("#diagram"));
-                draw.click($("#1"));
+                draw.click($("#" + Id));
 
             } else if (data == null) {
  
