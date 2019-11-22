@@ -226,23 +226,23 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, dra
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
 
-            if (pad == null) {
+            if (pad == null) {console.log(229+feed)
 
                 draw.diagram();
 
-            } else if (id == null) {
+            } else if (id == null) {console.log(233+feed)
 
-                //set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
+                //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
                 var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;
                 $("<div>", {id: Id}).appendTo($("#diagram"));
                 draw.click($("#" + Id));
 
-            } else if (data == null) {
+            } else if (data == null) {console.log(240+feed)
  
                 data = result.items[0];
                 editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
-            } else if (window['tree']) {
+            } else if (window['tree']) {console.log(245+feed)
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 data = result.items[0];
