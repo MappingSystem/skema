@@ -54,7 +54,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     getLinks : function() {
 
         //Extend workflows links on each skema
-        if (params.type) $(".theme").val('simple')
         $('#tautan a').each(function(key, value) {
 
             if ($(".theme").val() == 'hand') {
@@ -221,8 +220,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
+        if (!type) type = 'Sequence';
         if ($(".theme").val() == 'hand') pad = null;
-        if (!type) type = (params.type)? params.type: 'Sequence';
 
         $.getJSON(feed).done(function(result){
 
