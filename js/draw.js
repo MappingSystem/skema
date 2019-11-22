@@ -217,8 +217,11 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //Inject Workflows from getJSON
         if (ids == null) ids = new Array();
+
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
+
+        if ($(".theme").val() == 'hand') pad = null;
         if (!type) type = (params.type)? params.type: 'Sequence';
 
         $.getJSON(feed).done(function(result){
