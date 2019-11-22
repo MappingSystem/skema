@@ -221,7 +221,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if (!feed) feed = '/feed.json?t=' + $.now();
 
         if (!type) type = 'Sequence';
-        if (!pad) pad = (params.pad)? params.pad: null;
+        //if (!pad) pad = (params.pad)? params.pad: null;
 
         $.getJSON(feed).done(function(result){
 
