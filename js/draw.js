@@ -221,28 +221,28 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, dra
         if (!feed) feed = '/feed.json?t=' + $.now();
         if (!type) type = (params.type)? params.type: 'Sequence';
 
-        $.getJSON(feed).done(function(result){console.log(224+feed)
+        $.getJSON(feed).done(function(result){
 
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
 
-            if (pad == null) {console.log(229+feed)
+            if (pad == null) {console.log(229+' '+type+' '+feed)
 
                 draw.diagram();
 
-            } else if (id == null) {console.log(233+feed)
+            } else if (id == null) {console.log(229+' '+type+' '+feed)
 
                 //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
                 var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;
                 $("<div>", {id: Id}).appendTo($("#diagram"));
                 draw.click($("#" + Id));
 
-            } else if (data == null) {console.log(240+feed)
+            } else if (data == null) {console.log(229+' '+type+' '+feed)
  
                 data = result.items[0];
                 editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
 
-            } else if (window['tree']) {console.log(245+feed)
+            } else if (window['tree']) {console.log(229+' '+type+' '+feed)
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 data = result.items[0];
