@@ -231,8 +231,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             if (pad == null) {console.log(229+' '+type+' '+feed)
 
-                if (init) editor.setValue(init);
-                else draw.diagram();
+                if (!init) draw.diagram();
+                else editor.setValue(init);
 
             } else if (id == null) {console.log(233+' '+type+' '+feed)
 
