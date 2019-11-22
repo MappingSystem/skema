@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, select, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, draw = {
 
     diagram : function() {
 
@@ -53,12 +53,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     getLinks : function() {
 
-        select = $(".theme").val();
-
         //Extend workflows links on each skema
+        if (params.type) $(".theme").val('simple')
         $('#tautan a').each(function(key, value) {
 
-            if (select == 'hand') {
+            if ($(".theme").val() == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
@@ -82,7 +81,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     getScript : function() {
 
-        if (select != 'hand') {
+        if ($(".theme").val() != 'hand') {
 
             var style = data.style;
             var skema = data.skema;
@@ -233,7 +232,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
             } else if (id == null) {
 
-                $("<div>", {id: "1"}).appendTo($("#diagram"));
+                //set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
+                var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;}
+                $("<div>", {id: Id}).appendTo($("#diagram"));
                 draw.click($("#1"));
 
             } else if (data == null) {
@@ -331,7 +332,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         //Utilize pad in to the workflows id
         var s = String(i);
-        while (s.length < (pad || size)) {s = "0" + s;}
+        while (s.length < pad) {s = "0" + s;}
         return s;
 
     },
