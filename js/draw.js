@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, select, draw = {
 
     diagram : function() {
 
@@ -217,11 +217,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
     getJSON : function() {
 
         //Inject Workflows from getJSON
-console.log(parameter_on_hash);
-        if (!type) type = 'Sequence';
         if (ids == null) ids = new Array();
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
+
+        if (!type) type = 'Sequence';
+        console.log(params);
 
         $.getJSON(feed).done(function(result){
 
@@ -275,9 +276,6 @@ console.log(parameter_on_hash);
     },
 
     change : function() {
-
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {params[match[1]] = match[2];}
 
         //Strict Workflows default to Sequence but not the index 
         id = ids = data = feed = json = size = type = null;
