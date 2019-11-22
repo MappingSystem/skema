@@ -155,6 +155,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
+        if ($(".theme").val() == 'hand') $('.theme').val('simple');
         if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
         //Allow diagram to get the occurred index of a given objects 
