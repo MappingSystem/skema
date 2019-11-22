@@ -9,7 +9,7 @@ var dom, keys, node, root, element, tree = {
         root = element._reactRootContainer._internalRoot;
 
         dom = element.getElementsByClassName('execute-button')[1];
-        node = this.getReact(); console.log(node);
+        node = this.getReact(); console.log(node.props.onRun);
 
         draw.getJSON();
 
@@ -18,7 +18,7 @@ var dom, keys, node, root, element, tree = {
     getReact : function() {
 
         // Accessing react-dom
-        // https://src-bin.com/en/q/1bf6a0e
+        // https://stackoverflow.com/a/58968770/4058484
         // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
         let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
