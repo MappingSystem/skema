@@ -336,7 +336,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //Utilize pad in to the workflows id
         var s = String(i);
-        var padn = (pad + n < size)? (pad + n): (pad + n - size);
+        var padn = ((pad + n) < size)? (pad + n): (pad + n - size);
         while (s.length < padn) {s = "0" + s;}
         return s;
 
