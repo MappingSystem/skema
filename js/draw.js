@@ -222,7 +222,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (!feed) feed = '/feed.json?t=' + $.now();
 
         if (!type) type = 'Sequence';
-        console.log(params);
+        console.log(params.type);
 
         $.getJSON(feed).done(function(result){
 
