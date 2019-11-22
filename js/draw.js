@@ -216,36 +216,35 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //Inject Workflows from getJSON
         if (ids == null) ids = new Array();
+        if ($(".theme").val() == 'hand') pad = null;
 
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
-
-        if (!type) type = 'Sequence';
-        if ($(".theme").val() == 'hand') pad = null;
 
         $.getJSON(feed).done(function(result){
 
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
+            if (!type) type = 'Sequence';
 
-            if (pad == null) {console.log(229+' '+type+' '+feed);
+            if (pad == null) {
 
                 if (!init) draw.diagram();
                 else editor.setValue(init);
 
-            } else if (id == null) {console.log(233+' '+type+' '+feed);
+            } else if (id == null) {
 
                 //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
                 var Id = ("0").repeat((pad + 4 < size)? pad + 4: pad + 4 - size) + 1;
                 $("<div>", {id: Id}).appendTo($("#diagram")); draw.click($("#" + Id));
 
-            } else if (data == null) {console.log(240+' '+type+' '+feed);
+            } else if (data == null) {
  
                 data = result.items[0];
                 var skema = draw.encode(JSON.stringify(data.skema, draw.replacer, '\t'));
                 if (type == 'Sequence') init = skema; editor.setValue(skema);
 
-            } else if (window['tree']) {console.log(245+' '+type+' '+feed);
+            } else if (window['tree']) {
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 data = result.items[0];
