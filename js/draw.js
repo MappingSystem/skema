@@ -165,7 +165,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         //id.length vs type index (1»2 2»3 3»4 4»5 5»6 6»1)
         pad = (ln + 1 > size)? 1: ln + 1;
-        type = json[pad]['title'];console.log(168+type);
+        type = json[pad - 1]['title'];console.log(168+type);
         draw.feed('part');
 
     },
