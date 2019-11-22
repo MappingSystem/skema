@@ -20,7 +20,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                 pad = item['weight'];
                 $('#diagram').empty();
 
-                if (type != 'Node') {
+                if (type != 'Tree') {
 
                     $('#diagram').show();
                     $('#graphiql, #viewport').css("visibility", "hidden");
@@ -75,7 +75,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (test) test = false;
         $(".loadingImg").show();
 
-        if (type == 'Node' && $('#graphiql').find('svg')[0]) {draw.element();}
+        if (type == 'Tree' && $('#graphiql').find('svg')[0]) {draw.element();}
         else {draw.getScript();}
 
     },
@@ -139,16 +139,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
             var elements;
 
             //get mandatory elements 
-            if (type == 'Node') {elements = draw.clone($('button.execute-button'), 'svg path');}
+            if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Pattern') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Route' && type != 'Node') {elements.click(function() {draw.click(this);});}
+            if (type != 'Route' && type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            if (type == 'Node') {query = cm.CodeMirror; draw.feed('tree');}
+            if (type == 'Tree') {query = cm.CodeMirror; draw.feed('tree');}
         }
 
     },
