@@ -220,9 +220,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (ids == null) ids = new Array();
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
-
-        if (!type) type = 'Sequence';
-        console.log(params.type);
+        if (!type) type = (params.type)? params.type: 'Sequence';
 
         $.getJSON(feed).done(function(result){
 
