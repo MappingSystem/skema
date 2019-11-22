@@ -104,9 +104,9 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                if (type == 'Pattern') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
+                else if (type == 'Channel') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Route') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
@@ -142,8 +142,8 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
             if (type == 'Node') {elements = draw.clone($('button.execute-button'), 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
-            else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
+            else if (type == 'Pattern') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
             if (type != 'Route' && type != 'Node') {elements.click(function() {draw.click(this);});}
