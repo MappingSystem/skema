@@ -88,8 +88,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         } else {
 
+            var skema = init;
             var style = {theme: 'hand', "font-size": 13};
-            var skema = (init)? init: editor.getValue();
             var js = '/sequence/js/sequence-diagram-snap-min.js';
 
         }
@@ -217,6 +217,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //Inject Workflows from getJSON
         if (ids == null) ids = new Array();
+        if (!init) init = editor.getValue();
+
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
@@ -231,8 +233,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             if (pad == null) {
 
-                if (!init) draw.diagram();
-                else editor.setValue(init);
+                editor.setValue(init);
 
             } else if (id == null) {
 
@@ -244,7 +245,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
  
                 data = result.items[0];
                 var skema = draw.encode(JSON.stringify(data.skema, draw.replacer, '\t'));
-                if (type == 'Sequence') init = skema; editor.setValue(skema);
+                editor.setValue(skema);
 
             } else if (window['tree']) {
 
