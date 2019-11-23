@@ -1,4 +1,4 @@
-var route = {
+var Route = {
 
     feed : function(id, size) {
 

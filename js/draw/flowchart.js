@@ -1,4 +1,4 @@
-var flowchart = {
+var Flowchart = {
 
     feed : function(id, size) {
 

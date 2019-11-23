@@ -1,4 +1,4 @@
-var sequence = {
+var Sequence = {
 
     feed : function(id, size) {
 

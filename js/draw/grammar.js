@@ -1,4 +1,4 @@
-var grammar = {
+var Grammar = {
 
     feed : function(id, size) {
 

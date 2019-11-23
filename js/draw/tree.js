@@ -1,4 +1,4 @@
-var dom, keys, node, root, element, tree = {
+var dom, keys, node, root, element, Tree = {
 
     feed : function(id, size) {
 

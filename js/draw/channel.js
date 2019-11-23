@@ -1,4 +1,4 @@
-var channel = {
+var Channel = {
 
     feed : function(id, size) {
 
