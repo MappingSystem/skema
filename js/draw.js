@@ -238,7 +238,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             } else if (id == null) {
 
                 //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
-                var Id = draw.pad(1,4);console.log(Id);
+                var Id = draw.pad(1);console.log(Id);
                 draw.click($("<div>", {id: Id}));
 
             } else if (data == null) {
@@ -337,7 +337,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //Utilize pad in to the workflows id
         var s = String(i);
-        var padn = ((pad + n) < size)? (pad + n): (pad + n - size);
+        var padn = ((pad + n) <= size)? (pad + n): (pad + n - size);
         while (s.length < padn) {s = "0" + s;}
         return s;
 
