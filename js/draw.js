@@ -328,7 +328,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
         if (window[type]) {window[type].feed(id, size);}
-        else {$.getScript('/skema/js/draw/' + type + '.js', function() {draw.feed(type);});}
+        else {$.getScript('/skema/js/draw/' + type + '.js', function() {draw.feed();});}
 
     },
 
