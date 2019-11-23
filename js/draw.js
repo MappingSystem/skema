@@ -249,7 +249,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 var skema = draw.encode(JSON.stringify(data.skema, draw.replacer, '\t'));
                 editor.setValue(skema);
 
-            } else if (window['tree']) {
+            } else if (window[type]) {
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 data = result.items[0];
