@@ -2,19 +2,17 @@ var dom, keys, node, root, element, tree = {
 
     feed : function(id, size) {
 
-        // Accessing react-dom
+        // Accessing data file: console.log(node.props.onRun);
         if (!data) feed = (id.length < size)? '/' + id + feed: feed;
-        else node = this.getReact(); //console.log(node.props.onRun);
+        else if (query) node = this.getReact();
         draw.getJSON();
 
     },
 
     getReact : function() {
 
-        // Accessing root
+        // Accessing react-dom
         // https://stackoverflow.com/a/58968770/4058484
-        // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
-        // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
 
         element = document.getElementById('graphiql');
         root = element._reactRootContainer._internalRoot;

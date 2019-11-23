@@ -1,4 +1,4 @@
-var part = {
+var route = {
 
     feed : function(id, size) {
 
