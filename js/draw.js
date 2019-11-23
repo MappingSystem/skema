@@ -102,7 +102,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Pattern') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                if (type == 'Grammar') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Channel') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
@@ -141,7 +141,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Pattern') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
             if (type != 'Route' && type != 'Tree') {elements.click(function() {draw.click(this);});}
