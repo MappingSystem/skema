@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, select, params, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, draw = {
 
     diagram : function() {
 
@@ -17,9 +17,10 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
             if (item['title'] == type) {
 
+                pad = item['weight'];
                 $('#diagram').empty();
 
-                if (type != 'Node') {
+                if (type != 'Tree') {
 
                     $('#diagram').show();
                     $('#graphiql, #viewport').css("visibility", "hidden");
@@ -42,8 +43,7 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
                 }
 
-                pad = index;
-                draw.getLinks(item);
+                draw.getLinks();
 
             }
 
@@ -51,14 +51,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    getLinks : function(item) {
-
-        select = $(".theme").val();
+    getLinks : function() {
 
         //Extend workflows links on each skema
         $('#tautan a').each(function(key, value) {
 
-            if (select == 'hand') {
+            if ($(".theme").val() == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
             } else {
@@ -75,23 +73,23 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         if (test) test = false;
         $(".loadingImg").show();
 
-        if (type == 'Node' && $('#graphiql').find('svg')[0]) {draw.element();}
+        if (type == 'Tree' && $('#graphiql').find('svg')[0]) {draw.element();}
         else {draw.getScript();}
 
     },
 
-    getScript : function(item) {
+    getScript : function() {
 
-        if (select != 'hand') {
+        if ($(".theme").val() != 'hand') {
 
             var style = data.style;
             var skema = data.skema;
             var js = '/' + data.guide['js'];
 
-        } else if (type == 'Sequence') {
+        } else {
 
+            var skema = init;
             var style = {theme: 'hand', "font-size": 13};
-            var skema = (data)? data.skema: editor.getValue();
             var js = '/sequence/js/sequence-diagram-snap-min.js';
 
         }
@@ -104,11 +102,11 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Railroad') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                if (type == 'Pattern') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Nodelinks') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
+                else if (type == 'Channel') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
-                else if (type == 'Sitewheel') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
+                else if (type == 'Route') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
             } finally {
 
@@ -139,16 +137,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
             var elements;
 
             //get mandatory elements 
-            if (type == 'Node') {elements = draw.clone($('button.execute-button'), 'svg path');}
+            if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
-            else if (type == 'Nodelinks') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Railroad') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
+            else if (type == 'Pattern') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Sitewheel' && type != 'Node') {elements.click(function() {draw.click(this);});}
+            if (type != 'Route' && type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            if (type == 'Node') {query = cm.CodeMirror; draw.feed('tree');}
+            if (type == 'Tree') {query = cm.CodeMirror; draw.feed('tree');}
         }
 
     },
@@ -157,16 +155,31 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
+        if ($(".theme").val() == 'hand') $('.theme').val('simple');
         if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
-        //Allow diagram to get the occurred index of a given object's 
+        //Allow diagram to get the occurred index of a given objects 
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
-        (ln == pad || ln - size == pad)? ids.push(id): ids.pop();
+        (ln == pad)? ids.push(id): ids.pop();
 
-        //id.length vs type index (1»2 2»3 3»4 4»0 5»1)
-        pad = (ln + 1 >= size)? ln - size + 1: ln + 1;
-        type = json[pad]['title'];
+        //id.length vs type index (1»2 2»3 3»4 4»5 5»6 6»1)
+        pad = (ln + 1 > size)? 1: ln + 1;
+        type = json[pad - 1]['title'];
         draw.feed('part');
+
+    },
+
+    node : function(i, e) {
+
+        if (i != 0) {e.id = draw.pad(i);}//ids.length vs type index (1»4 2»5 3»0 4»1 5»2 6»3)
+        else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
+
+        e.parentNode.appendChild(e);
+        $(e).filter('.eQuery').css({'pointer-events':'auto'});
+        $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
+
+        $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
+        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
     },
 
@@ -203,29 +216,36 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
     getJSON : function() {
 
         //Inject Workflows from getJSON
-        if (!type) type = 'Sequence';
         if (ids == null) ids = new Array();
+        if (!init) init = editor.getValue();
+
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
+
+        if ($(".theme").val() == 'hand' && pad) pad = null;
+        else if (!pad) pad = (params.pad)? (params.pad * 1): null;
 
         $.getJSON(feed).done(function(result){
 
             if (!json) json = result.items[4].items;
             if (!size) size = json.length;
+            if (!type) type = 'Sequence';
 
             if (pad == null) {
 
-                draw.diagram();
+                editor.setValue(init);
 
             } else if (id == null) {
 
-                $("<div>", {id: "1"}).appendTo($("#diagram"));
-                draw.click($("#1"));
+                //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
+                var Id = draw.pad(1,5);
+                draw.click($("<div>", {id: Id}));
 
             } else if (data == null) {
  
                 data = result.items[0];
-                editor.setValue(draw.encode(JSON.stringify(data.skema, draw.replacer, '\t')));
+                var skema = draw.encode(JSON.stringify(data.skema, draw.replacer, '\t'));
+                editor.setValue(skema);
 
             } else if (window['tree']) {
 
@@ -236,6 +256,16 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
             }
 
         });
+
+    },
+
+    pad : function(i, n=0) {
+
+        //Utilize pad in to the workflows id
+        var s = String(i);
+        var padn = ((pad + n) <= size)? (pad + n): (pad + n - size);
+        while (s.length < padn) {s = "0" + s;}
+        return s;
 
     },
 
@@ -261,9 +291,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     change : function() {
 
-        var regex = /[?&]([^=#]+)=([^&#]*)/g, url = window.location.href, params = {}, match;
-        while(match = regex.exec(url)) {params[match[1]] = match[2];}
-
         //Strict Workflows default to Sequence but not the index 
         id = ids = data = feed = json = size = type = null;
         draw.getJSON();
@@ -273,7 +300,6 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
     query : function() {
 
         if (!test) {
-            if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
             var result = "{" + $('#graphiql .resultWrap').text().split("{").pop();
             if (draw.isJSON(result)) {test = !test; draw.click($('.eQuery').last());}
         }
@@ -287,42 +313,12 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
 
     },
 
-    node : function(i, e) {
+    loading : function() {
 
-        if (i != 0) {e.id = draw.pad(i);}
-        else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
-
-        e.parentNode.appendChild(e);
-        $(e).filter('.eQuery').css({'pointer-events':'auto'});
-        $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
-
-        $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
-        $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
-
-    },
-
-    clone : function(e, path) {
-
-        var title = 'Back to previous session';
-        if (e.first().attr('title') == title) return $(path);
-
-        var button = e.clone();
-        button.prependTo(e.parent());
-
-        button.attr('title',title);
-        button.click(function() {draw.click($('.eQuery').first());});  
-
-        $(path).attr('class','eQuery');
-        return $(path);
-
-    },
-
-    pad : function(i) {
-
-        //Utilize pad in to the workflows id
-        var s = String(i);
-        while (s.length < (pad || size)) {s = "0" + s;}
-        return s;
+        if ($('#diagram').is(':visible') || $('#graphiql').css('visibility') === 'visible') {
+            $('#diagram').hide(); $('#graphiql, #viewport').css("visibility", "hidden");
+            $(".loadingImg").show();
+        }
 
     },
 
@@ -331,6 +327,19 @@ var id, js, ids, pad, back, data, feed, json, link, size, test, type, query, sel
         //Support Unlimited Scripts on Workflows Algorithm (#36)
         if (window[scope]) {window[scope].feed(id, size);}
         else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
+
+    },
+
+    clone : function(e, path) {
+
+        var title = 'Back to previous session';
+        if (e.first().attr('title') == title) return $(path);
+
+        var button = e.clone(); button.prependTo(e.parent()); button.attr('title',title);
+        button.click(function() {draw.click($('.eQuery').first());});  
+ 
+        e.mouseup(_.debounce(function(){draw.loading();}, 600));
+        return $(path).attr('class','eQuery');
 
     },
 
