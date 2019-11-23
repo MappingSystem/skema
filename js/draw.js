@@ -238,7 +238,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             } else if (id == null) {
 
                 //Set id.length vs type index (1»5 2»0 3»1 4»2 5»3 6»4)
-                var Id = draw.pad(1,5);console.log(Id);
+                var Id = draw.pad(1,5);
                 draw.click($("<div>", {id: Id}));
 
             } else if (data == null) {
