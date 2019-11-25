@@ -3,8 +3,7 @@ var dom, keys, node, root, element, Tree = {
     feed : function(id, size) {
 
         // Accessing data file: console.log(node.props.onRun);
-        feed = '/skema.json?t=' + $.now();
-        if (!data) feed = (id.length < size)? '/' + id + feed: feed;
+        if (!data) feed = '/' + id + '/skema.json?t=' + $.now();
         else if (query) node = this.getReact();
         draw.getJSON();
 

@@ -2,8 +2,7 @@ var Flowchart = {
 
     feed : function(id, size) {
 
-        feed = '/skema.json?t=' + $.now();
-        if (!data) feed = (id.length < size)? '/' + id + feed: feed;
+        if (!data) feed = '/skema.json?t=' + $.now();
         draw.getJSON();
 
     }
