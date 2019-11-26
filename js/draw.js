@@ -102,7 +102,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
-                if (type == 'Pattern') {main.drawDiagramsFromSerializedGrammar(skema, g);}
+                if (type == 'Grammar') {main.drawDiagramsFromSerializedGrammar(skema, g);}
                 else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Channel') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
@@ -141,12 +141,12 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
-            else if (type == 'Pattern') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
+            else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
             if (type != 'Route' && type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            if (type == 'Tree') {query = cm.CodeMirror; draw.feed('tree');}
+            if (type == 'Tree') {query = cm.CodeMirror; draw.feed();}
         }
 
     },
@@ -165,7 +165,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         //id.length vs type index (1»2 2»3 3»4 4»5 5»6 6»1)
         pad = (ln + 1 > size)? 1: ln + 1;
         type = json[pad - 1]['title'];
-        draw.feed('part');
+        data = null; draw.feed();
 
     },
 
@@ -247,7 +247,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 var skema = draw.encode(JSON.stringify(data.skema, draw.replacer, '\t'));
                 editor.setValue(skema);
 
-            } else if (window['tree']) {
+            } else if (window[type]) {
 
                 //Support Asynchronous Json Data Driven on Workflows(#39)
                 data = result.items[0];
@@ -322,11 +322,11 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     },
 
-    feed : function(scope) {
+    feed : function() {
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[scope]) {window[scope].feed(id, size);}
-        else {$.getScript('skema/js/' + scope + '.js', function() {draw.feed(scope);});}
+        if (window[type]) {window[type].feed(id, size);}
+        else {$.getScript('/skema/js/draw/' + type + '.js', function() {draw.feed();});}
 
     },
 

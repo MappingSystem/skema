@@ -1,16 +1,10 @@
-var dom, keys, node, root, element, tree = {
+var dom, keys, node, root, element, Tree = {
 
     feed : function(id, size) {
 
-        // Accessing root
-        // https://dev.to/carlmungazi/a-journey-through-reactdom-render-302c
-
-        element = document.getElementById('graphiql');
-        root = element._reactRootContainer._internalRoot;
-
-        dom = element.getElementsByClassName('execute-button')[1];
-        node = this.getReact(); console.log(node.props.onRun);
-
+        // Accessing data file: console.log(node.props.onRun);
+        if (!data) feed = '/' + id + '/skema.json?t=' + $.now();
+        else if (query) node = this.getReact();
         draw.getJSON();
 
     },
@@ -19,9 +13,13 @@ var dom, keys, node, root, element, tree = {
 
         // Accessing react-dom
         // https://stackoverflow.com/a/58968770/4058484
-        // https://medium.com/@sitambas/get-global-element-state-a408a744e99d
 
+        element = document.getElementById('graphiql');
+        root = element._reactRootContainer._internalRoot;
+
+        dom = element.getElementsByClassName('execute-button')[1];
         let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
+
         let internalInstance = dom[key];
         if (internalInstance == null) return null;
 
