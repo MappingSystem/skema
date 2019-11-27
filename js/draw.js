@@ -181,7 +181,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
         e.parentNode.appendChild(e);
-        if(e == elements.filter(':last')) console.log(i);
+        if(e.id == elements.filter(':last').attr('id')) console.log(i);
 
     },
 
