@@ -137,7 +137,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             elements == null;
 
             //get mandatory elements 
-            if (type == 'Route') {elements = $([$('svg g.node')[0],$('svg line.link')[0]]);}
+            if (type == 'Route') {elements = $('svg g.node').push('svg line.link');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
@@ -373,3 +373,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     svg : {}
 
 }
+
+$.fn.push = function(selector) {
+    Array.prototype.push.apply(this, $.makeArray($(selector)));
+    return this;
+};
