@@ -174,13 +174,14 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if (i != 0) {e.id = draw.pad(i);}//ids.length vs type index (1»4 2»5 3»0 4»1 5»2 6»3)
         else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
 
-        e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
-        if(e.id == elements.filter(':last').id) console.log(i);
+
+        e.parentNode.appendChild(e);
+        if($(e).attr('id') == elements.filter(':last').attr('id')) console.log(i);
 
     },
 
