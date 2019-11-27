@@ -137,14 +137,15 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             elements == null;
 
             //get mandatory elements 
-            if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
+            if (type == 'Route') {elements = $('svg g.node');}
+            else if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
             else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Route' && type != 'Tree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
             if (type == 'Tree') {query = cm.CodeMirror; draw.feed();}
         }
