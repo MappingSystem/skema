@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, elements, draw = {
 
     diagram : function() {
 
@@ -134,7 +134,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         } else if ($(".theme").val() != 'hand') {
 
-            var elements;
+            elements == null;
 
             //get mandatory elements 
             if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
@@ -180,6 +180,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
+        if($(e) == elements.last()) console.log(i);
 
     },
 
