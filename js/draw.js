@@ -135,6 +135,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         } else if ($(".theme").val() != 'hand') {
 
             elements == null;
+            $.fn.push = function(e) {Array.prototype.push.apply(this, $.makeArray($(e))); return this;};
 
             //get mandatory elements 
             if (type == 'Route') {elements = $('svg g.node').push('svg line.link');}
@@ -373,8 +374,3 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     svg : {}
 
 }
-
-$.fn.push = function(selector) {
-    Array.prototype.push.apply(this, $.makeArray($(selector)));
-    return this;
-};
