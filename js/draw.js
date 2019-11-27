@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, elements, draw = {
 
     diagram : function() {
 
@@ -134,17 +134,19 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         } else if ($(".theme").val() != 'hand') {
 
-            var elements;
+            elements == null;
+            $.fn.push = function(e) {Array.prototype.push.apply(this, $.makeArray($(e))); return this;};
 
             //get mandatory elements 
-            if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
+            if (type == 'Route') {elements = $('svg g.node').push('svg line.link');}
             else if (type == 'Sequence') {elements = $('svg g.title, svg g.actor, svg g.signal');}
             else if (type == 'Flowchart') {elements = $('svg rect.flowchart, svg path.flowchart');}
+            else if (type == 'Tree') {elements = draw.clone($('button.execute-button'), 'svg path');}
             else if (type == 'Channel') {elements = $('svg g g g').hover(function() {$(this).hide(100).show(100);});}
             else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Route' && type != 'Tree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
             if (type == 'Tree') {query = cm.CodeMirror; draw.feed();}
         }
@@ -171,15 +173,17 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     node : function(i, e) {
 
-        if (i != 0) {e.id = draw.pad(i);}//ids.length vs type index (1»4 2»5 3»0 4»1 5»2 6»3)
+        if (i != 0) {e.id = draw.pad(i);} //ids.length vs type index (1»4 2»5 3»0 4»1 5»2 6»3)
         else {e.id = (ids.length > 1)? ids[ids.length - 2]: ("0").repeat((pad + 3 < size)? pad + 3: pad + 3 - size) + 1;}
 
-        e.parentNode.appendChild(e);
         $(e).filter('.eQuery').css({'pointer-events':'auto'});
         $(e).filter('.title, .actor, .signal').hover(function() {$(this).hide(100).show(100);});
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
+
+        e.parentNode.appendChild(e);
+        if(e.id == elements.filter(':last').attr('id')) console.log(i);
 
     },
 
