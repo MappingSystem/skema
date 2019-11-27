@@ -180,7 +180,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         $(e).mouseenter(function(){$(this).css('fill','teal')}).mouseout(function(){$(this).css('fill','')});
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
-        if(e.id == elements.last().id) console.log(id);
+        if($(e) == elements.filter(':last')) console.log(i);
 
     },
 
