@@ -135,6 +135,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         } else if ($(".theme").val() != 'hand') {
 
             elements == null;
+            if (cm && cm.CodeMirror instanceof Object) query = cm.CodeMirror;
             $.fn.push = function(e) {Array.prototype.push.apply(this, $.makeArray($(e))); return this;};
 
             //get mandatory elements 
@@ -148,7 +149,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             //set each id and its handle 
             if (type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            if (type == 'Tree') {query = cm.CodeMirror; draw.feed();}
+            
         }
 
     },
@@ -183,7 +184,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
         e.parentNode.appendChild(e);
-        if(e.id == elements.filter(':last').attr('id')) console.log(i);
+        if(e.id == elements.filter(':last').attr('id')) {if (type == 'Tree') draw.feed();}
 
     },
 
