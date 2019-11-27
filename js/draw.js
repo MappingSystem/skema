@@ -147,7 +147,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Tree') {elements.click(function() {draw.click(this);});}
+            if (type != 'Tree' && type != 'Route') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
             
         }
