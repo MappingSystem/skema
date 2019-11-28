@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, click, elements, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, click, diagram, elements, draw = {
 
     diagram : function() {
 
@@ -94,7 +94,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             try {
 
-                var diagram = {};
+                diagram = {};
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
