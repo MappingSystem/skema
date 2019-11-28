@@ -94,7 +94,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             try {
 
-                var diagram;
+                var diagram = {};
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
