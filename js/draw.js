@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, elements, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, click, diagram, options, elements, draw = {
 
     diagram : function() {
 
@@ -34,12 +34,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                     $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": "-4px"});
 
                     //set handle and idle time
-                    var dom = 'DOMSubtreeModified';
-                    var hash = '#chetabahana-skema';
-                    var event = 'click mousemove keyup';
-
-                    $('body').on(dom, '.resultWrap', function() {draw.query();});
-                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 600000));
+                    $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
+                    $('body').on('click mousemove keyup', _.debounce(function(){draw.reload();}, 600000));
 
                 }
 
@@ -98,7 +94,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             try {
 
-                var diagram;
+                diagram = {};
                 var g = $('#diagram').get(0);
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
@@ -135,6 +131,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         } else if ($(".theme").val() != 'hand') {
 
             elements == null;
+            if (cm && cm.CodeMirror instanceof Object) query = cm.CodeMirror;
             $.fn.push = function(e) {Array.prototype.push.apply(this, $.makeArray($(e))); return this;};
 
             //get mandatory elements 
@@ -146,14 +143,36 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Tree') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            if (type == 'Tree') {query = cm.CodeMirror; draw.feed();}
+            if (type != 'Tree') {elements.on('click', function(){draw.click(this);});}
+            if (type != 'Route') {elements.on('dblclick', function(){draw.dblclick(this);});}
+
         }
 
     },
 
     click : function(e) {
+
+        if (!click) {
+            click = true; // this is a hack so that click doesnt fire on the 1st click of a dblclick
+            setTimeout(function(){if (click) {click = false; draw.setClick(e);}}.bind(e),200);
+        }
+
+    },
+
+    dblclick : function(e) {
+
+        click=false;
+        if (type == 'Route') {
+            if (options.nodeFocus) {
+                e.isCurrentlyFocused = !e.isCurrentlyFocused;
+                doTheTreeViz(makeFilteredData(diagram));
+            }
+        }
+
+    },
+
+    setClick : function(e) {
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
@@ -183,7 +202,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         $(e).css({'cursor':'pointer'}).attr('class', function(index, classNames) {return draw.name(classNames);});
 
         e.parentNode.appendChild(e);
-        if(e.id == elements.filter(':last').attr('id')) console.log(i);
+        if(e.id == elements.filter(':last').attr('id')) {if (type == 'Tree') draw.feed();}
 
     },
 
@@ -347,9 +366,9 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     },
 
-    reload : function(hash) {
+    reload : function() {
 
-        scrollTo(hash); window.stop();
+        var hash = '#chetabahana-skema'; scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
 
     },
