@@ -145,7 +145,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             //set each id and its handle 
             if (type != 'Tree' && type != 'Route') {elements.click(function() {draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
-            
+
         }
 
     },
