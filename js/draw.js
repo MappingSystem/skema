@@ -143,18 +143,10 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             else if (type == 'Grammar') {elements = $('svg path').first().add($('svg rect')).add($('svg path').last());}
 
             //set each id and its handle 
-            if (type != 'Tree' && type != 'Route') {elements.click(function() {draw.click(this);});}
+            if (type != 'Tree') {elements.on('dblclick', function(){draw.dblclick(this);});}
+            if (type != 'Tree') {elements.on('click', function(){draw.click(this);});}
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
 
-        }
-
-    },
-
-    click : function(e) {
-
-        if (!click) {
-            click = true; // this is a hack so that click doesnt fire on the 1st click of a dblclick
-            setTimeout(function(){if (click) {click = false; draw.setClick(e);}}.bind(e),200);
         }
 
     },
@@ -167,6 +159,15 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 e.isCurrentlyFocused = !e.isCurrentlyFocused;
                 doTheTreeViz(makeFilteredData(diagram));
             }
+        }
+
+    },
+
+    click : function(e) {
+
+        if (!click) {
+            click = true; // this is a hack so that click doesnt fire on the 1st click of a dblclick
+            setTimeout(function(){if (click) {click = false; draw.setClick(e);}}.bind(e),200);
         }
 
     },
