@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, hash, json, link, init, size, test, type, query, elements, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, elements, draw = {
 
     diagram : function() {
 
