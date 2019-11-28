@@ -220,7 +220,6 @@ var id, js, ids, pad, back, data, feed, hash, json, link, init, size, test, type
         if (ids == null) ids = new Array();
         if (!init) init = editor.getValue();
 
-        if (!hash) hash = '#chetabahana-skema';
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
@@ -347,7 +346,7 @@ var id, js, ids, pad, back, data, feed, hash, json, link, init, size, test, type
 
     reload : function() {
 
-        scrollTo(hash); window.stop();
+        var hash = '#chetabahana-skema'; scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
 
     },
