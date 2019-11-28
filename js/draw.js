@@ -152,9 +152,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     click : function(e) {
 
-        // this is a hack so that click doesnt fire on the 1st click of a dblclick
         if (!click) {
-            click = true;
+            click = true; // this is a hack so that click doesnt fire on the 1st click of a dblclick
             setTimeout(function(){if (click) {click = false; draw.setClick(e);}}.bind(e),200);
         }
 
@@ -163,9 +162,11 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     dblclick : function(e) {
 
         click=false;
-        if (options.nodeFocus) {
-            e.isCurrentlyFocused = !e.isCurrentlyFocused;
-            doTheTreeViz(makeFilteredData(diagram));
+        if (type == 'Route') {
+            if (options.nodeFocus) {
+                e.isCurrentlyFocused = !e.isCurrentlyFocused;
+                doTheTreeViz(makeFilteredData(diagram));
+            }
         }
 
     },
