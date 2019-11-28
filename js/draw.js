@@ -35,7 +35,7 @@ var id, js, ids, pad, back, data, feed, hash, json, link, init, size, test, type
 
                     //set handle and idle time
                     $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
-                    $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
+                    $('body').on('click mousemove keyup', _.debounce(function(){draw.reload();}, 600000));
 
                 }
 
@@ -345,7 +345,7 @@ var id, js, ids, pad, back, data, feed, hash, json, link, init, size, test, type
 
     },
 
-    reload : function(hash) {
+    reload : function() {
 
         scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
