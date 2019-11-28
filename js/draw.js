@@ -151,6 +151,15 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     },
 
+    click : function(e) {
+
+        if (!click) {
+            click = true; // this is a hack so that click doesnt fire on the 1st click of a dblclick
+            setTimeout(function(){if (click) {click = false; draw.setClick(e);}}.bind(e),200);
+        }
+
+    },
+
     dblclick : function(e) {
 
         click=false;
@@ -159,15 +168,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 e.isCurrentlyFocused = !e.isCurrentlyFocused;
                 doTheTreeViz(makeFilteredData(diagram));
             }
-        }
-
-    },
-
-    click : function(e) {
-
-        if (!click) {
-            click = true; // this is a hack so that click doesnt fire on the 1st click of a dblclick
-            setTimeout(function(){if (click) {click = false; draw.setClick(e);}}.bind(e),200);
         }
 
     },
