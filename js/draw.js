@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, elements, draw = {
+var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, click, elements, draw = {
 
     diagram : function() {
 
@@ -151,6 +151,13 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     },
 
     click : function(e) {
+
+        // this is a hack so that click doesnt fire on the 1st click of a dblclick
+        if (!click) {click = true; setTimeout(function(){if (click) {click = false; draw.point(e);}}.bind(e),200);}
+
+    },
+
+    point : function(e) {
 
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
