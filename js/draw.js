@@ -6,7 +6,7 @@ editor.getSession().setMode("ace/mode/asciidoc");
 editor.getSession().on('change', _.debounce(function() {draw.diagram();}, 100));
 
 // Put all of the process variables in to global
-var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, query, elements, draw = {
+var id, js, ids, pad, back, data, feed, hash, json, link, init, size, test, type, query, elements, draw = {
 
     diagram : function() {
 
@@ -34,12 +34,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                     $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": "-4px"});
 
                     //set handle and idle time
-                    var dom = 'DOMSubtreeModified';
-                    var hash = '#chetabahana-skema';
-                    var event = 'click mousemove keyup';
-
-                    $('body').on(dom, '.resultWrap', function() {draw.query();});
-                    $('body').on(event, _.debounce(function(){draw.reload(hash);}, 600000));
+                    $('body').on('DOMSubtreeModified', '.resultWrap', function() {draw.query();});
+                    $('body').on('click mousemove keyup', _.debounce(function(){draw.reload(hash);}, 600000));
 
                 }
 
@@ -224,6 +220,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if (ids == null) ids = new Array();
         if (!init) init = editor.getValue();
 
+        if (!hash) hash = '#chetabahana-skema';
         if (!link) link = $('#tautan a').clone();
         if (!feed) feed = '/feed.json?t=' + $.now();
 
