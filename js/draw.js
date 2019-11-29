@@ -130,7 +130,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         } else if ($(".theme").val() != 'hand') {
 
-            elements = null; query = null;
+            click = elements = query = null;
             if (cm && cm.CodeMirror instanceof Object) query = cm.CodeMirror;
             $.fn.push = function(e) {Array.prototype.push.apply(this, $.makeArray($(e))); return this;};
 
