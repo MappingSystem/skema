@@ -167,6 +167,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             if (options.nodeFocus) {
                 e.isCurrentlyFocused = !e.isCurrentlyFocused;
                 doTheTreeViz(makeFilteredData(diagram));
+                draw.element();
             }
         }
 
