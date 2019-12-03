@@ -58,13 +58,13 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             } else {
                 if (this.id == 'json') {this.href = feed;}
                 else if (data) {this.href = data.guide[this.id];}
+                $('#doc')[0].href = 'https://github.com/chetabahana/chetabahana.github.io/wiki/' + type;
             }
 
         });
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type.toLowerCase();
-        $('#doc')[0].href = 'https://github.com/chetabahana/chetabahana.github.io/wiki/' + type;
 
         if (test) test = false;
         $(".loadingImg").show();
