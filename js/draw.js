@@ -50,15 +50,19 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     getLinks : function() {
 
         //Extend workflows links on each skema
+        var href = $('#doc')[0].href;
+        var path = href.split('/').reverse()[0];
+
         $('#tautan a').each(function(key, value) {
 
             if ($(".theme").val() == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
+                $('#doc')[0].href = href.replace(path, 'Tipe-Diagram');
             } else {
                 if (this.id == 'json') {this.href = feed;}
                 else if (data) {this.href = data.guide[this.id];}
-                $('#doc')[0].href = 'https://github.com/chetabahana/chetabahana.github.io/wiki/' + type;
+                $('#doc')[0].href = href.replace(path, type);
             }
 
         });
