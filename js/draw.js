@@ -50,21 +50,25 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     getLinks : function() {
 
         //Extend workflows links on each skema
+        var href = $('#doc')[0].href;
+        var path = href.split('/').reverse()[0];
+
         $('#tautan a').each(function(key, value) {
 
             if ($(".theme").val() == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
+                $('#doc')[0].href = href.replace(path, 'Tipe-Diagram');
             } else {
                 if (this.id == 'json') {this.href = feed;}
                 else if (data) {this.href = data.guide[this.id];}
+                $('#doc')[0].href = href.replace(path, type);
             }
 
         });
 
         $('#type').text(type); 
         $('#type')[0].href = '/' + type.toLowerCase();
-        $('#doc')[0].href = 'https://github.com/chetabahana/chetabahana.github.io/wiki/' + type;
 
         if (test) test = false;
         $(".loadingImg").show();
@@ -130,7 +134,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         } else if ($(".theme").val() != 'hand') {
 
-            elements == null;
+            click = elements = query = null;
             if (cm && cm.CodeMirror instanceof Object) query = cm.CodeMirror;
             $.fn.push = function(e) {Array.prototype.push.apply(this, $.makeArray($(e))); return this;};
 
@@ -167,6 +171,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             if (options.nodeFocus) {
                 e.isCurrentlyFocused = !e.isCurrentlyFocused;
                 doTheTreeViz(makeFilteredData(diagram));
+                draw.element();
             }
         }
 
