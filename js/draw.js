@@ -58,7 +58,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             if ($(".theme").val() == 'hand') {
                 $(this).css({'cursor':'pointer'});
                 this.href = link.slice(key,key+1).get(0).href;
-                $('#doc')[0].href = href.replace(path, 'Tipe-Diagram');
+                $('#doc')[0].href = href.replace(path, 'Programming');
             } else {
                 if (this.id == 'json') {this.href = feed;}
                 else if (data) {this.href = data.guide[this.id];}
