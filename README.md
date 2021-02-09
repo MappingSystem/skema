@@ -6,7 +6,7 @@ WE ARE GOING TO WIN THE MARKET!
 </a><br /><br />
 </p>
 
-# Toko Chetabahana
+# Skema Chetabahana
 
 :hand: Selamat datang di [Halaman Project](https://github.com/MarketLeader) untuk sesi [**Toko Chetabahana**](https://github.com/MarketLeader/Toko-Chetabahana).
 
