@@ -253,9 +253,10 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if ($(".theme").val() == 'hand' && pad) pad = null;
         else if (!pad) pad = (params.pad)? (params.pad * 1): null;
 
-        $.getJSON(feed).done(function(result){
+        // ref https://www.w3cschool.cn/doc_jquery/jquery-jquery-getjson.html
+        $.getJSON(feed, {title: "Skema"}).done(function(result){
 
-            if (!json) json = result.items[4].items[1].items;
+            if (!json) json = result.items[1].items;
             if (!size) size = json.length;
             if (!type) type = 'Sequence';
 
