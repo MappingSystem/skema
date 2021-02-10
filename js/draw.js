@@ -255,7 +255,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         $.getJSON(feed).done(function(result){
 
-            if (!json) json = result.items[4].items[1].items; console.log(result.items.title['Skema'].items.title['Diagram'].items);
+            if (!json) json = result.items[4].items[1].items;
             if (!size) size = json.length;
             if (!type) type = 'Sequence';
 
