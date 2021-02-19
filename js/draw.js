@@ -379,6 +379,35 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
     },
 
+    findPrimes : function(n, current, primes) {
+
+        //Ref: https://stackoverflow.com/a/46387888/4058484
+        if (!n || current < 2) return [];
+        var isPrime = true;
+        for (var i = 0; i < primes.length; i++) {
+            if (current % primes[i] == 0) {isPrime = false; break;}
+        }
+        if (isPrime) primes.push(current);
+        if (primes.length < n) return findPrimes(n, current + 1, primes)
+        else return primes
+
+        /* Usage code
+        var primes = [2,3]
+        for (var i = 1; i <= 1000; i++) {
+            primes = findPrimes(i*1000, primes[primes.length - 1]+1, primes)
+            console.log(i*1000 + 'th prime: ' + primes[primes.length-1])
+
+        Output
+        ...
+        996000th prime: 15419293
+        997000th prime: 15435941
+        998000th prime: 15452873
+        999000th prime: 15469313
+        1000000th prime: 15485863
+        }*/
+
+    },
+
     encode : function(val) {
 
         return val.replace(/^"(.*)"$/, "$1")
