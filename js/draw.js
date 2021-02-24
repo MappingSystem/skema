@@ -28,8 +28,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 } else {
 
-                    $('#diagram').hide();
                     $('#graphiql, #viewport').css("visibility", "visible");
+                    $('#diagram').hide().css("background-image", "url('/images/loading.gif')");
                     if (!$('#viewport canvas').length) $('#viewport').html('<canvas></canvas>'); 
                     $('#viewport canvas').width(400).height(317).css({"position": "absolute", "right": "-4px"});
 
@@ -112,7 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //set element
                 draw.element();
-                if (type != 'Tree') $('.loadingImg').hide().css("background-image", "url('/images/loading.gif')");
+                if (type != 'Tree') $('.loadingImg').hide();
 
             }
 
