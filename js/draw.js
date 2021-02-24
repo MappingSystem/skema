@@ -25,6 +25,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                     $('#diagram').show();
                     $('#graphiql, #viewport').css("visibility", "hidden");
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
+                    $(".loadingImg").css("background-image", "url('/images/loading.gif')");
 
                 } else {
 
@@ -112,7 +113,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //set element
                 draw.element();
-                $('.loadingImg').hide();
+                if (type != 'Tree') $('.loadingImg').hide();
 
             }
 
@@ -253,9 +254,11 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if ($(".theme").val() == 'hand' && pad) pad = null;
         else if (!pad) pad = (params.pad)? (params.pad * 1): null;
 
+        // ref https://www.w3cschool.cn/doc_jquery/jquery-jquery-getjson.html
+        //$.getJSON(feed, {name: "Project Maps"}).done(function(result){
         $.getJSON(feed).done(function(result){
 
-            if (!json) json = result.items[4].items[0].items;
+            if (!json) json = result.items[4].items[2].items;
             if (!size) size = json.length;
             if (!type) type = 'Sequence';
 
@@ -353,7 +356,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     feed : function() {
 
         //Support Unlimited Scripts on Workflows Algorithm (#36)
-        if (window[type]) {window[type].feed(id, size);}
+        if (window[type]) {window[type].feed(id, size); $('.loadingImg').hide();}
         else {$.getScript('/skema/js/draw/' + type + '.js', function() {draw.feed();});}
 
     },
@@ -375,6 +378,22 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
         var hash = '#chetabahana-skema'; scrollTo(hash); window.stop();
         location.hash = hash; location.reload(true);
+
+    },
+
+    getPrimes : function(max) {
+
+        //Ref: https://stackoverflow.com/a/12287599/4058484
+        var sieve = [], i, j, primes = [];
+        for (i = 2; i <= max; ++i) {
+            if (!sieve[i]) {
+                primes.push(i);
+                for (j = i << 1; j <= max; j += i) {
+                    sieve[j] = true;
+                }
+            }
+        }
+        return primes;
 
     },
 
