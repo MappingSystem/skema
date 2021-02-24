@@ -112,7 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //set element
                 draw.element();
-                if (type != 'Tree') $('.loadingImg').hide();
+                if (type != 'Tree') $('.loadingImg').hide().css("background-image", "url('/images/loading.gif')");
 
             }
 
@@ -182,7 +182,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         //disable click events to avoid interruption
         $('.mypointer').css('pointer-events', 'none');
         if ($(".theme").val() == 'hand') $('.theme').val('simple');
-        $(".loadingImg").css("background-image", "url('/images/loading.gif')")
         if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
         //Allow diagram to get the occurred index of a given objects 
