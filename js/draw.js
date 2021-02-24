@@ -112,6 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //set element
                 draw.element();
+                if (type != 'Tree') $('.loadingImg').hide().css("background-image", "url('/images/loading.gif')");
 
             }
 
@@ -149,7 +150,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             if (elements) {elements.each(function(index) {draw.node(index, this);});}
             if (type != 'Tree') {elements.on('click', function(){draw.click(this);});}
             if (type != 'Route') {elements.on('dblclick', function(){draw.dblclick(this);});}
-            if (type != 'Tree') $('.loadingImg').hide().css("background-image", "url('/images/loading.gif')");
 
         }
 
