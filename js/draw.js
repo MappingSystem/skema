@@ -71,7 +71,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         $('#type')[0].href = '/' + type.toLowerCase();
 
         if (test) test = false;
-        $(".loadingImg").show();
+        $(".loadingImg").css("background-image", "url('/images/loading.gif')").show();
 
         if (type == 'Tree' && $('#graphiql').find('svg')[0]) {draw.element();}
         else {draw.getScript();}
