@@ -112,6 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //set element
                 draw.element();
+                if (type != 'Tree') $('.loadingImg').hide();
 
             }
 
