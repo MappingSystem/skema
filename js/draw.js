@@ -322,7 +322,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     change : function() {
 
         //Strict Workflows default to Sequence but not the index 
-        $(".loadingImg").css("background-image", "url('/images/loading.gif')");
+        if (id == null) $(".loadingImg").css("background-image", "url('/images/loading.gif')");
         id = ids = data = feed = json = size = type = null;
         draw.getJSON();
 
