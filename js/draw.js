@@ -184,7 +184,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
         //Allow diagram to get the occurred index of a given objects 
-alert(id);
+        if (id === undefined) $(".loadingImg").css("background-image", "url('/images/loading.gif')");
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
         (ln == pad)? ids.push(id): ids.pop();
 
