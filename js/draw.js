@@ -25,7 +25,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                     $('#diagram').show();
                     $('#graphiql, #viewport').css("visibility", "hidden");
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
-                    $(".loadingImg").css("background-image", "url('/images/loading.gif')");
 
                 } else {
 
@@ -92,6 +91,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             var skema = init;
             var style = {theme: 'hand', "font-size": 13};
             var js = '/sequence/js/sequence-diagram-snap-min.js';
+            $(".loadingImg").css("background-image", "url('/images/loading.gif')");
 
         }
 
