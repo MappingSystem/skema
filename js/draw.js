@@ -262,8 +262,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
             if (pad == null) {
 
-                editor.setValue(init);
 alert(pad);
+                editor.setValue(init);
 
             } else if (id == null) {
 
