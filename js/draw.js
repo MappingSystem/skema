@@ -19,7 +19,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 pad = item['weight'];
                 $('#diagram').empty();
-
+alert(id);
                 if (type != 'Tree') {
 
                     $('#diagram').show();
