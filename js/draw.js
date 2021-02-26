@@ -91,7 +91,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
             var skema = init;
             var style = {theme: 'hand', "font-size": 13};
             var js = '/sequence/js/sequence-diagram-snap-min.js';
-            $(".loadingImg").css("background-image", "url('/images/loading.gif')");
 
         }
 
@@ -323,6 +322,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     change : function() {
 
         //Strict Workflows default to Sequence but not the index 
+        $(".loadingImg").css("background-image", "url('/images/loading.gif')");
         id = ids = data = feed = json = size = type = null;
         draw.getJSON();
 
