@@ -38,7 +38,6 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 }
 
-alert(id);
                 draw.getLinks();
 
             }
@@ -264,6 +263,7 @@ alert(id);
             if (pad == null) {
 
                 editor.setValue(init);
+alert(pad);
 
             } else if (id == null) {
 
