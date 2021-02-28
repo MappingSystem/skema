@@ -112,6 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 //set element
                 draw.element();
                 if (type != 'Tree') $('.loadingImg').hide();
+                $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
             }
 
@@ -377,6 +378,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     reload : function() {
 
         var hash = '#chetabahana-skema'; scrollTo(hash); window.stop();
+        $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
         location.hash = hash; location.reload(true);
 
     },
