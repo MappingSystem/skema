@@ -19,13 +19,11 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 pad = item['weight'];
                 $('#diagram').empty();
-
                 if (type != 'Tree') {
 
                     $('#diagram').show();
                     $('#graphiql, #viewport').css("visibility", "hidden");
                     $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
-                    $(".loadingImg").css("background-image", "url('/images/loading.gif')");
 
                 } else {
 
@@ -104,8 +102,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
                 if (type == 'Grammar') {main.drawDiagramsFromSerializedGrammar(skema, g);}
-                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Channel') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
+                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Route') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
@@ -114,6 +112,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
                 //set element
                 draw.element();
                 if (type != 'Tree') $('.loadingImg').hide();
+                $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
 
             }
 
@@ -186,6 +185,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
         if ($('#diagram').is(':visible')) {$('#diagram').hide(); $(".loadingImg").show();}
 
         //Allow diagram to get the occurred index of a given objects 
+        if (id === undefined) $(".loadingImg").css("background-image", "url('/images/loading.gif')");
         id = $(e).attr("id"); var ln = id.length; var ls = ids.length;
         (ln == pad)? ids.push(id): ids.pop();
 
@@ -323,6 +323,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     change : function() {
 
         //Strict Workflows default to Sequence but not the index 
+        if (id === undefined) $(".loadingImg").css("background-image", "url('/images/loading.gif')");
         id = ids = data = feed = json = size = type = null;
         draw.getJSON();
 
@@ -377,6 +378,7 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
     reload : function() {
 
         var hash = '#chetabahana-skema'; scrollTo(hash); window.stop();
+        $('#diagram').attr('class', 'diagram-' + type.toLowerCase());
         location.hash = hash; location.reload(true);
 
     },
