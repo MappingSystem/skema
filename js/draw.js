@@ -102,8 +102,8 @@ var id, js, ids, pad, back, data, feed, json, link, init, size, test, type, quer
 
                 //Support Skema with all diagram types including ones from GraphiQL/Threejs/D3 
                 if (type == 'Grammar') {main.drawDiagramsFromSerializedGrammar(skema, g);}
-                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Channel') {diagram = draw.makeSvg(style, skema); g.prepend(diagram);}
+                else if (type == 'Sequence') {diagram = Diagram.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Flowchart') {diagram = flowchart.parse(skema); diagram.drawSVG(g, style);}
                 else if (type == 'Route') {initTheTreeViz(skema).then (function (control) {doTheTreeViz(control);});}
 
