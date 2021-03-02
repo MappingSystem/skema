@@ -2,7 +2,7 @@ var Channel = {
 
     feed : function(id, size) {
 
-        if (!data) feed = '/' + id + '/diagram.json?t=' + $.now();
+        if (!data) feed = '/channel.json?t=' + $.now();
         draw.getJSON();
 
     }
